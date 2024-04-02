@@ -104,6 +104,7 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcxMjA3NDM1MywiZXh
 | 02/04/2024| Création du projet|
 || |
 || Installation de ```npm``` et de ```node.js```|
+|| Prise en main de Swagger et tests de l'api réalisés avec Postman |
 
 
 ### 
