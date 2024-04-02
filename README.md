@@ -33,6 +33,8 @@
 - URL du repository : https://github.com/OpenClassrooms-Student-Center/booki-starter-code
 - Maquettes du site : https://www.figma.com/file/kfKHknHySoTibZfdolGAX6/Desktop?node-id=0%3A1
 - Kanban : https://openclassrooms.notion.site/da3bb5863a554b34ba1a8df90d4c99af?v=df7f8dcccd9f4917a664a559f00b7ccb
+
+
 ### 
 ###
 ## Installation
@@ -51,6 +53,7 @@ git commit -m "Création du projet"
 git push -u origin master
 
 # Installation et Lancement du serveur
+cd Backend/
 npm install 
 npm start
 ```
@@ -61,6 +64,18 @@ npm start
 - [Node.js](https://nodejs.org/en/) 
 - [NPM](https://www.npmjs.com/)
 - [Kanban](https://openclassrooms.notion.site/da3bb5863a554b34ba1a8df90d4c99af?v=df7f8dcccd9f4917a664a559f00b7ccb)
+- [Documentation de l'api Swagger](http://localhost:5678/api-docs/)
+
+###
+###
+## Compte de test Sophie Bluel
+```
+#Email
+sophie.bluel@test.tld 
+
+#Mot de passe
+S0phie
+```
 
 ### 
 ###
@@ -75,6 +90,7 @@ npm start
 - [Documentation de l'objet Set en javascript](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Set)
 - [Créer une fenêtre modale en JavaScript](https://grafikart.fr/tutoriels/modal-javascript-css-72)
 
+
 ### 
 ###
 ## Réalisation
@@ -82,6 +98,7 @@ npm start
 | Date | Réalisation |
 | ------ | ------ |
 | 02/04/2024| Création du projet|
+|| |
 || Installation de ```npm``` et de ```node.js```|
 
 
