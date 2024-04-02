@@ -49,6 +49,10 @@ git remote set-url origin git@github.com:nicolasmorvant/projet3.git
 git add .
 git commit -m "Création du projet"
 git push -u origin master
+
+# Installation et Lancement du serveur
+npm install 
+npm start
 ```
 
 ### 
