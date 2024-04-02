@@ -77,7 +77,7 @@ git push -u origin master
 | Date | Réalisation |
 | ------ | ------ |
 | 02/04/2024| Création du projet|
-|| Installation de npm et de node.js|
+|| Installation de ```npm``` et de ```node.js```|
 
 
 
