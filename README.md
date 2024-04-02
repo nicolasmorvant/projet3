@@ -69,6 +69,7 @@ git push -u origin master
 - [Utilisez JavaScript pour réaliser un site dynamique (WEBINAIRE)](https://app.livestorm.co/openclassrooms-1/utilisez-javascript-pour-realiser-un-site-dynamique/live?email=nicolas.morvant%40tuta.io&key=662d4e39fdf7a63246fd23&s=ce585089-cab6-4fe1-b9ee-86fa8a0880f8#/) 
 - [Documenter une API avec Swagger](https://grafikart.fr/tutoriels/swagger-openapi-php-1160) 
 - [Documentation de l'objet Set en javascript](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Set)
+- [Créer une fenêtre modale en JavaScript](https://grafikart.fr/tutoriels/modal-javascript-css-72)
 
 ### 
 ###
