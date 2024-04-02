@@ -75,6 +75,9 @@ sophie.bluel@test.tld
 
 #Mot de passe
 S0phie
+
+#Token Bearer (works)
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcxMjA3NDM1MywiZXhwIjoxNzEyMTYwNzUzfQ.OfgurY75ziY9vu5Bdr0uu9of2GqhHTb8w8LhVScukfg
 ```
 
 ### 
