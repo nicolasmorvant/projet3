@@ -113,7 +113,9 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcxMjA3NDM1MywiZXh
 || Exercices Javascript sur les fonctions asynchrones|
 |||
 ||05/04/2024|
-|| Récupération dynamique des données des travaux via l’API|
+|| Récupération dynamique des données des travaux via l’API avec fetch|
+|| Mise en plus du menu dynamique|
+|| Mise en forme du menu dynamique dans ```styles.css```|
 |||
 |||
 
