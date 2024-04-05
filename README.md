@@ -107,7 +107,7 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcxMjA3NDM1MywiZXh
 || Prise en main de Swagger et tests de l'api réalisés avec Postman |
 |||
 | 03/04/2024| Suivi des cours sur Javascript : "Apprenez à programmer avec javascript" et "Créez des pages web dynamiques avec javasript"|
-|| Création du fichier ```index.js```|
+|| Création du fichier ```index.js``` dans le répertoire ```/scripts```|
 |||
 ||04/04/2023|
 || Exercices Javascript sur les fonctions asynchrones|
