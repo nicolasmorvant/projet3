@@ -119,7 +119,8 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcxMjA3NDM1MywiZXh
 |||
 ||06/04/2024|
 || Ajout de variables css pour les couleurs|
-|| Création de trois fonctions afficherTravauxCategorie(), afficherTousLesTravaux() et recupererDonnees() |
+|| Création de trois fonctions ```afficherTravauxCategorie()```, ```afficherTousLesTravaux()``` et ```recupererDonnees()``` ```dans index.js```|
+|| Création de ```login.html```|
 |||
 
 ### 
