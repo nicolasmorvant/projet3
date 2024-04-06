@@ -4,12 +4,18 @@
     
     :root 
     {
-        --main-bg-color: --main-bg-color;
+        --main-bg-color: #FFFEF8;
 		--main-orange: #B1663C;
         --main-green: #1D6154;
     }
 
 /* FIN CHARTE GRAPHIQUE */
+
+
+	body
+	{
+		background-color: var(--main-bg-color);
+	}
 
 /* FIN GÉNÉRAL */
 	
@@ -89,7 +95,9 @@
 	{
 		display: flex;
 		justify-content: space-between;
+		align-items: center;
 		margin: 50px 0;
+		height: 42px;
 	}
 	
 	section 
@@ -127,13 +135,21 @@
 		display: flex;
 		align-items: center;
 		list-style-type: none;
-
+		height: 19px;
 	}
 
 	nav li 
 	{
 		padding: 0 10px;
-		font-size: 1.2em;
+		font-size: 16px;
+		font-weight: 400;
+		height: 100%;
+		margin-left: 25px;
+	}
+
+	nav ul li:first-child	
+	{
+		margin-left: 0;
 	}
 
 	li:hover 
@@ -141,7 +157,32 @@
 		color: var(--main-orange);
 	}
 
+	#instagram 
+	{
+		width: 22px;
+		height: 22px;
+	}
 
+
+
+/* MAIN */
+
+	main
+	{
+		margin-top: 150px;
+	}
+	
+/* FIN MAIN */
+
+
+/* INTRODUCTION ET PORTFOLIO */
+
+	#introduction, #portfolio
+	{
+		max-width: 960px;
+	}
+
+/* FIN INTRODUCTION ET PORTFOLIO */
 
 
 
@@ -151,23 +192,26 @@
 	{
 		display: flex;
 		align-items: center;
+		margin: 0 auto;
 	}
 
 	#introduction figure
 	{
 		flex: 1;
+		margin-right: 82px;
 	}
 
 	#introduction img
 	{
-		display: block;
-		margin: auto;
-		width: 80%;
+	
+		width: 474px;
+		height: auto;
 	}
 
 	#introduction article
 	{
 		flex: 1;
+		width: 404px;
 	}
 
 	#introduction h2
@@ -186,10 +230,18 @@
 
 /* PORTFOLIO */
 
+	#portfolio
+	{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		margin: 150px auto 50px;
+	}
+
 	#portfolio h2
 	{
 		text-align: center;
-		margin-bottom: 1em;
+		margin-bottom: 60px;
 	}
 
 
@@ -197,28 +249,43 @@
 
 		#menuTravaux
 		{
+			display: flex;
+			justify-content: center;
 			margin-bottom: 50px;
-			height: 37px;
+			height: 38px;
 		}
 
 		#menuTravaux button
 		{
 			font-family: 'Syne';
 			font-size: 16px;
-			height: 100%;
+			font-weight: 700;
 			min-width: 100px;
-			padding: 0 15px;
+			padding: 0 10px;
+			margin-left: 15px;
 			border: 1px solid var(--main-green);
 			color: var(--main-green);
-			border-radius: 20px;
-			background-color: --main-bg-color;
-			margin-left: 10px;
+			border-radius: 60px;
+			background-color: var(--main-bg-color);
+		}
+
+		#menuTravaux button:hover
+		{
+			opacity: 0.8 !important;
+			border: 1px solid var(--main-orange) !important;
+			background-color: var(--main-orange) !important;
+			color: #FFFFFF !important;
 		}
 
 		#tous
 		{
-			background-color: var(--main-green) !important;
+			margin-left: 0 !important;
+		}
+
+		.selected
+		{
 			color: #FFFFFF !important;
+			background-color: var(--main-green) !important;
 		}
 
 	/* FIN MENU DES TRAVAUX */
