@@ -1,3 +1,19 @@
+/* GÉNÉRAL */
+
+	/* CHARTE GRAPHIQUE */
+    
+    :root 
+    {
+        --main-bg-color: --main-bg-color;
+		--main-orange: #B1663C;
+        --main-green: #1D6154;
+    }
+
+/* FIN CHARTE GRAPHIQUE */
+
+/* FIN GÉNÉRAL */
+	
+	
 	/* http://meyerweb.com/eric/tools/css/reset/
 	v2.0 | 20110126
 	License: none (public domain)
@@ -15,7 +31,8 @@
 	article, aside, canvas, details, embed,
 	figure, figcaption, footer, header, hgroup,
 	menu, nav, output, ruby, section, summary,
-	time, mark, audio, video {
+	time, mark, audio, video
+	{
 		margin: 0;
 		padding: 0;
 		border: 0;
@@ -23,81 +40,110 @@
 		font: inherit;
 		vertical-align: baseline;
 	}
+	
 	/* HTML5 display-role reset for older browsers */
 	article, aside, details, figcaption, figure,
-	footer, header, hgroup, menu, nav, section {
+	footer, header, hgroup, menu, nav, section 
+	{
 		display: block;
 	}
-	body {
+	
+	body 
+	{
 		line-height: 1;
 	}
-	ol, ul {
+	
+	ol, ul 
+	{
 		list-style: none;
 	}
-	blockquote, q {
+	
+	blockquote, q 
+	{
 		quotes: none;
 	}
+	
 	blockquote:before, blockquote:after,
-	q:before, q:after {
+	q:before, q:after 
+	{
 		content: '';
 		content: none;
 	}
-	table {
+	
+	table 
+	{
 		border-collapse: collapse;
 		border-spacing: 0;
 	}
+	
 	/** end reset css**/
-	body {
+	body 
+	{
 		max-width: 1140px;
 		margin:auto;
 		font-family: 'Work Sans' ;
 		font-size: 14px;
 	}
-	header {
+	
+	header 
+	{
 		display: flex;
 		justify-content: space-between;
-		margin: 50px 0
+		margin: 50px 0;
 	}
-	section {
-		margin: 50px 0
+	
+	section 
+	{
+		margin: 50px 0;
 	}
 
-	h1{
+	h1
+	{
 		display: flex;
 		flex-direction: column;
 		font-family: 'Syne';
 		font-size: 22px;
 		font-weight: 800;
-		color: #B1663C
+		color: var(--main-orange);
 	}
 
-	h1 > span {
+	h1 > span 
+	{
 		font-family: 'Work Sans';
 		font-size:10px;
 		letter-spacing: 0.1em;
-	;
 	}
 
-	h2{
+	h2
+	{
 		font-family: 'Syne';
 		font-weight: 700;
 		font-size: 30px;
-		color: #1D6154
+		color: var(--main-green);
 	}
-	nav ul {
+
+	nav ul 
+	{
 		display: flex;
 		align-items: center;
 		list-style-type: none;
 
 	}
-	nav li {
+
+	nav li 
+	{
 		padding: 0 10px;
 		font-size: 1.2em;
 	}
 
-	li:hover {
-		color: #B1663C;
+	li:hover 
+	{
+		color: var(--main-orange);
 	}
+
+
+
+
 
 /* INTRODUCTION */
 
@@ -109,7 +155,7 @@
 
 	#introduction figure
 	{
-		flex: 1
+		flex: 1;
 	}
 
 	#introduction img
@@ -121,7 +167,7 @@
 
 	#introduction article
 	{
-		flex: 1
+		flex: 1;
 	}
 
 	#introduction h2
@@ -151,8 +197,6 @@
 
 		#menuTravaux
 		{
-			display: flex;
-			justify-content: center;
 			margin-bottom: 50px;
 			height: 37px;
 		}
@@ -160,19 +204,20 @@
 		#menuTravaux button
 		{
 			font-family: 'Syne';
+			font-size: 16px;
 			height: 100%;
 			min-width: 100px;
 			padding: 0 15px;
-			border: 1px solid #1D6154;
-			color: #1D6154;
+			border: 1px solid var(--main-green);
+			color: var(--main-green);
 			border-radius: 20px;
-			background-color: #FFFEF8;
+			background-color: --main-bg-color;
 			margin-left: 10px;
 		}
 
 		#tous
 		{
-			background-color: #1D6154 !important;
+			background-color: var(--main-green) !important;
 			color: #FFFFFF !important;
 		}
 
@@ -189,11 +234,18 @@
 			grid-template-columns: 1fr 1fr 1fr;
 			grid-column-gap: 20px;
 			grid-row-gap: 20px;
+			justify-items: center;
 		}
 
 		.gallery img
 		{
 			width: 100%;
+		}
+
+		/* POUR LES MESSAGES D'ERREUR */
+		.gallery strong
+		{
+			grid-column-start: 2;
 		}
 
 	/* FIN GALLERIE */
@@ -253,7 +305,7 @@
 		font-family: 'Syne';
 		font-weight: 700;
 		color: white;
-		background-color: #1D6154;
+		background-color: var(--main-green);
 		margin : 2em auto ;
 		width: 180px;
 		text-align: center;
