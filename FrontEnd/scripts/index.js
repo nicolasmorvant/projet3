@@ -10,6 +10,7 @@ const urlApi = "http://localhost:5678/api/";
     //DIV CONTENANT LES TRAVAUX
     let gallerie = document.querySelector(".gallery");
 
+/* FIN RÉCUPÉRATION DES ÉLÉMENTS DU DOM */
 
 
 /* FONCTIONS */
@@ -214,6 +215,8 @@ const urlApi = "http://localhost:5678/api/";
             gallerie.innerHTML="<strong>Impossible de récupérer les travaux</strong>";
         }
     }
+
+/* FIN FONCTIONS */
 
 
 //RÉCUPÉRATION DES DONNÉES
