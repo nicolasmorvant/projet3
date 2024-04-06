@@ -117,6 +117,9 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcxMjA3NDM1MywiZXh
 || Mise en plus du menu dynamique|
 || Mise en forme du menu dynamique dans ```styles.css```|
 |||
+||06/04/2024|
+|| Ajout de variables css pour les couleurs|
+|||
 |||
 
 ### 
