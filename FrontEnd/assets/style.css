@@ -130,12 +130,18 @@
 		color: var(--main-green);
 	}
 
+	nav
+	{
+		display: flex;
+		align-items: center;
+	}
+
 	nav ul 
 	{
 		display: flex;
 		align-items: center;
 		list-style-type: none;
-		height: 19px;
+		height: 22px;
 	}
 
 	nav li 
@@ -143,13 +149,18 @@
 		padding: 0 10px;
 		font-size: 16px;
 		font-weight: 400;
-		height: 100%;
+		height: 19px;
 		margin-left: 25px;
 	}
 
 	nav ul li:first-child	
 	{
 		margin-left: 0;
+	}
+
+	nav ul li:last-child	
+	{
+		height: 22px;
 	}
 
 	li:hover 
