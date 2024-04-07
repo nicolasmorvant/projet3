@@ -4,6 +4,9 @@ const urlApi = "http://localhost:5678/api";
 
 /* RÉCUPÉRATION DES ÉLÉMENTS DU DOM */
 
+    //HEADER
+    let mainContainer = document.querySelector("#main-container");
+
     //LIEN CONNEXION
     let lienConnexion = document.querySelector("#lienConnexion");
 
@@ -223,6 +226,33 @@ const urlApi = "http://localhost:5678/api";
 //VÉRIFICATION SI L'UTILISATEUR EST AUTHENTIFIÉ
 if(window.localStorage.getItem("token"))
 {       
+    //AJOUT DU BANDEAU NOIR MODE ÉDITION
+    let bandeau = document.createElement("div");
+
+    //AJOUT DU STYLE DU BANDEAU
+    bandeau.style.backgroundColor = "#000000";
+    bandeau.style.color = "#FFFFFF";
+    bandeau.style.height = "59px";
+    bandeau.style.display = "flex";
+    bandeau.style.justifyContent = "center";
+    bandeau.style.alignItems = "center";
+    bandeau.style.fontWeight = 400;
+    bandeau.style.fontSize = "16px";
+
+    //CRÉATION DES ÉLÉMENTS DU BANDEAU
+    let span = document.createElement("span");
+    span.innerText = "Mode édition";
+
+    let icone = document.createElement("i");
+    icone.classList.add("fa-solid", "fa-pen-to-square");
+    icone.style.marginRight = "10px";
+
+    //AJOUT DES ÉLÉMENTS DU BANDEAU
+    bandeau.append(icone,span);
+
+    //AJOUT AU BODY AVANT LE HEADER
+    document.body.insertBefore(bandeau,mainContainer);
+
     //MODIFICATION DU STYLE DU LIEN LOGIN
     lienConnexion.innerText = "";
     lienConnexion.innerText = "logout";
