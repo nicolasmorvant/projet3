@@ -1,8 +1,11 @@
 //URL DE L'API
-const urlApi = "http://localhost:5678/api/";
+const urlApi = "http://localhost:5678/api";
 
 
 /* RÉCUPÉRATION DES ÉLÉMENTS DU DOM */
+
+    //LIEN CONNEXION
+    let lienConnexion = document.querySelector("#lienConnexion");
 
     //DIV PORTFOLIO
     let sectionPortfolio = document.querySelector("#portfolio");
@@ -54,7 +57,6 @@ const urlApi = "http://localhost:5678/api/";
             });
         }  
     }
-
 
     //FONCTION POUR RÉCUPÉRER TOUS LES TRAVAUX
     function afficherTousLesTravaux(donnees)
@@ -186,7 +188,6 @@ const urlApi = "http://localhost:5678/api/";
             });
     }
 
-
     //FONCTION DE RÉCUPÉRATION DES DONNÉES
     async function recupererDonnees() 
     {
@@ -195,7 +196,7 @@ const urlApi = "http://localhost:5678/api/";
 
         try 
         {
-            const response = await fetch(urlApi + "works");
+            const response = await fetch(urlApi + "/works");
             const works = await response.json();
 
             //VÉRIFICATION POUR SAVOIR S'IL Y A AU MOINS UNE RÉALISATION
@@ -219,8 +220,34 @@ const urlApi = "http://localhost:5678/api/";
 /* FIN FONCTIONS */
 
 
+//VÉRIFICATION SI L'UTILISATEUR EST AUTHENTIFIÉ
+if(window.localStorage.getItem("token"))
+{       
+    lienConnexion.innerText = "";
+    lienConnexion.innerText = "logout";
+}
+
 //RÉCUPÉRATION DES DONNÉES
 recupererDonnees();
 
+//ÉCOUTE ÉVÈNEMENT CLIC LIEN CONNEXION
+lienConnexion.addEventListener("click", () => 
+{
+    if(window.localStorage.getItem("token"))
+    {
+        window.localStorage.removeItem("token");
+
+        let lienConnexion = document.querySelector("#lienConnexion");
+        
+        lienConnexion.innerText = "";
+        lienConnexion.innerText = "login";
+
+        window.location.href = "index.html";
+    }
+    else
+    {
+        window.location.href = "login.html";
+    }
+});
 
 

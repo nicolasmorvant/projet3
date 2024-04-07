@@ -122,6 +122,13 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcxMjA3NDM1MywiZXh
 || Création de trois fonctions ```afficherTravauxCategorie()```, ```afficherTousLesTravaux()``` et ```recupererDonnees()``` ```dans index.js```|
 || Création de ```login.html```|
 |||
+|| 07/04/2024|
+|| Ajout d'une feuille de styles pour la page ```login.html```|
+|||
+|||
+|||
+|||
+|||
 
 ### 
 ###
