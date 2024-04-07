@@ -135,6 +135,7 @@
 		font-family: 'Syne';
 		font-weight: 700;
 		font-size: 30px;
+		line-height: 36px;
 		color: var(--main-green);
 	}
 
@@ -343,9 +344,24 @@
 			justify-items: center;
 		}
 
+		.gallery figure
+		{
+			width: 304px;
+			height: 430px;
+		}
+
 		.gallery img
 		{
 			width: 100%;
+			height: 407px;
+		}
+
+		.gallery figcaption
+		{
+			color: #3D3D3D;
+			font-size: 13px;
+			font-weight: 400;
+			margin-top: 5px;
 		}
 
 		/* POUR LES MESSAGES D'ERREUR */
