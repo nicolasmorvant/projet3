@@ -223,6 +223,7 @@ const urlApi = "http://localhost:5678/api";
 //VÉRIFICATION SI L'UTILISATEUR EST AUTHENTIFIÉ
 if(window.localStorage.getItem("token"))
 {       
+    //MODIFICATION DU STYLE DU LIEN LOGIN
     lienConnexion.innerText = "";
     lienConnexion.innerText = "logout";
 }
@@ -235,6 +236,7 @@ lienConnexion.addEventListener("click", () =>
 {
     if(window.localStorage.getItem("token"))
     {
+        //DÉCONNEXION
         window.localStorage.removeItem("token");
 
         let lienConnexion = document.querySelector("#lienConnexion");
@@ -242,10 +244,12 @@ lienConnexion.addEventListener("click", () =>
         lienConnexion.innerText = "";
         lienConnexion.innerText = "login";
 
+        //REDIRECTION VERS LA PAGE D'ACCUEIL
         window.location.href = "index.html";
     }
     else
     {
+        //REDIRECTION VERS LA PAGE DE CONNEXION
         window.location.href = "login.html";
     }
 });
