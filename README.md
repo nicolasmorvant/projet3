@@ -114,22 +114,18 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcxMjA3NDM1MywiZXh
 | 03/04/2024| Suivi des cours sur Javascript : "Apprenez à programmer avec javascript" et "Créez des pages web dynamiques avec javasript"|
 || Création du fichier ```index.js``` dans le répertoire ```/scripts```|
 |||
-||04/04/2023|
-|| Exercices Javascript sur les fonctions asynchrones|
+|04/04/2023| Exercices Javascript sur les fonctions asynchrones|
 |||
-||05/04/2024|
-|| Récupération dynamique des données des travaux via l’API avec fetch|
+|05/04/2024| Récupération dynamique des données des travaux via l’API avec fetch|
 || Mise en plus du menu dynamique|
 || Mise en forme du menu dynamique dans ```styles.css```|
 |||
-||06/04/2024|
-|| Ajout de variables css pour les couleurs|
+|06/04/2024| Ajout de variables css pour les couleurs|
 || Création de trois fonctions ```afficherTravauxCategorie()```, ```afficherTousLesTravaux()``` et ```recupererDonnees()``` ```dans index.js```|
 || Création de ```login.html```|
 |||
-|| 07/04/2024|
-|| Ajout d'une feuille de styles pour la page ```login.html```|
-|||
+|07/04/2024| Ajout d'une feuille de styles pour la page ```login.html```|
+|| Ajout du bandeau noir en mode édition sur ```index.html```|
 |||
 |||
 |||
