@@ -85,10 +85,18 @@
 	/** end reset css**/
 	body 
 	{
-		max-width: 1140px;
+		max-width: 1440px;			
 		margin:auto;
 		font-family: 'Work Sans' ;
 		font-size: 14px;
+	}
+
+	/* AJOUT D'UN MAIN CONTAINER */
+	#main-container
+	{
+		max-width: 1140px;
+		display: block;
+		margin: 0 auto;
 	}
 	
 	header 
@@ -240,6 +248,14 @@
 	#introduction h2
 	{
 		margin-bottom: 1em;
+	}
+
+	#paragraphesIntro
+	{
+		height: 192px;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
 	}
 
 	#introduction p
