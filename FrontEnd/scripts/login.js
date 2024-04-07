@@ -67,7 +67,6 @@
 
         /* FIN FONCTIONS DE VÉRIFICATION DES CHAMPS DU FORMULAIRE */
 
-        
         //FONCTION D'AFFICHAGE D'ERREUR
         function afficherErreur(msgErreur)
         {
@@ -93,6 +92,22 @@
             }
 
             blocErreur.innerText = msgErreur;
+        }
+
+        //FONCTION DE DÉCONNEXION
+        function deconnecterUtilisateur()
+        {
+            //SUPPRESSION DU TOKEN DU LOCAL STORAGE
+            window.localStorage.removeItem("token");
+
+            //MODIFICATION DU LIEN CONNEXION
+            lienConnexion = document.querySelector("#lienConnexion");
+                
+            lienConnexion.innerText = "";
+            lienConnexion.innerText = "login";
+        
+            //REDIRECTION VERS LA PAGE D'ACCUEIL
+            window.location.href = "index.html";
         }
 
     /* FIN FONCTIONS */
@@ -142,18 +157,6 @@
         lienAccueil.addEventListener("mouseleave", () => 
         {
             lienAccueil.style.color = "var(--main-green)";
-        });
-
-
-        //ÉCOUTE ÉVÈNEMENT CLIC LIEN DÉCONNEXION
-        lienConnexion.addEventListener("click", () => 
-        {
-            window.localStorage.removeItem("token");
-            
-            lienConnexion.innerText = "";
-            lienConnexion.innerText = "login";
-
-            window.location.href = "index.html";
         });
     }
     //L'UTILISATEUR N'EST PAS CONNECTÉ
@@ -239,3 +242,19 @@
 
         /* FIN API */
     }
+
+
+    //ÉCOUTE ÉVÈNEMENT CLIC LIEN DÉCONNEXION
+    lienConnexion.addEventListener("click", () => 
+    {
+        if(window.localStorage.getItem("token"))
+        {
+            //SI L'UTILISATEUR EST AUTHENTIFIÉ, DÉCONNEXION
+            deconnecterUtilisateur();
+        }
+        else
+        {
+            //SINON REDIRECTION POUR SE CONNECTER
+            window.location.href = "login.html";
+        }
+    });
