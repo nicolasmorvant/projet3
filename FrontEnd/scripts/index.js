@@ -13,6 +13,9 @@ const urlApi = "http://localhost:5678/api";
     //DIV PORTFOLIO
     let sectionPortfolio = document.querySelector("#portfolio");
 
+    //TITRE PORTFOLIO
+    let titrePortfolio = sectionPortfolio.querySelector("h2");
+
     //DIV CONTENANT LES TRAVAUX
     let gallerie = document.querySelector(".gallery");
 
@@ -220,6 +223,22 @@ const urlApi = "http://localhost:5678/api";
         }
     }
 
+    //FONCTION DE DÉCONNEXION
+    function deconnecterUtilisateur()
+    {
+        //SUPPRESSION DU TOKEN DU LOCAL STORAGE
+        window.localStorage.removeItem("token");
+
+        //MODIFICATION DU LIEN CONNEXION
+        lienConnexion = document.querySelector("#lienConnexion");
+            
+        lienConnexion.innerText = "";
+        lienConnexion.innerText = "login";
+    
+        //REDIRECTION VERS LA PAGE D'ACCUEIL
+        window.location.href = "index.html";
+    }
+
 /* FIN FONCTIONS */
 
 
@@ -236,7 +255,7 @@ if(window.localStorage.getItem("token"))
     bandeau.style.display = "flex";
     bandeau.style.justifyContent = "center";
     bandeau.style.alignItems = "center";
-    bandeau.style.fontWeight = 400;
+    bandeau.style.fontWeight = "400";
     bandeau.style.fontSize = "16px";
 
     //CRÉATION DES ÉLÉMENTS DU BANDEAU
@@ -253,6 +272,63 @@ if(window.localStorage.getItem("token"))
     //AJOUT AU BODY AVANT LE HEADER
     document.body.insertBefore(bandeau,mainContainer);
 
+    //CRÉATION D'UNE DIV POUR LE TITRE ET LE BOUTON MODIFIER
+    let divTitreBoutonModif = document.createElement("div");
+    divTitreBoutonModif.setAttribute("id", "titreEtModif");
+    divTitreBoutonModif.style.display = "flex";
+    divTitreBoutonModif.style.justifyContent = "center";
+    divTitreBoutonModif.style.alignItems = "center";
+    divTitreBoutonModif.style.height = "36px";
+    divTitreBoutonModif.style.marginBottom = "50px";
+
+    //CRÉATION DES ÉLÉMENTS DE LA DIV
+    let boutonModifier = document.createElement("button");
+    boutonModifier.setAttribute("id", "modifier");
+    boutonModifier.style.width = "84px";   
+    boutonModifier.style.height = "18px"; 
+    boutonModifier.style.backgroundColor = "transparent";
+    boutonModifier.style.border = "none";
+    boutonModifier.style.marginLeft = "20px";
+    boutonModifier.style.display = "flex";
+    boutonModifier.style.alignItems = "end";
+
+    let iconeBoutonModifier = document.createElement("i");
+    iconeBoutonModifier.classList.add("fa-solid", "fa-pen-to-square");
+    iconeBoutonModifier.style.marginRight = "10px";
+    iconeBoutonModifier.style.width = "16px";
+    iconeBoutonModifier.style.height = "16px";
+
+    let spanModifier = document.createElement("span");
+    spanModifier.innerText = "modifier";
+    spanModifier.style.width = "58px";
+    
+    //AJOUT DES ÉLÉMENTS DU BOUTON
+    boutonModifier.appendChild(iconeBoutonModifier);
+    boutonModifier.appendChild(spanModifier);
+
+    //SUPPRESSION DE LA MARGE DU TITRE H2 DE PORTFOLIO
+    titrePortfolio.style.marginBottom = "0";
+
+    //AJOUT DU TITRE DU PORTFOLIO À LA DIV
+    divTitreBoutonModif.appendChild(titrePortfolio);
+
+    //AJOUT DU BOUTON À LA DIV
+    divTitreBoutonModif.appendChild(boutonModifier);
+
+    //AJOUT DE LA DIV À LA SECTION PORTFOLIO
+    sectionPortfolio.insertBefore(divTitreBoutonModif,gallerie);
+
+    //ÉCOUTE ÉVÈNEMENT HOVER BOUTON
+    boutonModifier.addEventListener("mouseover", () => 
+    {
+        boutonModifier.style.color = "var(--main-orange)";
+    });
+
+    boutonModifier.addEventListener("mouseout", () => 
+    {
+        boutonModifier.style.color = "initial";
+    });
+
     //MODIFICATION DU STYLE DU LIEN LOGIN
     lienConnexion.innerText = "";
     lienConnexion.innerText = "logout";
@@ -266,22 +342,13 @@ lienConnexion.addEventListener("click", () =>
 {
     if(window.localStorage.getItem("token"))
     {
-        //DÉCONNEXION
-        window.localStorage.removeItem("token");
-
-        let lienConnexion = document.querySelector("#lienConnexion");
-        
-        lienConnexion.innerText = "";
-        lienConnexion.innerText = "login";
-
-        //REDIRECTION VERS LA PAGE D'ACCUEIL
-        window.location.href = "index.html";
+        //SI L'UTILISATEUR EST AUTHENTIFIÉ, DÉCONNEXION
+        deconnecterUtilisateur();
     }
     else
     {
-        //REDIRECTION VERS LA PAGE DE CONNEXION
+        //SINON REDIRECTION POUR SE CONNECTER
         window.location.href = "login.html";
     }
 });
-
 
