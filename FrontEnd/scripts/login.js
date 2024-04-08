@@ -12,6 +12,8 @@
 
     /* FIN RÉCUPÉRATION DES ÉLÉMENTS DU DOM */
 
+    //AJOUT DU STYLE AU LIEN DE CONNEXION
+    lienConnexion.style.fontWeight = "600";
 
     /* FONCTIONS */
 
