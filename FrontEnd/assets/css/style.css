@@ -285,7 +285,7 @@
 	}
 
 
-	/* MENU DES TRAVAUX */
+	/* MENU DES TRAVAUX ET MODAL*/
 
 		#menuTravaux
 		{
@@ -295,7 +295,7 @@
 			height: 38px;
 		}
 
-		#menuTravaux button
+		#menuTravaux button, #modal button
 		{
 			font-family: 'Syne';
 			font-size: 16px;
@@ -309,7 +309,7 @@
 			background-color: var(--main-bg-color);
 		}
 
-		#menuTravaux button:hover
+		#menuTravaux button:hover, #modal button:hover
 		{
 			opacity: 0.8 !important;
 			border: 1px solid var(--main-orange) !important;
