@@ -329,6 +329,12 @@ if(window.localStorage.getItem("token"))
         boutonModifier.style.color = "initial";
     });
 
+    //ÉCOUTE ÉVÈNEMENT CLIC BOUTON
+    boutonModifier.addEventListener("click", () => 
+    {
+        afficherModal();
+    });
+
     //MODIFICATION DU STYLE DU LIEN LOGIN
     lienConnexion.innerText = "";
     lienConnexion.innerText = "logout";
