@@ -128,8 +128,14 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcxMjA3NDM1MywiZXh
 || Ajout du bandeau noir en mode édition sur ```index.html```|
 || Ajout de la div contenant le titre de la gallerie "Mes projets" et du bouton modifier|
 |||
+|08/04/2024| Création du fichier ```modal.js```|
 |||
+|09/04/2024| Ajout de la logique de création du modal|
+|| Ajout de la logique de suppression d'une réalisation|
 |||
+|10/04/2024||
+|||
+
 
 ### 
 ###
