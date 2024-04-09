@@ -14,7 +14,7 @@
 	<link rel="stylesheet" href="./assets/css/style.css">
 	<link rel="shortcut icon" href="https://openclassrooms.com/fav-icon.png?v=3" type="image/x-icon">
 	<script src="./scripts/index.js" defer></script>
-	<script src="./scripts/modal.js" defer></script>
+	<!--<script src="./scripts/modal.js" defer></script>-->
 </head>
 <body>
 	<div id="main-container">
@@ -23,7 +23,7 @@
 			<nav>
 				<ul>
 					<li><a href="index.html">projets</a></li>
-					<li>contact</li>
+					<li><a href="#">contact</a></li>
 					<li><a href="login.html" id="lienConnexion">login</a></li>
 					<li><img src="./assets/icons/instagram.png" alt="Instagram" id="instagram"></li>
 				</ul>
@@ -45,9 +45,22 @@
 			</section>
 
 			<section id="portfolio">
+
+				<div id="modal">
+					<div id="modalContainer">
+						<i class="fa-solid fa-xmark" id="fermetureModal"></i>
+						<h3>Galerie photo</h3>
+						<div id="gallerieModale">
+
+						</div>
+						<button id="ajoutPhoto">Ajouter une photo</button>
+					</div>
+				</div>
+
 				<h2>Mes projets</h2>
 				
-				<div class="gallery"></div>
+				<div id="gallery"></div>
+
 			</section>
 			
 			<section id="contact">
