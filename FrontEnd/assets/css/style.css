@@ -7,9 +7,15 @@
         --main-bg-color: #FFFEF8;
 		--main-orange: #B1663C;
         --main-green: #1D6154;
+		--full-white: #FFFFFF;
     }
 
 /* FIN CHARTE GRAPHIQUE */
+
+	*
+	{
+		box-sizing: border-box;
+	}
 
 
 	body
@@ -153,18 +159,12 @@
 		height: 22px;
 	}
 
-	nav li 
+	nav ul li 
 	{
-		padding: 0 10px;
 		font-size: 16px;
 		font-weight: 400;
+		margin-left: 40px;
 		height: 19px;
-		margin-left: 25px;
-	}
-
-	nav li:hover
-	{
-		cursor: pointer;
 	}
 
 	nav ul li:first-child	
@@ -177,9 +177,10 @@
 		height: 22px;
 	}
 
-	li:hover 
+	nav ul li a:hover 
 	{
-		color: var(--main-orange);
+		font-weight: 600;
+		cursor: pointer;
 	}
 
 	/* RESET DU STYLE AUTO DU NAVIGATEUR */
@@ -276,6 +277,7 @@
 		flex-direction: column;
 		justify-content: center;
 		margin: 150px auto 50px;
+		position: relative;		/* Pour permettre la position absolute à la modale */
 	}
 
 	#portfolio h2
@@ -285,7 +287,7 @@
 	}
 
 
-	/* MENU DES TRAVAUX ET MODAL*/
+	/* MENU DES TRAVAUX*/
 
 		#menuTravaux
 		{
@@ -295,7 +297,7 @@
 			height: 38px;
 		}
 
-		#menuTravaux button, #modal button
+		#menuTravaux button, #ajoutPhoto
 		{
 			font-family: 'Syne';
 			font-size: 16px;
@@ -309,12 +311,13 @@
 			background-color: var(--main-bg-color);
 		}
 
-		#menuTravaux button:hover, #modal button:hover
+		#menuTravaux button:hover, #ajoutPhoto:hover
 		{
 			opacity: 0.8 !important;
 			border: 1px solid var(--main-orange) !important;
 			background-color: var(--main-orange) !important;
-			color: #FFFFFF !important;
+			color: var(--full-white) !important;
+			cursor: pointer;
 		}
 
 		#tous
@@ -324,17 +327,17 @@
 
 		.selected
 		{
-			color: #FFFFFF !important;
+			color: var(--full-white) !important;
 			background-color: var(--main-green) !important;
 		}
 
-	/* FIN MENU DES TRAVAUX */
+	/* FIN MENU DES TRAVAUX*/
 
 
 
 	/* GALLERIE */
 
-		.gallery
+		#gallery
 		{
 			width: 100%;
 			display: grid;
@@ -344,19 +347,19 @@
 			justify-items: center;
 		}
 
-		.gallery figure
+		#gallery figure
 		{
 			width: 304px;
 			height: 430px;
 		}
 
-		.gallery img
+		#gallery img
 		{
 			width: 100%;
 			height: 407px;
 		}
 
-		.gallery figcaption
+		#gallery figcaption
 		{
 			color: #3D3D3D;
 			font-size: 13px;
@@ -365,12 +368,143 @@
 		}
 
 		/* POUR LES MESSAGES D'ERREUR */
-		.gallery strong
+		#gallery strong
 		{
 			grid-column-start: 2;
 		}
 
 	/* FIN GALLERIE */
+
+
+	/* MODALE */
+
+		#modal
+		{
+			display: none;
+			width: 630px;
+			height: 688px;
+			background-color: var(--full-white);
+			border-radius: 10px;
+			position: absolute;
+			top: 0;
+			left: 165px;	/* 960px pour portfolio - 630px = 330 / 2 = 165px */
+			z-index: 1; /* Profondeur pour placer l'élement au dessus */
+		}
+
+		#modalContainer
+		{
+			width: 100%;
+			height: 100%;
+			padding: 20px 20px 50px 20px;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-around;
+			align-items: center;
+		}
+
+		#modal h3
+		{
+			line-height: 30px;
+			font-size: 26px;
+			font-weight: 400;
+		}
+
+		#modal button
+		{
+			width: 237px;
+			height: 36px;
+			margin-left: 0;
+			background-color: var(--main-green);
+			color: var(--full-white);
+		}
+
+		/* ICONE DE FERMETURE*/
+		#fermetureModal
+		{
+			display: inline;
+			text-align: center;
+			width: 24px;
+			height: 24px;
+			align-self: end;
+		}
+		
+		#fermetureModal::before
+		{
+			display: inline-block;
+			width: 12px;
+			height: 12px;
+		}
+
+		#fermetureModal:hover
+		{
+			cursor: pointer;
+		}
+
+		#gallerieModale
+		{
+			border-bottom: 1px solid #B3B3B3;	
+			display: flex;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			max-width: 420px;
+			padding: 40px 0;
+		}
+
+		.workContainer
+		{
+			position: relative;
+			width: 76.86px;
+			height: 102.57px;
+			margin-bottom: 20px;
+		}
+
+		.workContainer:hover
+		{
+			opacity: 0.8;
+		}
+
+		.workContainer img
+		{
+			position: absolute;
+			top: 0;
+			left: 0;
+			max-width: 76.86px;
+			height: 102.57px;
+		}
+
+		.workContainer i
+		{
+			color: var(--full-white);
+			position: absolute;
+			top: 5px;
+			right: 5px;
+			z-index: 1;
+			background-color: #000000;
+			border-radius: 2px;
+			width: 17px;
+			height: 18px;
+			text-align: center;
+		}
+
+		.workContainer i:hover
+		{
+			color: #ff0000;
+			background-color: var(--full-white);
+		}
+
+		.workContainer i::before
+		{
+			font-size: 11px;
+			display: inline;
+			vertical-align: bottom;
+		}
+
+		#ajoutPhoto
+		{
+			margin-top: 40px;
+		}
+
+	/* FIN MODALE */
 
 /* FIN PORTFOLIO */
 
@@ -435,9 +569,6 @@
 	}
 
 /* FIN CONTACT */
-
-
-
 
 
 /* FOOTER */
