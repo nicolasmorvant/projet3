@@ -133,7 +133,7 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcxMjA3NDM1MywiZXh
 || Ajout de la logique de suppression d'une réalisation|
 |||
 |10/04/2024| Ajout du formulaire de la modale|
-|||
+|| Ajout des fonctions ```enregistrerPhoto(formdata)```, ```verifierTitre(titre)``` et ```verifierCategorie(categorie)```|
 
 
 ### 
