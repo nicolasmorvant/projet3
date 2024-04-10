@@ -421,6 +421,381 @@
     }
 
 
+    /**
+    ** FONCTION QUI AFFICHE LE FORMULAIRE DE LA MODALE
+    * 
+    * @param aucun
+    * @returns {div} formulaire
+    */
+    async function afficherFormulaireModale()
+    {
+        //RÉTRECISSEMENT DE LA FENÊTRE MODALE
+        modale.style.height = "670px";
+
+        //CRÉATION DE LA FLÈCHE
+        let iconeFleche = document.createElement("i");
+        iconeFleche.classList.add("fa-solid", "fa-arrow-left-long");
+        iconeFleche.setAttribute("id", "retour");
+
+        //CRÉATION D'UN CONTENEUR POUR LES ICONES DE LA MODALE
+        let headerModale = document.createElement("div");
+        headerModale.setAttribute("id", "headerModale");
+
+        //AJOUT DE LA FLÈCHE AU HEADER DE LA MODALE
+        headerModale.appendChild(iconeFleche);
+
+        //AJOUT DE L'ICONE DE FERMETURE
+        headerModale.appendChild(iconeFermetureModale);
+
+        //INSERTION DU HEADER DE LA MODALE
+        modaleContainer.insertBefore(headerModale,titreModaleContainer);    
+        
+        //RÉCUPÉRATION DE L'ÉLÉMENT
+        let iconeRetour = document.querySelector("#retour");
+
+        //RÉINITIALISATION DU TITRE
+        titreModaleContainer.innerText = "";
+
+        //AJOUT DU NOUVEAU TITRE
+        titreModaleContainer.innerText = "Ajout photo";
+
+        //SUPPRESSION DU CONTENU DE LA GALLERIE PHOTOS
+        gallerieModale.innerHTML = "";
+        
+        //SUPPRESSION DE LA BORDER DE GALLERIE MODALE
+        gallerieModale.style.border = "0";
+        gallerieModale.padding = "40px 0 20px 0 !important";
+
+        //CRÉATION DU FORMULAIRE
+        let formulaireRealisation = document.createElement("form");
+        formulaireRealisation.setAttribute("id", "formulaireRealisation");
+
+        /* PHOTO */
+
+            //CRÉATION DE LA DIV PHOTO
+            let divPhoto = document.createElement("div");
+            divPhoto.setAttribute("id", "divPhoto");
+
+            //CRÉATION DU CONTAINER DE L'ICONE DE LA DIV PHOTO
+            let containerIconeDivPhoto = document.createElement("div");
+            containerIconeDivPhoto.setAttribute("id","containerIconeDivPhoto");
+
+            //CRÉATION DE L'ICONE DE LA DIV PHOTO
+            let iconeDivPhoto = document.createElement("i");
+            iconeDivPhoto.classList.add("fa-regular","fa-image");
+
+            //CRÉATION DU BOUTON DE LA DIV PHOTO
+            let boutonDivPhoto = document.createElement("button");
+            boutonDivPhoto.setAttribute("id", "boutonDivPhoto");
+            boutonDivPhoto.innerText = "+ Ajouter photo";
+            
+
+            /* INPUT FILE DE LA PHOTO */
+
+                //CRÉATION
+                let inputDivPhoto = document.createElement("input");
+                inputDivPhoto.setAttribute("id", "inputDivPhoto");
+                inputDivPhoto.setAttribute("name", "image");
+
+                //TYPE
+                inputDivPhoto.setAttribute("type", "file");
+
+                //FORMATS ACCEPTÉS
+                inputDivPhoto.setAttribute("accept", "jpg,png");
+
+                //TAILLE MAXIMALE DE L'UPLOAD
+                inputDivPhoto.setAttribute("maxlength", "4M");
+
+                //REQUIRED
+                inputDivPhoto.setAttribute("required", true);
+
+            /* FIN INPUT FILE DE LA PHOTO */
+
+            //CRÉATION DU PARAGRAPHE SOUS LE BOUTON
+            let paragrapheDivPhoto = document.createElement("p");
+            paragrapheDivPhoto.innerText = "jpg, png : 4mo max";
+
+            //AJOUT DE L'INPUT DANS LE BOUTON
+            boutonDivPhoto.appendChild(inputDivPhoto);
+
+            //AJOUT DES ÉLÉMENTS À LA DIV PHOTO
+            divPhoto.appendChild(iconeDivPhoto);
+            divPhoto.appendChild(boutonDivPhoto);
+            divPhoto.appendChild(paragrapheDivPhoto);
+
+        /* FIN PHOTO */
+
+        
+        /* TITRE */
+
+            //CRÉATION DE LA DIV TITRE
+            let divTitre = document.createElement("div");
+            divTitre.setAttribute("id","divTitre");
+
+            //CRÉATION DE L'INPUT TITRE
+            let inputTitre = document.createElement("input");
+            inputTitre.setAttribute("id", "inputTitre")
+            inputTitre.setAttribute("type", "text");
+            inputTitre.setAttribute("name","titre");
+
+            //REQUIRED
+            inputTitre.setAttribute("required", true);
+
+            //CRÉATION DU LABEL TITRE
+            let labelTitre = document.createElement("label");
+            labelTitre.setAttribute("for","inputTitre");
+            labelTitre.innerText = "Titre";
+
+            //AJOUT DES ÉLÉMENTS À LA DIV
+            divTitre.appendChild(labelTitre);
+            divTitre.appendChild(inputTitre);
+
+        /* FIN TITRE */
+
+
+        /* CATÉGORIE */
+
+            //CRÉATION DE LA DIV CATÉGORIE
+            let divCategorie = document.createElement("div");
+            divCategorie.setAttribute("id", "divCategorie");
+
+            //CRÉATION DU SELECT CATÉGORIE
+            let selectCategorie = document.createElement("select");
+            selectCategorie.setAttribute("id", "selectCategorie");
+            selectCategorie.setAttribute("name", "categorie");
+
+            //REQUIRED
+            selectCategorie.setAttribute("required", true);
+
+            //CRÉATION DU LABEL CATÉGORIE
+            let labelCategorie = document.createElement("label");
+            labelCategorie.setAttribute("for","selectCategorie");
+            labelCategorie.innerText = "Catégorie";
+
+            //AJOUT D'UNE OPTION VIDE
+            let optionVide = document.createElement("option");
+            optionVide.setAttribute("value", '');
+            selectCategorie.appendChild(optionVide);
+
+            //RÉCUPÉRATION DES CATÉGORIES
+            let categoriesSelect = await recupererToutesLesCategories();
+
+            //ON BOUCLE SUR LES CATÉGORIES
+            categoriesSelect.forEach( categorieSelect => 
+            {
+                //CRÉATION D'UNE OPTION PAR CATÉGORIE
+                let optionCategorie = document.createElement("option");
+                
+                //AJOUT DE LA VALEUR DE L'OPTION
+                optionCategorie.setAttribute("value", categorieSelect.id);
+
+                //AJOUT DU TEXTE DE L'OPTION
+                optionCategorie.innerText = categorieSelect.name;
+
+                //AJOUT DE L'OPTION AU SELECT
+                selectCategorie.appendChild(optionCategorie);
+
+            });
+
+            //AJOUT DES ÉLÉMENTS À LA DIV CATÉGORIE
+            divCategorie.appendChild(labelCategorie);
+            divCategorie.appendChild(selectCategorie);
+
+        /* FIN CATÉGORIE */
+
+        //AJOUT DES ÉLÉMENTS AU FORMULAIRE
+        formulaireRealisation.appendChild(divPhoto);
+        formulaireRealisation.appendChild(divTitre);
+        formulaireRealisation.appendChild(divCategorie);
+        formulaireRealisation.appendChild(ajoutPhoto);
+
+        //AJOUT DU FORMULAIRE À LA GALLERIE MODALE
+        gallerieModale.appendChild(formulaireRealisation);
+
+        //MODIFICATION DU BOUTON
+        ajoutPhoto.innerText = "";
+        ajoutPhoto.innerText = "Valider";
+        ajoutPhoto.style.backgroundColor = "#A7A7A7";
+        ajoutPhoto.style.border = "1px solid #A7A7A7";
+        ajoutPhoto.style.marginTop = "40px";
+
+        //CHANGEMENT DU TYPE EN SUBMIT
+        ajoutPhoto.setAttribute("type", "submit");
+
+        //MODIFICATION DU PADDING DE MODALE CONTAINER
+        modaleContainer.style.padding ="20px 20px 10px 20px";
+
+        //ÉCOUTE ÉVÈNEMENT CHANGE INPUT AJOUT PHOTO
+        inputDivPhoto.addEventListener("change", (e) =>
+        {
+            //RÉCUPÉRATION DE L'UPLOAD
+            const upload = e.target.files[0];
+
+            //VÉRIFICATION SI L'UTILISATEUR A BIEN CHOISI UN FICHIER
+            if(upload)
+            {
+                //CRÉATION D'UN OBJET URL POUR RÉCUPÉRER LE LIEN DE L'IMAGE
+                const uploadUrl = URL.createObjectURL(upload);
+
+                console.log(uploadUrl);
+
+                //CRÉATION DE LA DIV DE L'IMAGE
+                let divImage = document.createElement("div");
+                divImage.style.width = "129px";
+                divImage.style.height = "169px";
+
+                //CRÉATION DE L'IMAGE
+                let image = document.createElement("img");
+                image.src = uploadUrl;
+                image.alt = "image ajoutée par l'utilisateur";
+
+                //AJOUT DU STYLE DE L'IMAGE
+                image.style.width = "100%";
+                image.style.height = "100%";
+                image.style.objectFit = "cover";
+
+                //SUPPRESSION DU CONTENU DE LA DIV PHOTO
+                divPhoto.innerHTML = "";
+
+                //SUPPRESSION DU PADDING
+                divPhoto.style.padding = "0";
+
+                //AJOUT DE L'IMAGE À LA DIV IMAGE
+                divImage.appendChild(image);
+
+                //AJOUT DE LA DIV IMAGE À LA DIV PHOTO
+                divPhoto.appendChild(divImage);
+            }
+
+        });
+
+        //ÉCOUTE ÉVÈNEMENT CLIC ENVOI DU FORMULAIRE
+        ajoutPhoto.addEventListener("click", (e) =>
+        {
+            e.preventDefault();
+
+            //CRÉATION D'UN OBJET FORMDATA
+            const formData = new FormData(formulaireRealisation);
+
+            formulaireRealisation.append(formulaireRealisation.image);
+            formulaireRealisation.append(formulaireRealisation.titre);
+            formulaireRealisation.append(formulaireRealisation.categorie);
+
+            
+            //RÉCUPÉRATION DES VALEURS DES CHAMPS DE FORMULAIRE
+            let valTitre = inputTitre.value;
+            let valCategorie = selectCategorie.value;
+
+            //VÉRIFICATION DES VALEURS DES CHAMPS DE FORMULAIRE
+            if(verifierTitre(valTitre) && verifierCategorie(valCategorie))
+            {
+                //ENVOI DE L'OBJET FORMDATA À LA FONCTION D'ENREGISTREMENT
+                enregistrerPhoto(formData);  
+            }          
+        });
+        
+        //ÉCOUTE ÉVÈNEMENT CLIC RETOUR VERS LA GALLERIE MODALE
+        iconeRetour.addEventListener("click", () => 
+        {
+            //RÉCUPÉRATION DE L'ICONE DE FERMETURE DE LA MODALE
+            modaleContainer.insertBefore(headerModale,iconeFermetureModale);
+
+            //SUPPRESSION DE HEADER MODALE
+            modaleContainer.removeChild(headerModale);
+
+            //SUPPRESSION DU CONTENU DE LA GALLERIE PHOTOS
+            gallerieModale.innerHTML = "";
+
+            //RECHARGEMENT DE LA BIBLIOTHÈQUE MODALE
+            afficherTravauxModale();
+        });
+    } 
+
+
+    /**
+    ** FONCTION QUI VÉRIFIE LA VALEUR DU CHAMP DE FORMULAIRE TITRE
+    * 
+    * @param {string} titre
+    * @returns {boolean}
+    */
+    function verifierTitre(titre)
+    {
+        //BOOLÉEN DE VÉRIFICATION
+        let verification = false;
+
+        //CRÉATION D'UNE EXPRESSION RÉGULIÈRE LIÉE AU TITRE
+        let regexTitre = /^[a-zA-Z&\- ]+$/;
+
+        //SUPPRESSION DES ESPACES EN DÉBUT ET FIN DE CHAINE
+        let titreTrim = titre.trim();
+
+        if(titreTrim !== "" && regexTitre.test(titreTrim))
+        {
+            verification = true;   
+        }
+
+        return verification;
+    }
+
+
+    /**
+    ** FONCTION QUI VÉRIFIE LA VALEUR DU CHAMP DE FORMULAIRE CATÉGORIE
+    * 
+    * @param {string} categorie
+    * @returns {boolean}
+    */
+    function verifierCategorie(categorie)
+    {
+        //BOOLÉEN DE VÉRIFICATION
+        let verification = false;
+
+        //CRÉATION D'UNE EXPRESSION RÉGULIÈRE ASSOCIÉE À LA CATÉGORIE
+        let regexCategorie = /^[0-9]+$/;
+
+        //SUPPRESSION DES ESPACES EN DÉBUT ET FIN DE CHAINE
+        let categorieTrim = categorie.trim();
+
+        if(categorieTrim !== "" && regexCategorie.test(categorieTrim))
+        {
+            verification = true;
+        }
+
+        return verification;
+    }
+
+
+    /**
+    ** FONCTION QUI ENREGISTRER UNE RÉALISATION DANS LA BASE DE DONNÉES
+    * 
+    * @param {FormData} données de formulaire
+    * @returns {void}
+    */
+    async function enregistrerPhoto(donneesFormulaire)
+    {
+        //RÉCUPÉRATION DU TOKEN
+        let token = window.localStorage.getItem("token");
+
+        try
+        {
+            const response = await fetch(urlApiWorks, 
+            {
+                method: "POST",
+                headers: 
+                {
+                    "Content-Type": "multipart/form-data",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: donneesFormulaire
+            });
+
+            const ajout = await response.json();
+            console.log(ajout);
+        }
+        catch(error)
+        {
+            console.log("Impossible d'ajouter la réalisation");
+        }
+    }
 
 
     /**
@@ -599,210 +974,7 @@ if(window.localStorage.getItem("token"))
                 e.preventDefault();
 
                 afficherFormulaireModale();
-                
-                async function afficherFormulaireModale()
-                {
-                    //RÉTRECISSEMENT DE LA FENÊTRE MODALE
-                    modale.style.height = "670px";
-
-                    //CRÉATION DE LA FLÈCHE
-                    let iconeFleche = document.createElement("i");
-                    iconeFleche.classList.add("fa-solid", "fa-arrow-left-long");
-                    iconeFleche.setAttribute("id", "retour");
-
-                    //CRÉATION D'UN CONTENEUR POUR LES ICONES DE LA MODALE
-                    let headerModale = document.createElement("div");
-                    headerModale.setAttribute("id", "headerModale");
-
-                    //AJOUT DE LA FLÈCHE AU HEADER DE LA MODALE
-                    headerModale.appendChild(iconeFleche);
-
-                    //AJOUT DE L'ICONE DE FERMETURE
-                    headerModale.appendChild(iconeFermetureModale);
-
-                    //INSERTION DU HEADER DE LA MODALE
-                    modaleContainer.insertBefore(headerModale,titreModaleContainer);    
-                    
-                    //RÉCUPÉRATION DE L'ÉLÉMENT
-                    let iconeRetour = document.querySelector("#retour");
-
-                    //RÉINITIALISATION DU TITRE
-                    titreModaleContainer.innerText = "";
-
-                    //AJOUT DU NOUVEAU TITRE
-                    titreModaleContainer.innerText = "Ajout photo";
-
-                    //SUPPRESSION DU CONTENU DE LA GALLERIE PHOTOS
-                    gallerieModale.innerHTML = "";
-                    
-                    //SUPPRESSION DE LA BORDER DE GALLERIE MODALE
-                    gallerieModale.style.border = "0";
-                    gallerieModale.padding = "40px 0 20px 0 !important";
-
-                    //CRÉATION DU FORMULAIRE
-                    let formulaireRealisation = document.createElement("form");
-                    formulaireRealisation.setAttribute("id", "formulaireRealisation");
-
-                    /* PHOTO */
-
-                        //CRÉATION DE LA DIV PHOTO
-                        let divPhoto = document.createElement("div");
-                        divPhoto.setAttribute("id", "divPhoto");
-
-                        //CRÉATION DU CONTAINER DE L'ICONE DE LA DIV PHOTO
-                        let containerIconeDivPhoto = document.createElement("div");
-                        containerIconeDivPhoto.setAttribute("id","containerIconeDivPhoto");
-
-                        //CRÉATION DE L'ICONE DE LA DIV PHOTO
-                        let iconeDivPhoto = document.createElement("i");
-                        iconeDivPhoto.classList.add("fa-regular","fa-image");
-
-                        //CRÉATION DU BOUTON DE LA DIV PHOTO
-                        let boutonDivPhoto = document.createElement("button");
-                        boutonDivPhoto.setAttribute("id", "boutonDivPhoto");
-                        boutonDivPhoto.innerText = "+ Ajouter photo";
-                        
-
-                        /* INPUT FILE DE LA PHOTO */
-
-                            //CRÉATION
-                            let inputDivPhoto = document.createElement("input");
-                            inputDivPhoto.setAttribute("id", "inputDivPhoto");
-
-                            //TYPE
-                            inputDivPhoto.setAttribute("type", "file");
-
-                            //FORMATS ACCEPTÉS
-                            inputDivPhoto.setAttribute("accept", "jpg,png");
-
-                            //TAILLE MAXIMALE DE L'UPLOAD
-                            inputDivPhoto.setAttribute("maxlength", "4M");
-
-                        /* FIN INPUT FILE DE LA PHOTO */
-
-                        //CRÉATION DU PARAGRAPHE SOUS LE BOUTON
-                        let paragrapheDivPhoto = document.createElement("p");
-                        paragrapheDivPhoto.innerText = "jpg, png : 4mo max";
-
-                        //AJOUT DE L'INPUT DANS LE BOUTON
-                        boutonDivPhoto.appendChild(inputDivPhoto);
-
-                        //AJOUT DES ÉLÉMENTS À LA DIV PHOTO
-                        divPhoto.appendChild(iconeDivPhoto);
-                        divPhoto.appendChild(boutonDivPhoto);
-                        divPhoto.appendChild(paragrapheDivPhoto);
-
-                    /* FIN PHOTO */
-
-                    
-                    /* TITRE */
-
-                        //CRÉATION DE LA DIV TITRE
-                        let divTitre = document.createElement("div");
-                        divTitre.setAttribute("id","divTitre");
-
-                        //CRÉATION DE L'INPUT TITRE
-                        let inputTitre = document.createElement("input");
-                        inputTitre.setAttribute("id", "inputTitre")
-                        inputTitre.setAttribute("type", "text");
-
-                        //CRÉATION DU LABEL TITRE
-                        let labelTitre = document.createElement("label");
-                        labelTitre.setAttribute("for","inputTitre");
-                        labelTitre.innerText = "Titre";
-
-                        //AJOUT DES ÉLÉMENTS À LA DIV
-                        divTitre.appendChild(labelTitre);
-                        divTitre.appendChild(inputTitre);
-
-                    /* FIN TITRE */
-
-
-                    /* CATÉGORIE */
-
-                        //CRÉATION DE LA DIV CATÉGORIE
-                        let divCategorie = document.createElement("div");
-                        divCategorie.setAttribute("id", "divCategorie");
-
-                        //CRÉATION DU SELECT CATÉGORIE
-                        let selectCategorie = document.createElement("select");
-                        selectCategorie.setAttribute("id", "selectCategorie");
-
-                        //CRÉATION DU LABEL CATÉGORIE
-                        let labelCategorie = document.createElement("label");
-                        labelCategorie.setAttribute("for","selectCategorie");
-                        labelCategorie.innerText = "Catégorie";
-
-                        //AJOUT D'UNE OPTION VIDE
-                        let optionVide = document.createElement("option");
-                        optionVide.setAttribute("value", '');
-                        selectCategorie.appendChild(optionVide);
-
-                        //RÉCUPÉRATION DES CATÉGORIES
-                        let categoriesSelect = await recupererToutesLesCategories();
-
-                        //ON BOUCLE SUR LES CATÉGORIES
-                        categoriesSelect.forEach( categorieSelect => 
-                        {
-                            //CRÉATION D'UNE OPTION PAR CATÉGORIE
-                            let optionCategorie = document.createElement("option");
-                            
-                            //AJOUT DE LA VALEUR DE L'OPTION
-                            optionCategorie.setAttribute("value", categorieSelect.id);
-
-                            //AJOUT DU TEXTE DE L'OPTION
-                            optionCategorie.innerText = categorieSelect.name;
-
-                            //AJOUT DE L'OPTION AU SELECT
-                            selectCategorie.appendChild(optionCategorie);
-
-                        });
-
-                        //AJOUT DES ÉLÉMENTS À LA DIV CATÉGORIE
-                        divCategorie.appendChild(labelCategorie);
-                        divCategorie.appendChild(selectCategorie);
-
-                    /* FIN CATÉGORIE */
-
-                    //AJOUT DES ÉLÉMENTS AU FORMULAIRE
-                    formulaireRealisation.appendChild(divPhoto);
-                    formulaireRealisation.appendChild(divTitre);
-                    formulaireRealisation.appendChild(divCategorie);
-                    formulaireRealisation.appendChild(ajoutPhoto);
-
-                    //AJOUT DU FORMULAIRE À LA GALLERIE MODALE
-                    gallerieModale.appendChild(formulaireRealisation);
-
-                    //MODIFICATION DU BOUTON
-                    ajoutPhoto.innerText = "";
-                    ajoutPhoto.innerText = "Valider";
-                    ajoutPhoto.style.backgroundColor = "#A7A7A7";
-                    ajoutPhoto.style.border = "1px solid #A7A7A7";
-                    ajoutPhoto.style.marginTop = "40px";
-
-                    //MODIFICATION DU PADDING DE MODALE CONTAINER
-                    modaleContainer.style.padding ="30px 20px 10px 20px";
-
-                    //ÉCOUTE ÉVÈNEMENT CLIC SÉLECTION BOUTON PHOTO
-                    boutonDivPhoto.addEventListener("click", (e) =>
-                    {
-                        
-                    });
-
-                    
-                    //ÉCOUTE ÉVÈNEMENT CLIC RETOUR VERS LA GALLERIE MODALE
-                    iconeRetour.addEventListener("click", () => 
-                    {
-                        //SUPPRESSION DU CONTENU DE LA GALLERIE PHOTOS
-                        gallerieModale.innerHTML = "";
-
-                        //RECHARGEMENT DE LA BIBLIOTHÈQUE MODALE
-                        afficherTravauxModale();
-                    });
-                } 
             });
-
-
 
             //ÉCOUTE ÉVÈNEMENT AU CLIC DE L'ICONE DE FERMETURE DU MODALE
             iconeFermetureModale.addEventListener("click", () =>
