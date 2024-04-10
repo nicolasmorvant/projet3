@@ -426,18 +426,12 @@
 		/* ICONE DE FERMETURE*/
 		#fermetureModale
 		{
-			display: inline;
-			text-align: center;
-			width: 24px;
+			font-size: 12px;
 			height: 24px;
-			align-self: end;
-		}
-		
-		#fermetureModal::before
-		{
-			display: inline-block;
-			width: 12px;
-			height: 12px;
+			width: 24px;
+			line-height: 24px;
+			align-self: flex-end;
+			text-align: center;
 		}
 
 		#fermetureModal:hover
@@ -516,6 +510,13 @@
 				width: 100%;
 				display: flex;
 				justify-content: space-between;
+				align-items: center;
+			}
+
+			#retour
+			{
+				font-size: 21px;
+				height: 21px;
 			}
 
 			#formulaireRealisation
@@ -603,10 +604,9 @@
 				height: 51px;
 			}
 
-			#inputTitre:focus
+			#inputTitre:focus, #selectCategorie:focus
 			{
 				border: 0;
-				outline: none;
 			}
 
 			#selectCategorie
