@@ -98,6 +98,7 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcxMjA3NDM1MywiZXh
 - [Documenter une API avec Swagger](https://grafikart.fr/tutoriels/swagger-openapi-php-1160) 
 - [Documentation de l'objet Set en javascript](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Set)
 - [Créer une fenêtre modale en JavaScript](https://grafikart.fr/tutoriels/modal-javascript-css-72)
+- [Utilisation des objets FormData](https://developer.mozilla.org/fr/docs/Web/API/XMLHttpRequest_API/Using_FormData_Objects)
 
 
 ### 
@@ -128,12 +129,10 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcxMjA3NDM1MywiZXh
 || Ajout du bandeau noir en mode édition sur ```index.html```|
 || Ajout de la div contenant le titre de la gallerie "Mes projets" et du bouton modifier|
 |||
-|08/04/2024| Création du fichier ```modal.js```|
-|||
-|09/04/2024| Ajout de la logique de création du modal|
+|09/04/2024| Ajout de la logique de création de la modale|
 || Ajout de la logique de suppression d'une réalisation|
 |||
-|10/04/2024||
+|10/04/2024| Ajout du formulaire de la modale|
 |||
 
 
