@@ -47,18 +47,54 @@
 
 				<div id="modale">
 					<div id="modaleContainer">
-						<i class="fa-solid fa-xmark" id="fermetureModale"></i>
-						<h3>Galerie photo</h3>
-						<div id="gallerieModale">
+						<header id="modaleHeader">
+							<div id="modaleHeaderIcones">
+								<i class="fa-solid fa-arrow-left-long" id="retourModale"></i>
+								<i class="fa-solid fa-xmark" id="fermetureModale"></i>
+							</div>
+							<h3 id="titreModale">Galerie photo</h3>
+						</header>
+						
+						<section id="galerieModale">
+							<!-- FORMULAIRE D'AJOUT -->
+								<form action="" method="" id="formulaireRealisation">
+									<!-- DIV PHOTO -->
+										<div id="divPhoto">
+											<i class="fa-regular fa-image"></i>
+											<button id="boutonDivPhoto">
+												+ Ajouter photo
+												<input type="file" name="image" id="inputDivPhoto" accept="jpg,png" maxlength="4M" required aria-required="true">
+											</button>
+											
+											<p>jpg, png : 4mo max</p>
+										</div>
+									<!-- FIN DIV PHOTO -->
 
-						</div>
-						<button id="ajoutPhoto">Ajouter une photo</button>
+									<!-- TITRE -->
+										<div id="divTitre">
+											<label for="inputTitre">Titre</label>
+											<input type="text" name="titre" id="inputTitre" pattern="[a-zA-Z&\- ']+" required aria-required="true">
+										</div>
+									<!-- FIN TITRE -->
+									
+									<div id="divCategorie">
+										<label for="selectCategorie">Catégorie</label>
+										<select name="categorie" id="selectCategorie" required aria-required="true"></select>
+									</div>
+									<button id="validerPhoto" type="submit">Valider</button>
+								</form>
+							<!-- FIN FORMULAIRE D'AJOUT -->
+						</section>
+		
+						<footer id="modaleFooter">
+							<button id="ajoutPhoto">Ajouter une photo</button>
+						</footer>
 					</div>
 				</div>
 				
 				<h2>Mes projets</h2>
 				
-				<div id="gallery"></div>
+				<div id="galery"></div>
 
 			</section>
 			
