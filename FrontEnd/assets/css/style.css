@@ -8,6 +8,7 @@
 		--main-orange: #B1663C;
         --main-green: #1D6154;
 		--full-white: #FFFFFF;
+		--full-black: #000000;
     }
 
 /* FIN CHARTE GRAPHIQUE */
@@ -94,23 +95,52 @@
 	}
 	
 	/** end reset css**/
+
 	body 
 	{
 		max-width: 1440px;			
-		margin:auto;
-		font-family: 'Work Sans' ;
+		margin: auto;
+		font-family: 'Work Sans';
 		font-size: 14px;
 	}
 
-	/* AJOUT D'UN MAIN CONTAINER */
-	#main-container
-	{
-		max-width: 1140px;
-		display: block;
-		margin: 0 auto;
-	}
+
+	/* BANDEAU NOIR AUTHENTIFIÉ */
+
+		#bandeauNoir
+		{
+			background-color: var(--full-black);
+			color: var(--full-white);
+			height: 59px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-weight: 400;
+			font-size: 16px;
+		}
+
+		#iconeBandeauNoir
+		{
+			margin-right: 10px;
+		}
+
+	/* BANDEAU NOIR AUTHENTIFIÉ */
+
+
+
+	/* AJOUT MAIN CONTAINER */
+
+		#main-container
+		{
+			max-width: 1140px;
+			display: block;
+			margin: 0 auto;
+		}
+
+	/* FIN AJOUT MAIN CONTAINER */
 	
-	header 
+
+	#main-container > header 
 	{
 		display: flex;
 		justify-content: space-between;
@@ -168,8 +198,9 @@
 	{
 		font-size: 16px;
 		font-weight: 400;
-		margin-left: 40px;
+		margin-left: 30px;
 		height: 19px;
+		width: 60px;
 	}
 
 	nav ul li:first-child	
@@ -302,7 +333,7 @@
 			height: 38px;
 		}
 
-		#menuTravaux button, #ajoutPhoto
+		#menuTravaux button, #ajoutPhoto, #validerPhoto
 		{
 			font-family: 'Syne';
 			font-size: 16px;
@@ -340,9 +371,9 @@
 
 
 
-	/* GALLERIE */
+	/* GALERIE */
 
-		#gallery
+		#galery
 		{
 			width: 100%;
 			display: grid;
@@ -352,19 +383,19 @@
 			justify-items: center;
 		}
 
-		#gallery figure
+		#galery figure
 		{
 			width: 304px;
 			height: 430px;
 		}
 
-		#gallery img
+		#galery img
 		{
 			width: 100%;
 			height: 407px;
 		}
 
-		#gallery figcaption
+		#galery figcaption
 		{
 			color: #3D3D3D;
 			font-size: 13px;
@@ -373,12 +404,53 @@
 		}
 
 		/* POUR LES MESSAGES D'ERREUR */
-		#gallery strong
+		#galery strong
 		{
 			grid-column-start: 2;
 		}
 
-	/* FIN GALLERIE */
+	/* FIN GALERIE */
+
+
+	/* BOUTON MODIFIER */
+
+		/*DIV*/
+		#divBoutonModifier
+		{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 36px;
+			margin-bottom: 50px
+		}
+
+		/*BOUTON*/
+		#boutonModifier
+		{
+			width: 84px;
+			height: 18px;
+			background-color: transparent;
+			border: 0;
+			margin-left: 20px;
+			display: flex;
+			align-items: flex-end;
+		}
+
+		/*ICONE*/
+		#iconeBoutonModifier
+		{
+			margin-right: 10px;
+			width: 16px;
+			height: 16px;
+		}
+
+		/*SPAN*/
+		#spanBoutonModifier
+		{
+			width: 58px;
+		}
+
+	/* FIN BOUTON MODIFIER */
 
 
 	/* MODALE */
@@ -400,18 +472,59 @@
 		{
 			width: 100%;
 			height: 100%;
-			padding: 20px 20px 50px 20px;
+			padding: 20px 20px 0px;
 			display: flex;
 			flex-direction: column;
-			justify-content: space-around;
 			align-items: center;
 		}
 
-		#modale h3
+		#modaleHeader, #modaleFooter
+		{
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+
+		#modaleHeaderIcones
+		{
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+		}
+
+		/* ICONE RETOUR */
+
+			#retourModale
+			{
+				visibility: hidden;
+			}
+
+		/* FIN ICONE RETOUR */
+
+		/* ICONE DE FERMETURE */
+			#fermetureModale
+			{
+				font-size: 14px;
+				height: 24px;
+				width: 24px;
+				line-height: 24px;
+				align-self: flex-end;
+				text-align: center;
+			}
+
+			#fermetureModal:hover
+			{
+				cursor: pointer;
+			}
+		/* FIN ICONE DE FERMETURE */
+
+		#titreModale
 		{
 			line-height: 30px;
 			font-size: 26px;
 			font-weight: 400;
+			margin-top: 20px;
 		}
 
 		#modale button
@@ -419,33 +532,19 @@
 			width: 237px;
 			height: 36px;
 			margin-left: 0;
-			background-color: var(--main-green);
 			color: var(--full-white);
 		}
 
-		/* ICONE DE FERMETURE*/
-		#fermetureModale
-		{
-			font-size: 12px;
-			height: 24px;
-			width: 24px;
-			line-height: 24px;
-			align-self: flex-end;
-			text-align: center;
-		}
-
-		#fermetureModal:hover
-		{
-			cursor: pointer;
-		}
-
-		#gallerieModale
+		#galerieModale
 		{
 			border-bottom: 1px solid #B3B3B3;	
 			display: flex;
 			justify-content: space-between;
 			flex-wrap: wrap;
 			max-width: 420px;
+			margin-top: 50px;
+			margin-bottom: 0;
+			padding-bottom: 40px;
 		}
 
 		.workContainer
@@ -500,12 +599,12 @@
 		#ajoutPhoto
 		{
 			margin-top: 40px;
+			background-color: var(--main-green);
 		}
-
 
 		/* MODALE PARTIE 2 / AJOUT PHOTO */
 
-			#headerModale
+			#modaleHeader
 			{
 				width: 100%;
 				display: flex;
@@ -513,17 +612,17 @@
 				align-items: center;
 			}
 
-			#retour
+			#retourModale
 			{
-				font-size: 21px;
+				font-size: 19px;
 				height: 21px;
 			}
 
 			#formulaireRealisation
 			{
-				display: flex;
+				display: none;
 				flex-direction: column;
-				align-items: center;
+				align-items : center;
 			}
 
 			#divPhoto
@@ -585,6 +684,19 @@
 				font-weight: 400;
 			}
 
+			#divImage
+			{
+				width: 129px;
+                height: 169px;
+			}
+			
+			#imageAjoutee
+			{
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+			}
+
 			#divTitre, #divCategorie
 			{
 				display: flex;
@@ -606,7 +718,8 @@
 
 			#inputTitre:focus, #selectCategorie:focus
 			{
-				border: 0;
+				
+				outline: 0;
 			}
 
 			#selectCategorie
@@ -633,6 +746,13 @@
 			{
 				padding-bottom: 50px;
 				border-bottom: 1px solid #B3B3B3;
+			}
+
+			#validerPhoto
+			{
+				background-color: #A7A7A7;
+				border: 1px solid #A7A7A7;
+				margin-top: 40px;
 			}
 
 		/* FIN MODALE PARTIE 2 / AJOUT PHOTO */
