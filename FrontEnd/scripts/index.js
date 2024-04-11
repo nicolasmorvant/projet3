@@ -11,7 +11,7 @@
 
 /* RÉCUPÉRATION DES ÉLÉMENTS DU DOM */
 
-    //HEADER
+    //MAIN CONTAINER
     let mainContainer = document.querySelector("#main-container");
 
     //LIEN CONNEXION
@@ -24,7 +24,7 @@
     let titrePortfolio = sectionPortfolio.querySelector("h2");
 
     //DIV CONTENANT LES TRAVAUX
-    let gallerie = document.querySelector("#gallery");
+    let galerie = document.querySelector("#galery");
 
     //MODALE
     let modale = document.querySelector("#modale");
@@ -32,17 +32,41 @@
     //MODALE CONTAINER
     let modaleContainer = document.querySelector("#modaleContainer");
 
+    //MODALE HEADER
+    let modaleHeader = document.querySelector("#modaleHeader");
+
+    //FOOTER HEADER
+    let modaleFooter = document.querySelector("#modaleFooter");
+
     //MODALE CONTAINER TITRE
-    let titreModaleContainer = document.querySelector("#modaleContainer h3");
+    let titreModale = document.querySelector("#titreModale");
+
+    //BOUTON AJOUT PHOTO
+    let ajoutPhoto = document.querySelector("#ajoutPhoto");
+
+    //ICONE RETOUR MODALE
+    let iconeRetourModale = document.querySelector("#retourModale");
 
     //ICONE FERMETURE MODALE
     let iconeFermetureModale = document.querySelector("#fermetureModale");
 
-    //GALLERIE MODALE
-    let gallerieModale = document.querySelector("#gallerieModale");
+    //GALERIE MODALE
+    let galerieModale = document.querySelector("#galerieModale");
+
+    //FORMULAIRE AJOUT PHOTO
+    let formulaireRealisation = document.querySelector("#formulaireRealisation");
+
+    //INPUT FORMULAIRE AJOUT PHOTO
+    let inputDivPhoto = document.querySelector("#inputDivPhoto");
+
+    //SELECT FORMULAIRE AJOUT PHOTO
+    let selectCategorie = document.querySelector("#selectCategorie");
+
+    //BOUTON FORMULAIRE MODAL
+    let validerPhoto = document.querySelector("#validerPhoto");
 
     //TOUTES LES IMAGES
-    let images = document.querySelectorAll("img");
+    let toutesLesImages = document.querySelectorAll("img");
 
     //TOUS LES INPUT
     let tousLesInput = document.querySelectorAll("input");
@@ -54,310 +78,6 @@
 
 
 /* FONCTIONS */
-
-    /**
-    ** FONCTION QUI AFFICHE LES TRAVAUX EN FONCTION DE LA CATÉGORIE
-    * 
-    * @param {bouton} boutonChoixCategorie
-    * @returns {void} 
-    */
-    function afficherTravauxCategorie(boutonChoixCategorie)
-    {
-        //RÉCUPÉRATION DE L'ID DE LA CATÉGORIE CONCERNÉE
-        let idCategorieBouton = boutonChoixCategorie.getAttribute("category-id");
-
-        //RÉCUPÉRATION DE TOUTES LES FIGURES
-        let toutesLesFigures = gallerie.querySelectorAll("figure");
-     
-        //BOUTON TOUS
-        if(idCategorieBouton === null)
-        {
-            toutesLesFigures.forEach( (figure) => 
-            {
-                //ON AFFICHE TOUT
-                figure.style.display = "block";
-            });
-        }
-        //LES AUTRES BOUTONS
-        else
-        {
-            //ON PARCOURT TOUTES LES FIGURES 
-            toutesLesFigures.forEach( (figure) => 
-            {
-                //RÉCUPÉRATION DE L'ID CATÉGORIE DE LA FIGURE
-                let idCategorieFigure = figure.getAttribute("category-id");
-
-                //CE N'EST PAS LA MÊME CATÉGORIE
-                if(idCategorieBouton !== idCategorieFigure)
-                {
-                    figure.style.display = "none";
-                }
-                else
-                {
-                    figure.style.display = "block";
-                }                 
-            });
-        }  
-    }
-
-
-    /**
-    ** FONCTION POUR AFFICHER TOUS LES TRAVAUX DANS LA GALLERIE PRINCIPALE
-    * 
-    * @param aucun
-    * @returns {void} 
-    */
-    async function afficherTousLesTravaux()
-    {
-        //RÉINITIALISATION DE LA GALLERIE
-        gallerie.innerHTML = "";
-
-        //RÉCUPÉRATION DES DONNÉES  
-        const works = await recupererDonnees(gallerie);
-
-        //RÉCUPÉRATION DES CATÉGORIES
-        const categories = await recupererToutesLesCategories();
-
-        //CRÉATION DIV MENU TRAVAUX
-        let menuTravaux = document.createElement("div");
-
-        //AJOUT D'UN ID
-        menuTravaux.setAttribute("id", "menuTravaux");
-
-        //AJOUT DU MENU TRAVAUX AVANT LA GALLERIE
-        sectionPortfolio.insertBefore(menuTravaux,gallerie);
-
-        //BOUCLE POUR PARCOURIR TOUS LES OBJETS DE LA LISTE
-        works.forEach(work => {
-
-            //console.log(work);
-
-            //CRÉATION DES 3 ÉLÉMENTS DE LA FIGURE
-            let figure = document.createElement("figure");
-            let image = document.createElement("img");
-            let figureCaption = document.createElement("figcaption");
-
-            //SETTINGS DE L'IMAGE
-            image.src = work.imageUrl;
-            image.setAttribute("alt", work.title);
-
-            //SETTINGS DE LA CAPTION
-            figureCaption.innerText = work.title;
-
-            //AJOUT DE L'IMAGE ET DE LA CAPTION À LA FIGURE FIGURE
-            figure.appendChild(image);
-            figure.appendChild(figureCaption);
-
-            //AJOUT DE L'ID CATEGORIE A LA FIGURE
-            figure.setAttribute("category-id", work.category.id);
-
-            //AJOUT DE LA FIGURE AU CONTAINER PARENT
-            gallerie.appendChild(figure);
-        });
-
-            /* CRÉATION DES BOUTONS DU MENU CATÉGORIES */
-
-                //CRÉATION DU BOUTON TOUS À INTÉGRER AU MENU
-                let boutonTous = document.createElement("button");
-                boutonTous.setAttribute("id", "tous");
-                boutonTous.innerText = "Tous";
-
-                //AJOUT DE LA CLASSE .selected pour le style
-                boutonTous.classList.add("selected");
-
-                //INTÉGRATION DU BOUTON TOUS
-                menuTravaux.appendChild(boutonTous);
-
-                //BOUCLE SUR LES CATÉGORIES
-                categories.forEach(categorie => 
-                {
-                    //CRÉATION DU BOUTON
-                    let boutonCategorie = document.createElement("button");
-       
-                    //MODIFICATION DU NOM DE LA CATÉGORIE POUR LA CRÉATION DE L'ID
-        
-                        // " - " et " & " doivent être remplacés par un tiret "-"
-            
-                        let regex = / & /g;     // / = début de la regex, | pour le ou,  et /g pour global
-            
-                        let nomCategorie = categorie.name.replace(regex, '-');
-            
-                        nomCategorie = nomCategorie.toLowerCase();
-        
-                    //console.log(nomCategorie);
-        
-                    //SETTINGS DU BOUTON
-                    boutonCategorie.setAttribute("id", nomCategorie);
-                    boutonCategorie.innerText = categorie.name;      
-                        
-                    //AJOUT DE L'ID DE LA CATÉGORIE
-                    boutonCategorie.setAttribute("category-id", categorie.id);
-        
-                    //AJOUT DU BOUTON
-                    menuTravaux.appendChild(boutonCategorie);
-                }); 
-
-            /* FIN CRÉATION DES BOUTONS DU MENU CATÉGORIES */
-
-
-            //ECOUTE D'ÉVÈNEMENTS DE CHOIX DE CATÉGORIE
-            let boutonsMenuTravaux = menuTravaux.querySelectorAll("button");
-
-            boutonsMenuTravaux.forEach( (bouton) => 
-            {
-                bouton.addEventListener("click", (e) => 
-                {
-                    //SUPPRESSION DE LA CLASSE .selected
-                    boutonsMenuTravaux.forEach( (bouton) => 
-                    {
-                        bouton.classList.remove("selected");
-                    });
-
-                    bouton.classList.add("selected");
-
-                    afficherTravauxCategorie(bouton);
-                });
-            });
-    }
-
-
-    /**
-    ** FONCTION POUR AFFICHER TOUS LES TRAVAUX DANS LA GALLERIE DE LA MODALE
-    * 
-    * @param aucun
-    * @returns {void} 
-    */
-    async function afficherTravauxModale()
-    {
-        //RÉINITIALISATION DE LA GALLERIE MODALE
-        gallerieModale.innerHTML = "";
-
-        //AJOUT DU STYLE POUR LA GALLERIE MODALE
-        gallerieModale.style.padding = "40px 0 50px 0";
-
-        //RÉCUPÉRATION DES TRAVAUX
-        works = await recupererDonnees(gallerieModale);
-
-        works.forEach( work => 
-        {
-            //CRÉATION DES ÉLÉMENTS DE LA GALLERIE
-            let workContainer = document.createElement("div");
-            workContainer.classList.add("workContainer");
-
-            let image = document.createElement("img");
-            image.src = work.imageUrl;
-
-            let iconeSuppression = document.createElement("i");
-            iconeSuppression.classList.add("fa-solid", "fa-trash-can");
-
-            //AJOUT DE L'IDENTIFIANT DE LA RÉALISATION POUR PERMETTRE LA SUPPRESSION
-            iconeSuppression.setAttribute("work-id", work.id);
-
-            //AJOUT DE L'IMAGE ET DE L'ICONE AU CONTAINER
-            workContainer.appendChild(image);
-            workContainer.appendChild(iconeSuppression);
-
-            //AJOUT DU CONTAINER
-            gallerieModale.appendChild(workContainer);
-        });
-
-        /* ÉCOUTE ÉVÈNEMENT SUPPRESSION */
-
-            //RÉCUPÉRATION DE TOUTES LES ICONES DE SUPPRESSION DE LA GALLERIE MODALE
-            let toutesLesIconesDelete = document.querySelectorAll(".fa-trash-can");
-
-            //console.log(toutesLesIconesDelete);
-
-            toutesLesIconesDelete.forEach( iconeDelete => 
-            {
-                iconeDelete.addEventListener("click", (e) => 
-                {
-                    e.preventDefault();
-
-                    let identifiantRealisation = iconeDelete.getAttribute("work-id");
-
-                    //console.log(typeof identifiantRealisation);
-
-                    //TRANSFORME LA CHAINE EN ENTIER
-                    identifiantRealisation = parseInt(identifiantRealisation);
-
-                    //SUPPRESSION DE LA RÉALISATION
-                    supprimerTravail(identifiantRealisation);
-                });
-            });
-
-        /* FIN ÉCOUTE ÉVÈNEMENT SUPPRESSION */
-    }
-
-
-    /**
-    ** FONCTION QUI SUPPRIME UNE RÉALISATION EN FONCTION DE SON IDENTIFIANT
-    * 
-    * @param {integer} id
-    * @returns {void} 
-    */
-    function supprimerTravail(id)
-    {
-        //ROUTE PROTÉGÉE DONC BESOIN DU TOKEN
-        let token = window.localStorage.getItem("token");
-
-        try 
-        {
-            fetch(`http://localhost:5678/api/works/${id}`, 
-            {
-                method: "DELETE",
-                headers: 
-                {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-                }
-            })
-            .then( response => 
-            {
-                if(response.ok)
-                {
-                    console.log("Réalisation supprimée");
-
-                    //RÉAFFICHAGE DES TRAVAUX DE LA GALLERIE MODALE
-                    afficherTravauxModale();
-
-                    //RÉAFFICHAGE DES TRAVAUX DE LA GALLERIE PRINCIPALE
-                    afficherTousLesTravaux();
-                }
-                else
-                {
-                    console.log("Échec de la suppression");
-                }
-            })
-        } 
-        catch(error)
-        {
-            console.error("Impossible de supprimer la réalisation : ", error);
-        }
-    }
-
-
-    /**
-    ** FONCTION DE DÉCONNEXION
-    * 
-    * @param aucun
-    * @returns {void} 
-    */
-    function deconnecterUtilisateur()
-    {
-        //SUPPRESSION DU TOKEN DU LOCAL STORAGE
-        window.localStorage.removeItem("token");
-
-        //MODIFICATION DU LIEN CONNEXION
-        lienConnexion = document.querySelector("#lienConnexion");
-            
-        lienConnexion.innerText = "";
-        lienConnexion.innerText = "login";
-    
-        //REDIRECTION VERS LA PAGE D'ACCUEIL
-        window.location.href = "index.html";
-    }
-
 
     /**
     ** FONCTION DE RÉCUPÉRATION DES TRAVAUX
@@ -422,6 +142,311 @@
 
 
     /**
+    ** FONCTION POUR AFFICHER TOUS LES TRAVAUX DANS LA GALERIE PRINCIPALE
+    * 
+    * @param aucun
+    * @returns {void} 
+    */
+    async function afficherTousLesTravaux()
+    {
+        //RÉINITIALISATION DE LA GALERIE
+        galerie.innerHTML = "";
+
+        //RÉCUPÉRATION DES DONNÉES  
+        const works = await recupererDonnees(galerie);
+
+        //RÉCUPÉRATION DES CATÉGORIES
+        const categories = await recupererToutesLesCategories();
+
+        //CRÉATION DIV MENU TRAVAUX
+        let menuTravaux = document.createElement("div");
+
+        //AJOUT D'UN ID
+        menuTravaux.setAttribute("id", "menuTravaux");
+
+        //AJOUT DU MENU TRAVAUX AVANT LA GALERIE
+        sectionPortfolio.insertBefore(menuTravaux,galerie);
+
+        //BOUCLE POUR PARCOURIR TOUS LES OBJETS DE LA LISTE
+        works.forEach(work => {
+
+            //console.log(work);
+
+            //CRÉATION DES 3 ÉLÉMENTS DE LA FIGURE
+            let figure = document.createElement("figure");
+            let image = document.createElement("img");
+            let figureCaption = document.createElement("figcaption");
+
+            //SETTINGS DE L'IMAGE
+            image.src = work.imageUrl;
+            image.setAttribute("alt", work.title);
+
+            //SETTINGS DE LA CAPTION
+            figureCaption.innerText = work.title;
+
+            //AJOUT DE L'IMAGE ET DE LA CAPTION À LA FIGURE FIGURE
+            figure.appendChild(image);
+            figure.appendChild(figureCaption);
+
+            //AJOUT DE L'ID CATEGORIE A LA FIGURE
+            figure.setAttribute("category-id", work.category.id);
+
+            //AJOUT DE LA FIGURE AU CONTAINER PARENT
+            galerie.appendChild(figure);
+        });
+
+        /* CRÉATION DES BOUTONS DU MENU CATÉGORIES */
+
+            //CRÉATION DU BOUTON TOUS À INTÉGRER AU MENU
+            let boutonTous = document.createElement("button");
+            boutonTous.setAttribute("id", "tous");
+            boutonTous.innerText = "Tous";
+
+            //AJOUT DE LA CLASSE .selected pour le style
+            boutonTous.classList.add("selected");
+
+            //INTÉGRATION DU BOUTON TOUS
+            menuTravaux.appendChild(boutonTous);
+
+            //BOUCLE SUR LES CATÉGORIES
+            categories.forEach(categorie => 
+            {
+                //CRÉATION DU BOUTON
+                let boutonCategorie = document.createElement("button");
+       
+                //MODIFICATION DU NOM DE LA CATÉGORIE POUR LA CRÉATION DE L'ID
+        
+                    // " - " et " & " doivent être remplacés par un tiret "-"
+            
+                    let regex = / & /g;     // / = début de la regex, | pour le ou,  et /g pour global
+            
+                    let nomCategorie = categorie.name.replace(regex, '-');
+            
+                    nomCategorie = nomCategorie.toLowerCase();
+        
+                    //console.log(nomCategorie);
+        
+                //SETTINGS DU BOUTON
+                boutonCategorie.setAttribute("id", nomCategorie);
+                boutonCategorie.innerText = categorie.name;      
+                        
+                //AJOUT DE L'ID DE LA CATÉGORIE
+                boutonCategorie.setAttribute("category-id", categorie.id);
+        
+                //AJOUT DU BOUTON
+                menuTravaux.appendChild(boutonCategorie);
+            }); 
+
+        /* FIN CRÉATION DES BOUTONS DU MENU CATÉGORIES */
+
+        //ECOUTE D'ÉVÈNEMENTS DE CHOIX DE CATÉGORIE
+        let boutonsMenuTravaux = menuTravaux.querySelectorAll("button");
+
+        boutonsMenuTravaux.forEach( (bouton) => 
+        {
+            bouton.addEventListener("click", (e) => 
+            {
+                //SUPPRESSION DE LA CLASSE .selected
+                boutonsMenuTravaux.forEach( (bouton) => 
+               {
+                    bouton.classList.remove("selected");
+                });
+
+                bouton.classList.add("selected");
+
+                afficherTravauxCategorie(bouton);
+            });
+        });
+    }
+
+
+    /**
+    ** FONCTION QUI AFFICHE LES TRAVAUX EN FONCTION DE LA CATÉGORIE
+    * 
+    * @param {bouton} boutonChoixCategorie
+    * @returns {void} 
+    */
+    function afficherTravauxCategorie(boutonChoixCategorie)
+    {
+        //RÉCUPÉRATION DE L'ID DE LA CATÉGORIE CONCERNÉE
+        let idCategorieBouton = boutonChoixCategorie.getAttribute("category-id");
+
+        //RÉCUPÉRATION DE TOUTES LES FIGURES
+        let toutesLesFigures = galerie.querySelectorAll("figure");
+     
+        //BOUTON TOUS
+        if(idCategorieBouton === null)
+        {
+            toutesLesFigures.forEach( (figure) => 
+            {
+                //ON AFFICHE TOUT
+                figure.style.display = "block";
+            });
+        }
+        //LES AUTRES BOUTONS
+        else
+        {
+            //ON PARCOURT TOUTES LES FIGURES 
+            toutesLesFigures.forEach( (figure) => 
+            {
+                //RÉCUPÉRATION DE L'ID CATÉGORIE DE LA FIGURE
+                let idCategorieFigure = figure.getAttribute("category-id");
+
+                //CE N'EST PAS LA MÊME CATÉGORIE
+                if(idCategorieBouton !== idCategorieFigure)
+                {
+                    figure.style.display = "none";
+                }
+                else
+                {
+                    figure.style.display = "block";
+                }                 
+            });
+        }  
+    }
+
+
+    /**
+    ** FONCTION POUR AFFICHER TOUS LES TRAVAUX DANS LA GALERIE DE LA MODALE
+    * 
+    * @param aucun
+    * @returns {void} 
+    */
+    async function afficherTravauxModale()
+    {
+        //MASQUAGE DU FORMULAIRE MODALE
+        formulaireRealisation.style.display = "none";
+
+        //SI LES TRAVAUX ONT DÉJÀ ÉTÉ RÉCUPÉRÉS DANS LA MODALE
+        if((document.querySelectorAll(".workContainer")).length > 0)
+        {
+            document.querySelectorAll(".workContainer").forEach(workContainer =>
+            {
+                workContainer.style.display = "block";
+            });
+        }
+        //PREMIÈRE OUVERTURE DE LA MODALE
+        else
+        {
+            //RÉCUPÉRATION DES TRAVAUX
+            let works = await recupererDonnees(galerieModale);
+
+            works.forEach( work => 
+            {
+                //CRÉATION DES ÉLÉMENTS DE LA GALERIE MODALE
+                let workContainer = document.createElement("div");
+                workContainer.classList.add("workContainer");
+
+                let image = document.createElement("img");
+                image.src = work.imageUrl;
+
+                let iconeSuppression = document.createElement("i");
+                iconeSuppression.classList.add("fa-solid", "fa-trash-can");
+
+                //AJOUT DE L'IDENTIFIANT DE LA RÉALISATION POUR PERMETTRE LA SUPPRESSION
+                iconeSuppression.setAttribute("work-id", work.id);
+
+                //AJOUT DE L'IMAGE ET DE L'ICONE AU CONTAINER
+                workContainer.appendChild(image);
+                workContainer.appendChild(iconeSuppression);
+
+                //AJOUT DU CONTAINER
+                galerieModale.appendChild(workContainer);
+            });
+        }
+
+        /* ÉCOUTE ÉVÈNEMENT SUPPRESSION */
+
+            //RÉCUPÉRATION DE TOUTES LES ICONES DE SUPPRESSION DE LA GALERIE MODALE
+            let toutesLesIconesDelete = document.querySelectorAll(".fa-trash-can");
+
+            toutesLesIconesDelete.forEach( iconeDelete => 
+            {
+                iconeDelete.addEventListener("click", (e) => 
+                {
+                    e.preventDefault();
+
+                    let identifiantRealisation = iconeDelete.getAttribute("work-id");
+
+                    //console.log(typeof identifiantRealisation);
+
+                    //SUPPRESSION DE LA RÉALISATION
+                    supprimerTravail(identifiantRealisation);
+                });
+            });
+
+        /* FIN ÉCOUTE ÉVÈNEMENT SUPPRESSION */
+    }
+
+
+    /**
+    ** FONCTION QUI SUPPRIME UNE RÉALISATION EN FONCTION DE SON IDENTIFIANT
+    * 
+    * @param {integer} id
+    * @returns {void} 
+    */
+    function supprimerTravail(id)
+    {
+        //ROUTE PROTÉGÉE DONC BESOIN DU TOKEN
+        let token = window.localStorage.getItem("token");
+
+        try 
+        {
+            fetch(`http://localhost:5678/api/works/${id}`, 
+            {
+                method: "DELETE",
+                headers: 
+                {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
+            })
+            .then( response => 
+            {
+                if(response.ok)
+                {
+                    console.log("Réalisation supprimée");
+
+                    //RÉAFFICHAGE DES TRAVAUX DE LA GALERIE MODALE
+                    afficherTravauxModale();
+
+                    //RÉAFFICHAGE DES TRAVAUX DE LA GALERIE PRINCIPALE
+                    afficherTousLesTravaux();
+                }
+                else
+                {
+                    console.log("Échec de la suppression");
+                }
+            })
+        } 
+        catch(error)
+        {
+            console.error("Impossible de supprimer la réalisation : ", error);
+        }
+    }
+
+
+    /**
+    ** FONCTION DE DÉCONNEXION
+    * 
+    * @param aucun
+    * @returns {void} 
+    */
+    function deconnecterUtilisateur()
+    {
+        //SUPPRESSION DU TOKEN DU LOCAL STORAGE
+        window.localStorage.removeItem("token");
+
+        //MODIFICATION DU LIEN CONNEXION
+        lienConnexion = document.querySelector("#lienConnexion");
+        lienConnexion.innerText = "login";
+    
+        //REDIRECTION VERS LA PAGE D'ACCUEIL
+        window.location.href = "index.html";
+    }
+
+
+    /**
     ** FONCTION QUI AFFICHE LE FORMULAIRE DE LA MODALE
     * 
     * @param aucun
@@ -429,201 +454,81 @@
     */
     async function afficherFormulaireModale()
     {
-        //RÉTRECISSEMENT DE LA FENÊTRE MODALE
-        modale.style.height = "670px";
+        document.querySelectorAll(".workContainer").forEach(workContainer =>
+        {
+            workContainer.style.display = "none";
+        });
 
-        //CRÉATION DE LA FLÈCHE
-        let iconeFleche = document.createElement("i");
-        iconeFleche.classList.add("fa-solid", "fa-arrow-left-long");
-        iconeFleche.setAttribute("id", "retour");
+        //AFFICHAGE DU FORMULAIRE
+        formulaireRealisation.style.display = "flex";
 
-        //CRÉATION D'UN CONTENEUR POUR LES ICONES DE LA MODALE
-        let headerModale = document.createElement("div");
-        headerModale.setAttribute("id", "headerModale");
+        /* MODIFICATION DES ÉLÉMENTS DU DOM */
 
-        //AJOUT DE LA FLÈCHE AU HEADER DE LA MODALE
-        headerModale.appendChild(iconeFleche);
+            //RÉTRECISSEMENT DE LA FENÊTRE MODALE
+            modale.style.height = "670px";
 
-        //AJOUT DE L'ICONE DE FERMETURE
-        headerModale.appendChild(iconeFermetureModale);
+            //MODIFICATION DU PADDING DE MODALE CONTAINER
+            modaleContainer.style.padding ="20px 20px 10px 20px";
 
-        //INSERTION DU HEADER DE LA MODALE
-        modaleContainer.insertBefore(headerModale,titreModaleContainer);    
+            //MODIFICATION DE LA VISIBILITÉ DE L'ICONE RETOUR
+            iconeRetourModale.style.visibility = "visible";
+
+            //AJOUT DU NOUVEAU TITRE
+            titreModale.innerText = "Ajout photo";
+
+            //DIMINUTION DU MARGIN TOP DE GALERIE MODALE
+            galerieModale.style.marginTop = "40px";
+
+            //SUPPRESSION DE LA BORDER DE GALERIE MODALE
+            galerieModale.style.border = "0";
+
+            //DISPLAY NONE DU MODAL FOOTER
+            modaleFooter.style.display = "none";
+
+        /* FIN MODIFICATION DES ÉLÉMENTS DU DOM */
+
+        //RESET DE LA DIV PHOTO
         
-        //RÉCUPÉRATION DE L'ÉLÉMENT
-        let iconeRetour = document.querySelector("#retour");
+        //RESET DU TITRE
+        inputTitre.value = "";
 
-        //RÉINITIALISATION DU TITRE
-        titreModaleContainer.innerText = "";
+        //SI AUCUNE OPTION N'A DÉJÀ ÉTÉ AJOUTÉE, CRÉATION DES OPTIONS
+        if(selectCategorie.length === 0)
+        {
+            /* AJOUT DES OPTIONS AU SELECT */
 
-        //AJOUT DU NOUVEAU TITRE
-        titreModaleContainer.innerText = "Ajout photo";
+                //AJOUT D'UNE OPTION VIDE AU SELECT
+                let optionVide = document.createElement("option");
+                optionVide.setAttribute("value", '');
+                selectCategorie.appendChild(optionVide);
 
-        //SUPPRESSION DU CONTENU DE LA GALLERIE PHOTOS
-        gallerieModale.innerHTML = "";
-        
-        //SUPPRESSION DE LA BORDER DE GALLERIE MODALE
-        gallerieModale.style.border = "0";
-        gallerieModale.padding = "40px 0 20px 0 !important";
+                //RÉCUPÉRATION DES CATÉGORIES
+                let categoriesSelect = await recupererToutesLesCategories();
 
-        //CRÉATION DU FORMULAIRE
-        let formulaireRealisation = document.createElement("form");
-        formulaireRealisation.setAttribute("id", "formulaireRealisation");
+                //ON BOUCLE SUR LES CATÉGORIES
+                categoriesSelect.forEach( categorieSelect => 
+                {
+                    //CRÉATION D'UNE OPTION PAR CATÉGORIE
+                    let optionCategorie = document.createElement("option");
+                        
+                    //AJOUT DE LA VALEUR DE L'OPTION
+                    optionCategorie.setAttribute("value", categorieSelect.id);
 
-        /* PHOTO */
+                    //AJOUT DU TEXTE DE L'OPTION
+                    optionCategorie.innerText = categorieSelect.name;
 
-            //CRÉATION DE LA DIV PHOTO
-            let divPhoto = document.createElement("div");
-            divPhoto.setAttribute("id", "divPhoto");
+                    //AJOUT DE L'OPTION AU SELECT
+                    selectCategorie.appendChild(optionCategorie);
+                });
 
-            //CRÉATION DU CONTAINER DE L'ICONE DE LA DIV PHOTO
-            let containerIconeDivPhoto = document.createElement("div");
-            containerIconeDivPhoto.setAttribute("id","containerIconeDivPhoto");
+            /* FIN AJOUT DES OPTIONS AU SELECT */
+        }
 
-            //CRÉATION DE L'ICONE DE LA DIV PHOTO
-            let iconeDivPhoto = document.createElement("i");
-            iconeDivPhoto.classList.add("fa-regular","fa-image");
+        //AFFICHAGE DU FORMULAIRE
+        formulaireRealisation.style.display = "flex";
 
-            //CRÉATION DU BOUTON DE LA DIV PHOTO
-            let boutonDivPhoto = document.createElement("button");
-            boutonDivPhoto.setAttribute("id", "boutonDivPhoto");
-            boutonDivPhoto.innerText = "+ Ajouter photo";
-            
-
-            /* INPUT FILE DE LA PHOTO */
-
-                //CRÉATION
-                let inputDivPhoto = document.createElement("input");
-                inputDivPhoto.setAttribute("id", "inputDivPhoto");
-                inputDivPhoto.setAttribute("name", "image");
-
-                //TYPE
-                inputDivPhoto.setAttribute("type", "file");
-
-                //FORMATS ACCEPTÉS
-                inputDivPhoto.setAttribute("accept", "jpg,png");
-
-                //TAILLE MAXIMALE DE L'UPLOAD
-                inputDivPhoto.setAttribute("maxlength", "4M");
-
-                //REQUIRED
-                inputDivPhoto.setAttribute("required", true);
-
-            /* FIN INPUT FILE DE LA PHOTO */
-
-            //CRÉATION DU PARAGRAPHE SOUS LE BOUTON
-            let paragrapheDivPhoto = document.createElement("p");
-            paragrapheDivPhoto.innerText = "jpg, png : 4mo max";
-
-            //AJOUT DE L'INPUT DANS LE BOUTON
-            boutonDivPhoto.appendChild(inputDivPhoto);
-
-            //AJOUT DES ÉLÉMENTS À LA DIV PHOTO
-            divPhoto.appendChild(iconeDivPhoto);
-            divPhoto.appendChild(boutonDivPhoto);
-            divPhoto.appendChild(paragrapheDivPhoto);
-
-        /* FIN PHOTO */
-
-        
-        /* TITRE */
-
-            //CRÉATION DE LA DIV TITRE
-            let divTitre = document.createElement("div");
-            divTitre.setAttribute("id","divTitre");
-
-            //CRÉATION DE L'INPUT TITRE
-            let inputTitre = document.createElement("input");
-            inputTitre.setAttribute("id", "inputTitre")
-            inputTitre.setAttribute("type", "text");
-            inputTitre.setAttribute("name","titre");
-
-            //REQUIRED
-            inputTitre.setAttribute("required", true);
-
-            //CRÉATION DU LABEL TITRE
-            let labelTitre = document.createElement("label");
-            labelTitre.setAttribute("for","inputTitre");
-            labelTitre.innerText = "Titre";
-
-            //AJOUT DES ÉLÉMENTS À LA DIV
-            divTitre.appendChild(labelTitre);
-            divTitre.appendChild(inputTitre);
-
-        /* FIN TITRE */
-
-
-        /* CATÉGORIE */
-
-            //CRÉATION DE LA DIV CATÉGORIE
-            let divCategorie = document.createElement("div");
-            divCategorie.setAttribute("id", "divCategorie");
-
-            //CRÉATION DU SELECT CATÉGORIE
-            let selectCategorie = document.createElement("select");
-            selectCategorie.setAttribute("id", "selectCategorie");
-            selectCategorie.setAttribute("name", "categorie");
-
-            //REQUIRED
-            selectCategorie.setAttribute("required", true);
-
-            //CRÉATION DU LABEL CATÉGORIE
-            let labelCategorie = document.createElement("label");
-            labelCategorie.setAttribute("for","selectCategorie");
-            labelCategorie.innerText = "Catégorie";
-
-            //AJOUT D'UNE OPTION VIDE
-            let optionVide = document.createElement("option");
-            optionVide.setAttribute("value", '');
-            selectCategorie.appendChild(optionVide);
-
-            //RÉCUPÉRATION DES CATÉGORIES
-            let categoriesSelect = await recupererToutesLesCategories();
-
-            //ON BOUCLE SUR LES CATÉGORIES
-            categoriesSelect.forEach( categorieSelect => 
-            {
-                //CRÉATION D'UNE OPTION PAR CATÉGORIE
-                let optionCategorie = document.createElement("option");
-                
-                //AJOUT DE LA VALEUR DE L'OPTION
-                optionCategorie.setAttribute("value", categorieSelect.id);
-
-                //AJOUT DU TEXTE DE L'OPTION
-                optionCategorie.innerText = categorieSelect.name;
-
-                //AJOUT DE L'OPTION AU SELECT
-                selectCategorie.appendChild(optionCategorie);
-
-            });
-
-            //AJOUT DES ÉLÉMENTS À LA DIV CATÉGORIE
-            divCategorie.appendChild(labelCategorie);
-            divCategorie.appendChild(selectCategorie);
-
-        /* FIN CATÉGORIE */
-
-        //AJOUT DES ÉLÉMENTS AU FORMULAIRE
-        formulaireRealisation.appendChild(divPhoto);
-        formulaireRealisation.appendChild(divTitre);
-        formulaireRealisation.appendChild(divCategorie);
-        formulaireRealisation.appendChild(ajoutPhoto);
-
-        //AJOUT DU FORMULAIRE À LA GALLERIE MODALE
-        gallerieModale.appendChild(formulaireRealisation);
-
-        //MODIFICATION DU BOUTON
-        ajoutPhoto.innerText = "";
-        ajoutPhoto.innerText = "Valider";
-        ajoutPhoto.style.backgroundColor = "#A7A7A7";
-        ajoutPhoto.style.border = "1px solid #A7A7A7";
-        ajoutPhoto.style.marginTop = "40px";
-
-        //CHANGEMENT DU TYPE EN SUBMIT
-        ajoutPhoto.setAttribute("type", "submit");
-
-        //MODIFICATION DU PADDING DE MODALE CONTAINER
-        modaleContainer.style.padding ="20px 20px 10px 20px";
+        //AJOUT DU FORMULAIRE À LA GALERIE MODALE
+        galerieModale.appendChild(formulaireRealisation);
 
         //ÉCOUTE ÉVÈNEMENT CHANGE INPUT AJOUT PHOTO
         inputDivPhoto.addEventListener("change", (e) =>
@@ -641,73 +546,153 @@
 
                 //CRÉATION DE LA DIV DE L'IMAGE
                 let divImage = document.createElement("div");
-                divImage.style.width = "129px";
-                divImage.style.height = "169px";
+                divImage.setAttribute("id", "divImage");
 
                 //CRÉATION DE L'IMAGE
-                let image = document.createElement("img");
-                image.src = uploadUrl;
-                image.alt = "image ajoutée par l'utilisateur";
-
-                //AJOUT DU STYLE DE L'IMAGE
-                image.style.width = "100%";
-                image.style.height = "100%";
-                image.style.objectFit = "cover";
-
-                //SUPPRESSION DU CONTENU DE LA DIV PHOTO
-                divPhoto.innerHTML = "";
+                let imageAjoutee = document.createElement("img");
+                imageAjoutee.setAttribute("id", "imageAjoutee");
+                imageAjoutee.src = uploadUrl;
+                imageAjoutee.alt = "image ajoutée par l'utilisateur";
 
                 //SUPPRESSION DU PADDING
                 divPhoto.style.padding = "0";
 
+                //ON MASQUE LES ÉLÉMENTS DE LA DIV PHOTO DÉJÀ PRÉSENTS
+                divPhoto.querySelectorAll("*").forEach(enfantDivPhoto => 
+                {
+                    enfantDivPhoto.style.display = "none";
+                });
+
                 //AJOUT DE L'IMAGE À LA DIV IMAGE
-                divImage.appendChild(image);
+                divImage.appendChild(imageAjoutee);
 
                 //AJOUT DE LA DIV IMAGE À LA DIV PHOTO
                 divPhoto.appendChild(divImage);
             }
+        });
 
+        //ÉCOUTE DES ÉVÈNEMENTS AU CHANGEMENT DE LA VALEUR D'UN CHAMP DE FORMULAIRE
+        formulaireRealisation.addEventListener("change", () => 
+        {   
+            console.log(inputDivPhoto.value);
+
+            //RÉCUPÉRATION DES VALEURS DES CHAMPS DE FORMULAIRE
+            let photo = inputDivPhoto.files[0];
+            let valTitre = inputTitre.value;
+            let valCategorie = selectCategorie.value;
+
+            console.log(photo);
+
+            if(photo && verifierTitre(valTitre) && verifierCategorie(valCategorie))
+            {
+                //ON CHANGE LE BOUTON EN VERT
+                validerPhoto.style.backgroundColor = "var(--main-green)";
+
+                //ON PASSE DISABLED ET ARIA-DISABLED À FALSE
+                validerPhoto.removeAttribute("disabled");
+                validerPhoto.removeAttribute("aria-disabled");
+            }
+            else
+            {
+                //ON RÉINITIALISE LA BACKGROUND COLOR DU BOUTON
+                validerPhoto.style.backgroundColor = "";
+
+                //ON PASSE DISABLED ET ARIA-DISABLED À TRUE
+                validerPhoto.setAttribute("disabled","true");
+                validerPhoto.setAttribute("aria-disabled", "true");
+            }
         });
 
         //ÉCOUTE ÉVÈNEMENT CLIC ENVOI DU FORMULAIRE
-        ajoutPhoto.addEventListener("click", (e) =>
+        validerPhoto.addEventListener("click", (e) =>
         {
             e.preventDefault();
+
+            //RÉCUPÉRATION DES VALEURS DES CHAMPS DE FORMULAIRE
+            let photo = inputDivPhoto.files[0];
+            let valTitre = inputTitre.value;
+            let valCategorie = selectCategorie.value;
+
+            //console.log(photo);
 
             //CRÉATION D'UN OBJET FORMDATA
             const formData = new FormData(formulaireRealisation);
 
-            formulaireRealisation.append(formulaireRealisation.image);
-            formulaireRealisation.append(formulaireRealisation.titre);
-            formulaireRealisation.append(formulaireRealisation.categorie);
+            //CRÉATION DE PAIRES CLÉ-VALEUR ET AJOUT À FORM DATA
+            formData.append("image", photo);
+            formData.append("titre", valTitre);
+            formData.append("categorie", valCategorie);
 
-            
-            //RÉCUPÉRATION DES VALEURS DES CHAMPS DE FORMULAIRE
-            let valTitre = inputTitre.value;
-            let valCategorie = selectCategorie.value;
+            //console.log(formData);
 
-            //VÉRIFICATION DES VALEURS DES CHAMPS DE FORMULAIRE
-            if(verifierTitre(valTitre) && verifierCategorie(valCategorie))
-            {
-                //ENVOI DE L'OBJET FORMDATA À LA FONCTION D'ENREGISTREMENT
-                enregistrerPhoto(formData);  
-            }          
+            //ENVOI DE L'OBJET FORMDATA À LA FONCTION D'ENREGISTREMENT
+            enregistrerPhoto(formData);          
         });
         
-        //ÉCOUTE ÉVÈNEMENT CLIC RETOUR VERS LA GALLERIE MODALE
-        iconeRetour.addEventListener("click", () => 
+        //ÉCOUTE ÉVÈNEMENT CLIC RETOUR VERS LA GALERIE MODALE
+        iconeRetourModale.addEventListener("click", (e) => 
         {
-            //RÉCUPÉRATION DE L'ICONE DE FERMETURE DE LA MODALE
-            modaleContainer.insertBefore(headerModale,iconeFermetureModale);
+            e.preventDefault();
 
-            //SUPPRESSION DE HEADER MODALE
-            modaleContainer.removeChild(headerModale);
+            /* MODIFICATION DES ÉLÉMENTS DU DOM */
 
-            //SUPPRESSION DU CONTENU DE LA GALLERIE PHOTOS
-            gallerieModale.innerHTML = "";
+                //AGRANDISSEMENT DE LA FENÊTRE MODALE
+                modale.style.height = "688px";
 
-            //RECHARGEMENT DE LA BIBLIOTHÈQUE MODALE
-            afficherTravauxModale();
+                //MODIFICATION DU PADDING DE MODALE CONTAINER
+                modaleContainer.style.padding ="20px 20px 0px;";
+
+                //MODIFICATION DE LA VISIBILITÉ DE L'ICONE RETOUR
+                iconeRetourModale.style.visibility = "hidden";
+
+                //AJOUT DU NOUVEAU TITRE
+                titreModale.innerText = "Galerie photo";
+
+                //MODIFICATION MARGIN DE GALERIE MODALE
+                galerieModale.style.marginTop = "50px";
+                galerieModale.style.marginBottom = "0";
+
+                //MODIFICAITON PADDING BOTTOM DE GALERIE MODALE
+                galerieModale.style.paddingBottom = "40px";
+
+                //AJOUT DE LA BORDER DE GALERIE MODALE
+                galerieModale.style.borderBottom = "1px solid #B3B3B3";
+
+                //DISPLAY NONE DU MODAL FOOTER
+                modaleFooter.style.display = "flex";
+
+                //PADDING DIV PHOTO
+                divPhoto.style.padding = "15px 0";
+
+            /* FIN MODIFICATION DES ÉLÉMENTS DU DOM */
+
+            //RÉINITIALISATION DES ÉLÉMENTS DE LA DIV PHOTO ET SUPPRESSION DE LA DIV AJOUT IMAGE
+            divPhoto.querySelectorAll("*").forEach(enfantDivPhoto => 
+            {
+                //AFFICHAGE DES ÉLÉMENTS PRÉCÉDEMMENT MASQUÉS
+                if(enfantDivPhoto.style.display === "none")
+                {
+                    enfantDivPhoto.style.display = "block";
+                }
+                
+                //SUPPRESSION DE LA DIV IMAGE CONTENANT LA PHOTO AJOUTÉE
+                if(enfantDivPhoto.getAttribute("id") === 'divImage')
+                {
+                    enfantDivPhoto.remove();
+                }
+            });
+
+            //SUPPRESSION DE L'IMAGE AJOUTÉE
+            inputDivPhoto.value = "";
+
+            //MASQUAGE DU FORMULAIRE
+            formulaireRealisation.style.display = "none";
+
+            //AFFICHAGE DES WORK CONTAINERS
+            document.querySelectorAll(".workContainer").forEach(workContainer =>
+            {
+                workContainer.style.display = "block";
+            });
         });
     } 
 
@@ -724,7 +709,7 @@
         let verification = false;
 
         //CRÉATION D'UNE EXPRESSION RÉGULIÈRE LIÉE AU TITRE
-        let regexTitre = /^[a-zA-Z&\- ]+$/;
+        let regexTitre = /^[a-zA-Z&\- ']+$/;
 
         //SUPPRESSION DES ESPACES EN DÉBUT ET FIN DE CHAINE
         let titreTrim = titre.trim();
@@ -801,18 +786,18 @@
     /**
     ** FONCTION QUI AFFICHE LA MODALE
     * 
-    * @param {div} modal
+    * @param {div} modale
     * @returns {void}
     */
-    function afficherModale(modal)
+    function afficherModale(modale)
     {
-        modal.style.display = "block";
-        modal.classList.add("visible");
+        modale.style.display = "block";
+        modale.classList.add("visible");
 
         //Modification de la couleur de fond du body
         document.body.style.backgroundColor = "rgba(0, 0, 0, 0.3)";
 
-        images.forEach((image) => 
+        toutesLesImages.forEach((image) => 
         {
             //SI LE PARENT LE PLUS PROCHE DE L'IMAGE N'EST PAS MODALE
             if(!(image.closest("#modale")))
@@ -823,7 +808,10 @@
 
         tousLesInput.forEach(input =>
         {
-            input.style.filter = "brightness(70%)";
+            if(!input.getAttribute("id") === "inputTitre")
+            {
+                input.style.filter = "brightness(70%)";
+            }    
         });
 
         textarea.style.filter = "brightness(70%)";
@@ -833,17 +821,77 @@
     /**
     ** FONCTION QUI CACHE LA MODALE
     * 
-    * @param {div} modal
+    * @param {div} modale
     * @returns {void}
     */
-    function cacherModale(modal)
+    function cacherModale(modale)
     {
-        modal.style.display = "none";
-        modal.classList.remove("visible");
+        modale.style.display = "none";
+        modale.classList.remove("visible");
 
+        //RESET DU BACKGROUND COLOR
         document.body.style.backgroundColor = "";
 
-        images.forEach((image) => 
+        //RESET DE LA DIV PHOTO
+        divPhoto.querySelectorAll("*").forEach(enfantDivPhoto => 
+        {
+            //AFFICHAGE DES ÉLÉMENTS PRÉCÉDEMMENT MASQUÉS
+            if(enfantDivPhoto.style.display === "none")
+            {
+                enfantDivPhoto.style.display = "block";
+            }
+                
+            //SUPPRESSION DE LA DIV IMAGE CONTENANT LA PHOTO AJOUTÉE
+            if(enfantDivPhoto.getAttribute("id") === 'divImage')
+            {
+                enfantDivPhoto.remove();
+            }
+        });
+
+        divPhoto.style.padding = "15px 0";
+
+        //RESET DU SELECT
+        selectCategorie.innerHTML = '';
+
+        //MASQUAGE DU FORMULAIRE
+        formulaireRealisation.style.display = "none";
+
+        //MASQUAGE DES WORK CONTAINERS
+        document.querySelectorAll(".workContainer").forEach(workContainer =>
+        {
+            workContainer.style.display = "none";
+        });
+    
+        /* MODIFICATION DES ÉLÉMENTS DU DOM */
+
+            //AGRANDISSEMENT DE LA FENÊTRE MODALE
+            modale.style.height = "688px";
+
+            //MODIFICATION DU PADDING DE MODALE CONTAINER
+            modaleContainer.style.padding ="20px 20px 0px;";
+
+            //MODIFICATION DE LA VISIBILITÉ DE L'ICONE RETOUR
+            iconeRetourModale.style.visibility = "hidden";
+
+            //AJOUT DU NOUVEAU TITRE
+            titreModale.innerText = "Galerie photo";
+
+            //MODIFICATION MARGIN DE GALERIE MODALE
+            galerieModale.style.marginTop = "50px";
+            galerieModale.style.marginBottom = "0";
+
+            //MODIFICAITON PADDING BOTTOM DE GALERIE MODALE
+            galerieModale.style.paddingBottom = "40px";
+
+            //AJOUT DE LA BORDER DE GALERIE MODALE
+            galerieModale.style.borderBottom = "1px solid #B3B3B3";
+
+            //DISPLAY NONE DU MODAL FOOTER
+            modaleFooter.style.display = "flex";
+
+        /* FIN MODIFICATION DES ÉLÉMENTS DU DOM */
+
+        toutesLesImages.forEach((image) => 
         {
             //SI LE PARENT LE PLUS PROCHE DE L'IMAGE N'EST PAS MODALE
             if(!(image.closest("#modale")))
@@ -870,91 +918,80 @@ afficherTousLesTravaux();
 //SI L'UTILISATEUR EST AUTHENTIFIÉ
 if(window.localStorage.getItem("token"))
 {       
-    //AJOUT DU BANDEAU NOIR MODE ÉDITION
-    let bandeau = document.createElement("div");
+    /* CRÉATION DU BANDEAU NOIR */
 
-    //AJOUT DU STYLE DU BANDEAU
-    bandeau.style.backgroundColor = "#000000";
-    bandeau.style.color = "#FFFFFF";
-    bandeau.style.height = "59px";
-    bandeau.style.display = "flex";
-    bandeau.style.justifyContent = "center";
-    bandeau.style.alignItems = "center";
-    bandeau.style.fontWeight = "400";
-    bandeau.style.fontSize = "16px";
+        //DIV
+        let bandeauNoir = document.createElement("div");
+        bandeauNoir.setAttribute("id","bandeauNoir");
 
-    //CRÉATION DES ÉLÉMENTS DU BANDEAU
-    let span = document.createElement("span");
-    span.innerText = "Mode édition";
+        //ICONE
+        let iconeBandeauNoir = document.createElement("i");
+        iconeBandeauNoir.classList.add("fa-solid", "fa-pen-to-square");
+        iconeBandeauNoir.setAttribute("id","iconeBandeauNoir");
 
-    let icone = document.createElement("i");
-    icone.classList.add("fa-solid", "fa-pen-to-square");
-    icone.style.marginRight = "10px";
+        //SPAN
+        let spanBandeauNoir = document.createElement("span");
+        spanBandeauNoir.innerText = "Mode édition";
 
-    //AJOUT DES ÉLÉMENTS DU BANDEAU
-    bandeau.append(icone,span);
+        //AJOUT DES ÉLÉMENTS DU BANDEAU
+        bandeauNoir.append(iconeBandeauNoir,spanBandeauNoir);
 
-    //AJOUT AU BODY AVANT LE HEADER
-    document.body.insertBefore(bandeau,mainContainer);
+        //AJOUT AU BODY AVANT LE MAIN CONTAINER
+        document.body.insertBefore(bandeauNoir,mainContainer);
 
-    //CRÉATION D'UNE DIV POUR LE TITRE ET LE BOUTON MODIFIER
-    let divTitreBoutonModif = document.createElement("div");
-    divTitreBoutonModif.setAttribute("id", "titreEtModif");
-    divTitreBoutonModif.style.display = "flex";
-    divTitreBoutonModif.style.justifyContent = "center";
-    divTitreBoutonModif.style.alignItems = "center";
-    divTitreBoutonModif.style.height = "36px";
-    divTitreBoutonModif.style.marginBottom = "50px";
+    /* FIN CRÉATION DU BANDEAU NOIR */    
 
-    //CRÉATION DES ÉLÉMENTS DE LA DIV
-    let boutonModifier = document.createElement("button");
-    boutonModifier.setAttribute("id", "modifier");
-    boutonModifier.style.width = "84px";   
-    boutonModifier.style.height = "18px"; 
-    boutonModifier.style.backgroundColor = "transparent";
-    boutonModifier.style.border = "none";
-    boutonModifier.style.marginLeft = "20px";
-    boutonModifier.style.display = "flex";
-    boutonModifier.style.alignItems = "end";
 
-    let iconeBoutonModifier = document.createElement("i");
-    iconeBoutonModifier.classList.add("fa-solid", "fa-pen-to-square");
-    iconeBoutonModifier.style.marginRight = "10px";
-    iconeBoutonModifier.style.width = "16px";
-    iconeBoutonModifier.style.height = "16px";
+    /* BOUTON MODIFIER */
 
-    let spanModifier = document.createElement("span");
-    spanModifier.innerText = "modifier";
-    spanModifier.style.width = "58px";
+        //DIV
+        let divBoutonModifier = document.createElement("div");
+        divBoutonModifier.setAttribute("id", "divBoutonModifier");
+
+        //BUTTON
+        let boutonModifier = document.createElement("button");
+        boutonModifier.setAttribute("id", "boutonModifier");
+
+        //ICONE
+        let iconeBoutonModifier = document.createElement("i");
+        iconeBoutonModifier.classList.add("fa-solid", "fa-pen-to-square");
+        iconeBoutonModifier.setAttribute("id", "iconeBoutonModifier");
+
+        //SPAN
+        let spanBoutonModifier = document.createElement("span");
+        spanBoutonModifier.innerText = "modifier";
+        spanBoutonModifier.setAttribute("id","spanBoutonModifier");
+
+        //AJOUT DES ÉLÉMENTS DU BOUTON
+        boutonModifier.appendChild(iconeBoutonModifier);
+        boutonModifier.appendChild(spanBoutonModifier);
+
+        //SUPPRESSION DE LA MARGE DU TITRE H2 DE PORTFOLIO
+        titrePortfolio.style.marginBottom = "0";
+
+        //AJOUT DU TITRE DU PORTFOLIO À LA DIV
+        divBoutonModifier.appendChild(titrePortfolio);
+
+        //AJOUT DU BOUTON À LA DIV
+        divBoutonModifier.appendChild(boutonModifier);
+
+        //AJOUT DE LA DIV À LA SECTION PORTFOLIO
+        sectionPortfolio.insertBefore(divBoutonModifier,galerie);
+
+        //ÉCOUTE ÉVÈNEMENT HOVER BOUTON
+        boutonModifier.addEventListener("mouseover", () => 
+        {
+            boutonModifier.style.color = "var(--main-orange)";
+        });
+
+        boutonModifier.addEventListener("mouseout", () => 
+        {
+            boutonModifier.style.color = "initial";
+        });
+
+    /* FIN BOUTON MODIFIER */
     
-    //AJOUT DES ÉLÉMENTS DU BOUTON
-    boutonModifier.appendChild(iconeBoutonModifier);
-    boutonModifier.appendChild(spanModifier);
 
-    //SUPPRESSION DE LA MARGE DU TITRE H2 DE PORTFOLIO
-    titrePortfolio.style.marginBottom = "0";
-
-    //AJOUT DU TITRE DU PORTFOLIO À LA DIV
-    divTitreBoutonModif.appendChild(titrePortfolio);
-
-    //AJOUT DU BOUTON À LA DIV
-    divTitreBoutonModif.appendChild(boutonModifier);
-
-    //AJOUT DE LA DIV À LA SECTION PORTFOLIO
-    sectionPortfolio.insertBefore(divTitreBoutonModif,gallerie);
-
-    //ÉCOUTE ÉVÈNEMENT HOVER BOUTON
-    boutonModifier.addEventListener("mouseover", () => 
-    {
-        boutonModifier.style.color = "var(--main-orange)";
-    });
-
-    boutonModifier.addEventListener("mouseout", () => 
-    {
-        boutonModifier.style.color = "initial";
-    });
-
-    
     /* MODALE */
 
         //ÉCOUTE ÉVÈNEMENT AU CLIC DU BOUTON MODIFIER
@@ -965,7 +1002,7 @@ if(window.localStorage.getItem("token"))
             //AFFICHAGE DE LA MODALE
             afficherModale(modale);
 
-            //AFFICHAGE DES TRAVAUX DANS LA LA GALLERIE DE LA MODALE
+            //AFFICHAGE DES TRAVAUX DANS LA LA GALERIE DE LA MODALE
             afficherTravauxModale();
 
             //ÉCOUTE ÉVÈNEMENT AU CLIC DU BOUTON AJOUTER UNE PHOTO
@@ -973,6 +1010,7 @@ if(window.localStorage.getItem("token"))
             {
                 e.preventDefault();
 
+                //AFFICHAGE DU FORMULAIRE DE LA MODALE
                 afficherFormulaireModale();
             });
 
@@ -1006,7 +1044,6 @@ if(window.localStorage.getItem("token"))
     /* FIN MODALE */
 
     //MODIFICATION DU STYLE DU LIEN LOGIN
-    lienConnexion.innerText = "";
     lienConnexion.innerText = "logout";
 }
 
