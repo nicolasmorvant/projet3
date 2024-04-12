@@ -13,8 +13,9 @@
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/css/style.css">
 	<link rel="shortcut icon" href="https://openclassrooms.com/fav-icon.png?v=3" type="image/x-icon">
+	<script src="./scripts/fonctions.js" defer></script>
 	<script src="./scripts/index.js" defer></script>
-</head>
+</head>	
 <body>
 	<div id="main-container">
 		<header>
@@ -57,7 +58,7 @@
 						
 						<section id="galerieModale">
 							<!-- FORMULAIRE D'AJOUT -->
-								<form action="" method="" id="formulaireRealisation">
+								<form action="" method="POST" id="formulaireRealisation" target="_self">
 									<!-- DIV PHOTO -->
 										<div id="divPhoto">
 											<i class="fa-regular fa-image"></i>
@@ -72,13 +73,13 @@
 									<!-- TITRE -->
 										<div id="divTitre">
 											<label for="inputTitre">Titre</label>
-											<input type="text" name="titre" id="inputTitre" pattern="[a-zA-Z&\- ']+" required aria-required="true">
+											<input type="text" name="title" id="inputTitre" pattern="[a-zA-Z&\- ']+" required aria-required="true">
 										</div>
 									<!-- FIN TITRE -->
 									
 									<div id="divCategorie">
 										<label for="selectCategorie">Catégorie</label>
-										<select name="categorie" id="selectCategorie" required aria-required="true"></select>
+										<select name="category" id="selectCategorie" required aria-required="true"></select>
 									</div>
 									<button id="validerPhoto" type="submit" disabled aria-disabled="true">Valider</button>
 								</form>
