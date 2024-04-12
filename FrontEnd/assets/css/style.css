@@ -9,6 +9,7 @@
         --main-green: #1D6154;
 		--full-white: #FFFFFF;
 		--full-black: #000000;
+		--main-grey: #3D3D3D;
     }
 
 /* FIN CHARTE GRAPHIQUE */
@@ -397,7 +398,7 @@
 
 		#galery figcaption
 		{
-			color: #3D3D3D;
+			color: var(--main-grey);
 			font-size: 13px;
 			font-weight: 400;
 			margin-top: 5px;
@@ -708,25 +709,33 @@
 				margin: 40px 0 15px;
 			}
 
+			#formulaireRealisation label
+			{
+				font-size: 14px;
+			}
+
 			#inputTitre, #selectCategorie
 			{
 				border: 0;
 				box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 				width: 420px;
 				height: 51px;
+				color: #444444;
+				font-size: 14px;
+				font-weight: 400;
+				padding-left: 15px;
 			}
 
 			#inputTitre:focus, #selectCategorie:focus
 			{
-				
 				outline: 0;
 			}
 
 			#selectCategorie
 			{
 				background-color: var(--full-white);
-				color: #6C6C6C;
 				padding-right: 15px;
+				border-right: 15px solid transparent
 			}
 
 			#selectCategorie option
