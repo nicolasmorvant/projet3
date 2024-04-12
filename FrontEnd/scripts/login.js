@@ -102,6 +102,9 @@
             //SUPPRESSION DU TOKEN DU LOCAL STORAGE
             window.localStorage.removeItem("token");
 
+            //SUPPRESSION DE L'USER ID DU LOCAL STORAGE
+            window.localStorage.removeItem("userId");
+            
             //MODIFICATION DU LIEN CONNEXION
             lienConnexion = document.querySelector("#lienConnexion");
                 
@@ -217,6 +220,8 @@
                     const retourConnexion = await responseConnexion.json(); 
 
                     const token = retourConnexion.token;
+
+                    const userId = retourConnexion.userId;
         
                     //SI LE TOKEN EXISTE
                     if(token)
@@ -224,7 +229,10 @@
                         //SAUVEGARDE DU TOKEN DANS LE LOCAL STORAGE
                         window.localStorage.setItem("token", token);
         
-                        console.log(token);
+                        //console.log(token);
+
+                        //SAUVEGARDE DE L'USER ID DANS LE LOCAL STORAGE
+                        window.localStorage.setItem("userId", userId);
 
                         //REDIRECTION VERS LA PAGE D'ACCUEIL
                         window.location.href = "index.html";
