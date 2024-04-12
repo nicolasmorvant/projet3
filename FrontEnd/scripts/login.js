@@ -15,11 +15,10 @@
     //AJOUT DU STYLE AU LIEN DE CONNEXION
     lienConnexion.style.fontWeight = "600";
 
-
     //SI L'UTILISATEUR EST DÉJÀ CONNECTÉ
     if(window.localStorage.getItem("token"))
     {
-        lienConnexion.innerText = "";
+        //MODIFICATION DU STYLE DU LIEN LOGIN
         lienConnexion.innerText = "logout";
 
         //ON CACHE LE FORMULAIRE DE CONNEXION
