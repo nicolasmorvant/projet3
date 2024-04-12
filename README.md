@@ -134,7 +134,11 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcxMjA3NDM1MywiZXh
 |||
 |10/04/2024| Ajout du formulaire de la modale|
 || Ajout des fonctions ```enregistrerPhoto(formdata)```, ```verifierTitre(titre)``` et ```verifierCategorie(categorie)```|
-
+|||
+|11/04/2024| Correction de la requête d'ajout de la photo|
+|||
+|12/04/2024| Création de ```fonctions.js```|
+|||
 
 ### 
 ###
