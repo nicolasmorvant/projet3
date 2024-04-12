@@ -181,13 +181,13 @@
 		color: var(--main-green);
 	}
 
-	nav
+	header nav
 	{
 		display: flex;
 		align-items: center;
 	}
 
-	nav ul 
+	header nav ul 
 	{
 		display: flex;
 		align-items: center;
@@ -195,7 +195,7 @@
 		height: 22px;
 	}
 
-	nav ul li 
+	header nav ul li 
 	{
 		font-size: 16px;
 		font-weight: 400;
@@ -204,17 +204,17 @@
 		width: 60px;
 	}
 
-	nav ul li:first-child	
+	header nav ul li:first-child	
 	{
 		margin-left: 0;
 	}
 
-	nav ul li:last-child	
+	header nav ul li:last-child	
 	{
 		height: 22px;
 	}
 
-	nav ul li a:hover 
+	header nav ul li a:hover 
 	{
 		font-weight: 600;
 		cursor: pointer;
@@ -460,7 +460,7 @@
 		{
 			display: none;
 			width: 630px;
-			height: 688px;
+			min-height: 688px;
 			background-color: var(--full-white);
 			border-radius: 10px;
 			position: absolute;
@@ -540,12 +540,14 @@
 		{
 			border-bottom: 1px solid #B3B3B3;	
 			display: flex;
-			justify-content: space-between;
+			/*justify-content: space-between;*/
 			flex-wrap: wrap;
 			max-width: 420px;
+			max-height: 420px;
 			margin-top: 50px;
 			margin-bottom: 0;
 			padding-bottom: 40px;
+			overflow: auto;
 		}
 
 		.workContainer
