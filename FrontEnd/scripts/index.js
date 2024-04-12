@@ -476,6 +476,9 @@
             //AJOUT DU NOUVEAU TITRE
             titreModale.innerText = "Ajout photo";
 
+            //AUGMENTATION DE LA HAUTEUR MAX DE LA GALERIE MODALE
+            galerieModale.style.maxHeight = "100%";
+
             //DIMINUTION DU MARGIN TOP DE GALERIE MODALE
             galerieModale.style.marginTop = "40px";
 
@@ -574,14 +577,10 @@
         //ÉCOUTE DES ÉVÈNEMENTS AU CHANGEMENT DE LA VALEUR D'UN CHAMP DE FORMULAIRE
         formulaireRealisation.addEventListener("change", () => 
         {   
-            console.log(inputDivPhoto.value);
-
             //RÉCUPÉRATION DES VALEURS DES CHAMPS DE FORMULAIRE
             let photo = inputDivPhoto.files[0];
             let valTitre = inputTitre.value;
             let valCategorie = selectCategorie.value;
-
-            console.log(photo);
 
             if(photo && verifierTitre(valTitre) && verifierCategorie(valCategorie))
             {
@@ -616,12 +615,12 @@
             //console.log(photo);
 
             //CRÉATION D'UN OBJET FORMDATA
-            const formData = new FormData(formulaireRealisation);
+            const formData = new FormData();
 
             //CRÉATION DE PAIRES CLÉ-VALEUR ET AJOUT À FORM DATA
             formData.append("image", photo);
-            formData.append("titre", valTitre);
-            formData.append("categorie", valCategorie);
+            formData.append("title", valTitre);
+            formData.append("category", valCategorie);
 
             //console.log(formData);
 
