@@ -25,14 +25,15 @@
     ** FONCTION QUI VÉRIFIE LA VALEUR DE L'ADRESSE EMAIL
     * 
     * @param {string} email
+    * @param {div} pErreur
     * @returns {boolean}
     */
-    function verifierEmail(email)
+    function verifierEmail(email, pErreur)
     {
-        if (email === "")
+        if (email.trim() === "")
         {
-            afficherErreur(`Le champ ${email} est vide.`);
-            throw new Error(`Le champ ${email} est vide.`);
+            afficherErreurFormulaire(`Le champ email est vide`, pErreur);
+            throw new Error(`Le champ email est vide`);
         }
         else
         {
@@ -42,8 +43,8 @@
             }
             else
             {
-                afficherErreur(`Le champ ${email} n'est pas valide.`);
-                throw new Error(`Le champ ${email} n'est pas valide.`);
+                afficherErreurFormulaire(`Le champ ${email} n'est pas valide`, pErreur);
+                throw new Error(`Le champ ${email} n'est pas valide`);
             }
         }
     }
@@ -52,26 +53,27 @@
     /**
     ** FONCTION QUI VÉRIFIE LA VALEUR DU MOT DE PASSE
     * 
-    * @param {string} mdp
+    * @param {string} password
+    * @param {div} pErreur
     * @returns {boolean}
     */
     //FONCTION DE VÉRIFICATION DU MOT DE PASSE
-    function verifierMotDePasse(mdp)
+    function verifierMotDePasse(password, pErreur)
     {
-        if (mdp === "")
+        if (password.trim() === "")
         {
-            afficherErreur(`Le champ ${mdp} est vide`);
-            throw new Error(`Le champ ${mdp} est vide`);
+            afficherErreurFormulaire(`Le champ mot de passe est vide`, pErreur);
+            throw new Error(`Le champ mot de passe est vide`);
         }
         else
         {
-            if(passwordRegex.test(mdp))
+            if(passwordRegex.test(password))
             {
                 return true;
             }
             else
             {
-                afficherErreur(`Mauvais mot de passe`);
+                afficherErreurFormulaire(`Mauvais mot de passe`, pErreur);
                 throw new Error(`Mauvais mot de passe`);
             }
         }
@@ -82,25 +84,31 @@
     ** FONCTION QUI VÉRIFIE LA VALEUR DU CHAMP DE FORMULAIRE TITRE
     * 
     * @param {string} titre
+    * @param {div} pErreur
     * @returns {boolean}
     */
-    function verifierTitre(titre)
+    function verifierTitre(titre, pErreur)
     {
-        //BOOLÉEN DE VÉRIFICATION
-        let verification = false;
-
         //CRÉATION D'UNE EXPRESSION RÉGULIÈRE LIÉE AU TITRE
         let regexTitre = /^[a-zA-Z&\- ']+$/;
 
-        //SUPPRESSION DES ESPACES EN DÉBUT ET FIN DE CHAINE
-        let titreTrim = titre.trim();
-
-        if(titreTrim !== "" && regexTitre.test(titreTrim))
+        if(titre.trim() === "")
         {
-            verification = true;   
+            afficherErreur("Le titre ne peut pas être vide", pErreur);
+            throw new Error("Le titre ne peut pas être vide");
         }
-
-        return verification;
+        else
+        {
+            if(regexTitre.test(titre))
+            {
+                return true; 
+            }
+            else
+            {
+                afficherErreur(`Le titre ${titre} ne correspond pas au format demandé`, pErreur);
+                throw new Error(`Le titre ${titre} ne correspond pas au format demandé`);
+            }
+        }            
     }
 
 
@@ -108,58 +116,30 @@
     ** FONCTION QUI VÉRIFIE LA VALEUR DU CHAMP DE FORMULAIRE CATÉGORIE
     * 
     * @param {string} categorie
+    * @param {div} pErreur
     * @returns {boolean}
     */
-    function verifierCategorie(categorie)
+    function verifierCategorie(categorie, pErreur)
     {
-        //BOOLÉEN DE VÉRIFICATION
-        let verification = false;
-
         //CRÉATION D'UNE EXPRESSION RÉGULIÈRE ASSOCIÉE À LA CATÉGORIE
         let regexCategorie = /^[0-9]+$/;
 
-        //SUPPRESSION DES ESPACES EN DÉBUT ET FIN DE CHAINE
-        let categorieTrim = categorie.trim();
-
-        if(categorieTrim !== "" && regexCategorie.test(categorieTrim))
+        if(categorie.trim() === "")
         {
-            verification = true;
-        }
-
-        return verification;
-    }
-
-
-    /**
-    ** FONCTION QUI VÉRIFIE LES VALEURS DU FORMULAIRE PHOTO
-    * 
-    * @param {string} categorie
-    * @returns {boolean}
-    */
-    function validerFormulairePhoto()
-    {
-        //RÉCUPÉRATION DES VALEURS DES CHAMPS DE FORMULAIRE
-        let photo = inputDivPhoto.files[0];
-        let valTitre = inputTitre.value;
-        let valCategorie = selectCategorie.value;
-
-        if(photo && verifierTitre(valTitre) && verifierCategorie(valCategorie))
-        {
-            //ON CHANGE LE BOUTON EN VERT
-            validerPhoto.style.backgroundColor = "var(--main-green)";
-
-            //ON PASSE DISABLED ET ARIA-DISABLED À FALSE
-            validerPhoto.removeAttribute("disabled");
-            validerPhoto.removeAttribute("aria-disabled");
+            afficherErreur(`La categorie ${categorie} ne peut pas être vide`, pErreur);
+            throw new Error(`La categorie ${categorie} ne peut pas être vide`);
         }
         else
-        {   
-            //ON RÉINITIALISE LA BACKGROUND COLOR DU BOUTON
-            validerPhoto.style.backgroundColor = "";
-
-            //ON PASSE DISABLED ET ARIA-DISABLED À TRUE
-            validerPhoto.setAttribute("disabled","true");
-            validerPhoto.setAttribute("aria-disabled", "true");
+        {
+            if(regexCategorie.test(categorie))
+            {
+                return true;
+            }
+            else
+            {
+                afficherErreur(`La categorie ${categorie} ne correspond pas au format demandé`, pErreur);
+                throw new Error(`La categorie ${categorie} ne correspond pas au format demandé`);
+            }
         }
     }
 
@@ -168,38 +148,64 @@
 
 
 
+/* ERREURS */
 
-/**
-** FONCTION QUI INSÈRE UN MESSAGE D'ERREUR DANS LE MAIN DE LA PAGE LOGIN.HTML
-* 
-* @param {string} msgErreur
-* @returns {void}
-*/
-function afficherErreur(msgErreur)
-{
-    let blocErreur = document.querySelector("#blocErreur");
-
-    if(!blocErreur)
+    /**
+    ** FONCTION QUI INSÈRE LE MESSAGE D'ERREUR DANS LE BLOC ERREUR
+    * 
+    * @param {string} msgErreur
+    * @returns {void}
+    */
+    function afficherErreurConnexion(msgErreur)
     {
-        blocErreur = document.createElement("p");
-        blocErreur.setAttribute("id", "blocErreur");
-        blocErreur.innerText = msgErreur;
-        blocErreur.style.width = "50%";
-        blocErreur.style.textAlign = "center";
-        blocErreur.style.backgroundColor = '#B1663C';
-        blocErreur.style.fontSize = "22px";
-        blocErreur.style.fontWeight = "bold";
-        blocErreur.style.color = "#FFFFFF";
-        blocErreur.style.padding = "20px";
-        blocErreur.style.margin = "0 auto";
-        blocErreur.style.border = "1px solid black";
+        let blocErreur = document.querySelector("#blocErreur");
 
-        //INSERTION DU BLOC ERREUR AVANT LA SECTION CONNEXION
-        main.insertBefore(blocErreur,connexion);
+        //getComputedStyle renvoie un objet de toutes les propriétés css de l'élément passé en paramètre
+
+        if(getComputedStyle(blocErreur).display === "none")
+        {
+            blocErreur.style.display = "block";
+
+            blocErreur.innerText = msgErreur;
+        }
+         
+        blocErreur.innerText = msgErreur;
+    }        
+
+
+    /**
+    ** FONCTION QUI INSÈRE LE MESSAGE D'ERREUR DANS LA DIV ERREUR DE L'INPUT
+    * 
+    * @param {string} msgErreur
+    * @param {div} pErreur
+    * @returns {void}
+    */
+    function afficherErreurFormulaire(msgErreur,pErreur)
+    {
+        if(pErreur.style.display === "none")
+        {
+            pErreur.style.display = "block";
+
+            pErreur.innerText = msgErreur;
+        }
+            
+        pErreur.innerText = msgErreur;
+    } 
+
+
+    /**
+     ** FONCTION QUI CACHE LA DIV ERREUR ET EFFACE SON CONTENU
+    * 
+    * @param {div} pErreur
+    * @returns {void}
+    */
+    function effacerMessageErreur(pErreur) 
+    {
+        pErreur.innerText = "";
+        pErreur.style.display = "none";
     }
 
-    blocErreur.innerText = msgErreur;
-}        
+/* FIN ERREURS */
 
 
 
@@ -264,7 +270,7 @@ function afficherErreur(msgErreur)
             const token = retourConnexion.token;
 
             const userId = retourConnexion.userId;
- 
+
             //SI LE TOKEN EXISTE
             if(token)
             {   
@@ -282,12 +288,13 @@ function afficherErreur(msgErreur)
             else
             {
                 //ON AFFICHE UN MESSAGE D'ERREUR
-                afficherErreur("Vous ne pouvez pas vous connecter")
+                
+                afficherErreurConnexion("Vous ne pouvez pas vous connecter");
             }
         }
         else
         {
-            afficherErreur(`Erreur lors de la connexion : Utilisateur inconnu`);
+            afficherErreurConnexion(`Erreur lors de la connexion : Utilisateur inconnu`);
             throw new Error("Erreur lors de la connexion");
         }
     }
@@ -490,6 +497,9 @@ function afficherErreur(msgErreur)
                     //RÉAFFICHAGE DES TRAVAUX DE LA GALERIE MODALE
                     afficherTravauxModale();
 
+                    //SUPPRESSION DU MENU TRAVAUX
+                    document.querySelector("#menuTravaux").remove();
+
                     //RÉAFFICHAGE DES TRAVAUX DE LA GALERIE PRINCIPALE
                     afficherTousLesTravaux();
                 }
@@ -552,6 +562,38 @@ function afficherErreur(msgErreur)
     */
     function effacerFormulaireAjoutPhoto()
     {
+        /* MODIFICATION DES ÉLÉMENTS DU DOM */
+
+            //AGRANDISSEMENT DE LA FENÊTRE MODALE
+            modale.style.height = "688px";
+
+            //MODIFICATION DU PADDING DE MODALE CONTAINER
+            modaleContainer.style.padding = "20px 20px 0px;";
+
+            //MODIFICATION DE LA VISIBILITÉ DE L'ICONE RETOUR
+            iconeRetourModale.style.visibility = "hidden";
+
+            //AJOUT DU NOUVEAU TITRE
+            titreModale.innerText = "Galerie photo";
+
+            //MODIFICATION MARGIN DE GALERIE MODALE
+            galerieModale.style.marginTop = "50px";
+            galerieModale.style.marginBottom = "0";
+
+            //MODIFICAITON PADDING BOTTOM DE GALERIE MODALE
+            galerieModale.style.paddingBottom = "40px";
+
+            //AJOUT DE LA BORDER DE GALERIE MODALE
+            galerieModale.style.borderBottom = "1px solid #B3B3B3";
+
+            //AJOUT DE L'OVERFLOW
+            galerieModale.style.overflow = "auto";
+
+            //DISPLAY NONE DU MODAL FOOTER
+            modaleFooter.style.display = "flex";
+
+        /* FIN MODIFICATION DES ÉLÉMENTS DU DOM */
+
         //RESET DE LA DIV PHOTO
         inputDivPhoto.value = "";
 
@@ -564,6 +606,15 @@ function afficherErreur(msgErreur)
         //SUPPRESSION DES OPTIONS DU SELECT CATÉGORIE
         selectCategorie.innerHTML = "";
 
+        //ON RÉINITIALISE LA BACKGROUND COLOR DU BOUTON
+        validerPhoto.style.backgroundColor = "";
+
+        divPhoto.style.padding = "15px 0";
+
+        //ON PASSE DISABLED ET ARIA-DISABLED À TRUE
+        validerPhoto.setAttribute("disabled","disabled");
+        validerPhoto.setAttribute("aria-disabled", "true");
+
         //SUPPRESSION DE LA DIV AJOUT IMAGE
         divPhoto.querySelectorAll("*").forEach(enfantDivPhoto => 
         {   
@@ -571,6 +622,10 @@ function afficherErreur(msgErreur)
             if(enfantDivPhoto.getAttribute("id") === 'divImage')
             {
                 enfantDivPhoto.remove();
+            }
+            else
+            {
+                enfantDivPhoto.style.display = "block";
             }
         });
 
@@ -605,8 +660,14 @@ function afficherErreur(msgErreur)
             const ajout = await response.json();
             console.log(ajout);
 
+            //SUPPRESSION DU FORMULAIRE D'AJOUT PHOTO
+            effacerFormulaireAjoutPhoto();
+
             //RÉAFFICHAGE DES TRAVAUX DE LA GALERIE MODALE
             afficherTravauxModale();
+
+            //SUPPRESSION DU MENU TRAVAUX
+            document.querySelector("#menuTravaux").remove();
 
             //RÉAFFICHAGE DES TRAVAUX DE LA GALERIE PRINCIPALE
             afficherTousLesTravaux();
@@ -797,6 +858,7 @@ function afficherErreur(msgErreur)
     */
     async function afficherTravauxModale()
     {
+        //SUPPRESSION DES WORK CONTAINERS
         supprimerWorkContainers();
 
         //RÉCUPÉRATION DES TRAVAUX
@@ -804,26 +866,26 @@ function afficherErreur(msgErreur)
 
         works.forEach( work => 
         {
-                //CRÉATION DES ÉLÉMENTS DE LA GALERIE MODALE
-                let workContainer = document.createElement("div");
-                workContainer.classList.add("workContainer");
+            //CRÉATION DES ÉLÉMENTS DE LA GALERIE MODALE
+            let workContainer = document.createElement("div");
+            workContainer.classList.add("workContainer");
 
-                let image = document.createElement("img");
-                image.src = work.imageUrl;
+            let image = document.createElement("img");
+            image.src = work.imageUrl;
 
-                let iconeSuppression = document.createElement("i");
-                iconeSuppression.classList.add("fa-solid", "fa-trash-can");
+            let iconeSuppression = document.createElement("i");
+            iconeSuppression.classList.add("fa-solid", "fa-trash-can");
 
-                //AJOUT DE L'IDENTIFIANT DE LA RÉALISATION POUR PERMETTRE LA SUPPRESSION
-                iconeSuppression.setAttribute("work-id", work.id);
+            //AJOUT DE L'IDENTIFIANT DE LA RÉALISATION POUR PERMETTRE LA SUPPRESSION
+            iconeSuppression.setAttribute("work-id", work.id);
 
-                //AJOUT DE L'IMAGE ET DE L'ICONE AU CONTAINER
-                workContainer.appendChild(image);
-                workContainer.appendChild(iconeSuppression);
+            //AJOUT DE L'IMAGE ET DE L'ICONE AU CONTAINER
+            workContainer.appendChild(image);
+            workContainer.appendChild(iconeSuppression);
 
-                //AJOUT DU CONTAINER
-                galerieModale.appendChild(workContainer);
-            });
+            //AJOUT DU CONTAINER
+            galerieModale.appendChild(workContainer);
+        });
 
         /* ÉCOUTE ÉVÈNEMENT SUPPRESSION */
 
@@ -875,8 +937,6 @@ function afficherErreur(msgErreur)
         //SUPPRESSION DES WORK CONTAINERS
         supprimerWorkContainers();
 
-        console.log(works);
-
         //AFFICHAGE DU FORMULAIRE
         formulaireRealisation.style.display = "flex";
 
@@ -903,12 +963,13 @@ function afficherErreur(msgErreur)
             //SUPPRESSION DE LA BORDER DE GALERIE MODALE
             galerieModale.style.border = "0";
 
+            //SUPPRESSION DE LOVERFLOW
+            galerieModale.style.overflow = "initial";
+
             //DISPLAY NONE DU MODAL FOOTER
             modaleFooter.style.display = "none";
 
         /* FIN MODIFICATION DES ÉLÉMENTS DU DOM */
-
-        
 
         /* AJOUT DES OPTIONS AU SELECT */
 
@@ -919,6 +980,8 @@ function afficherErreur(msgErreur)
 
             //RÉCUPÉRATION DES CATÉGORIES
             let categoriesSelect = await recupererToutesLesCategories();
+
+            console.log(categoriesSelect);
 
             //ON BOUCLE SUR LES CATÉGORIES
             categoriesSelect.forEach( categorieSelect => 
@@ -938,99 +1001,8 @@ function afficherErreur(msgErreur)
 
         /* FIN AJOUT DES OPTIONS AU SELECT */
 
-        
-
         //AJOUT DU FORMULAIRE À LA GALERIE MODALE
         galerieModale.appendChild(formulaireRealisation);
-
-        //ÉCOUTE ÉVÈNEMENT CHANGE INPUT AJOUT PHOTO
-        inputDivPhoto.addEventListener("change", (e) =>
-        {
-            //RÉCUPÉRATION DE L'UPLOAD
-            const upload = e.target.files[0];
-
-            //VÉRIFICATION SI L'UTILISATEUR A BIEN CHOISI UN FICHIER
-            if(upload)
-            {
-                creerApercuImageFormulairePhoto(upload);
-            }
-        });
-
-        //ÉCOUTE DES ÉVÈNEMENTS AU CHANGEMENT DE LA VALEUR D'UN CHAMP DE FORMULAIRE
-        formulaireRealisation.addEventListener("change", () => 
-        {   
-            validerFormulairePhoto();
-        });
-
-        //ÉCOUTE ÉVÈNEMENT CLIC ENVOI DU FORMULAIRE
-        validerPhoto.addEventListener("click", (e) =>
-        {
-            e.preventDefault();
-
-            //RÉCUPÉRATION DES VALEURS DES CHAMPS DE FORMULAIRE
-            let photo = inputDivPhoto.files[0];
-            let valTitre = inputTitre.value;
-            let valCategorie = selectCategorie.value;
-
-            //console.log(photo);
-
-            //CRÉATION D'UN OBJET FORMDATA
-            const formData = new FormData();
-
-            //CRÉATION DE PAIRES CLÉ-VALEUR ET AJOUT À FORM DATA
-            formData.append("image", photo);
-            formData.append("title", valTitre);
-            formData.append("category", valCategorie);
-
-            //console.log(formData);
-
-            //ENVOI DE L'OBJET FORMDATA À LA FONCTION D'ENREGISTREMENT
-            enregistrerPhoto(formData);          
-        });
-        
-        //ÉCOUTE ÉVÈNEMENT CLIC RETOUR VERS LA GALERIE MODALE
-        iconeRetourModale.addEventListener("click", (e) => 
-        {
-            e.preventDefault();
-
-            //RESET DU FORMULAIRE AJOUT PHOTO
-            effacerFormulaireAjoutPhoto();
-
-            /* MODIFICATION DES ÉLÉMENTS DU DOM */
-
-                //AGRANDISSEMENT DE LA FENÊTRE MODALE
-                modale.style.height = "688px";
-
-                //MODIFICATION DU PADDING DE MODALE CONTAINER
-                modaleContainer.style.padding ="20px 20px 0px;";
-
-                //MODIFICATION DE LA VISIBILITÉ DE L'ICONE RETOUR
-                iconeRetourModale.style.visibility = "hidden";
-
-                //AJOUT DU NOUVEAU TITRE
-                titreModale.innerText = "Galerie photo";
-
-                //MODIFICATION MARGIN DE GALERIE MODALE
-                galerieModale.style.marginTop = "50px";
-                galerieModale.style.marginBottom = "0";
-
-                //MODIFICAITON PADDING BOTTOM DE GALERIE MODALE
-                galerieModale.style.paddingBottom = "40px";
-
-                //AJOUT DE LA BORDER DE GALERIE MODALE
-                galerieModale.style.borderBottom = "1px solid #B3B3B3";
-
-                //DISPLAY NONE DU MODAL FOOTER
-                modaleFooter.style.display = "flex";
-
-                //PADDING DIV PHOTO
-                divPhoto.style.padding = "15px 0";
-
-            /* FIN MODIFICATION DES ÉLÉMENTS DU DOM */
-
-            //AFFICHAGE DES WORK CONTAINERS
-            afficherTravauxModale();
-        });
     } 
 
 /* FIN FONCTIONS DONNÉES */
@@ -1092,71 +1064,12 @@ function afficherErreur(msgErreur)
         //RESET DU FORMULAIRE AJOUT PHOTO
         effacerFormulaireAjoutPhoto();
 
+        //SUPPRESSION DE LA COULEUR DE FOND DU BODY
+        document.body.style.backgroundColor = "var(--main-bg-color)";
+
         //ON CACHE LA MODALE
         modale.style.display = "none";
         modale.classList.remove("visible");
-
-        //RESET DU BACKGROUND COLOR
-        document.body.style.backgroundColor = "";
-
-        //RESET DE LA DIV PHOTO
-        divPhoto.querySelectorAll("*").forEach(enfantDivPhoto => 
-        {
-            //AFFICHAGE DES ÉLÉMENTS PRÉCÉDEMMENT MASQUÉS
-            if(enfantDivPhoto.style.display === "none")
-            {
-                enfantDivPhoto.style.display = "block";
-            }
-                
-            //SUPPRESSION DE LA DIV IMAGE CONTENANT LA PHOTO AJOUTÉE
-            if(enfantDivPhoto.getAttribute("id") === 'divImage')
-            {
-                enfantDivPhoto.remove();
-            }
-        });
-
-        divPhoto.style.padding = "15px 0";
-
-        //RESET DU SELECT
-        selectCategorie.innerHTML = '';
-
-        //MASQUAGE DU FORMULAIRE
-        formulaireRealisation.style.display = "none";
-
-        //MASQUAGE DES WORK CONTAINERS
-        document.querySelectorAll(".workContainer").forEach(workContainer =>
-        {
-            workContainer.style.display = "none";
-        });
-    
-        /* MODIFICATION DES ÉLÉMENTS DU DOM */
-
-            //AGRANDISSEMENT DE LA FENÊTRE MODALE
-            modale.style.height = "688px";
-
-            //MODIFICATION DU PADDING DE MODALE CONTAINER
-            modaleContainer.style.padding ="20px 20px 0px;";
-
-            //MODIFICATION DE LA VISIBILITÉ DE L'ICONE RETOUR
-            iconeRetourModale.style.visibility = "hidden";
-
-            //AJOUT DU NOUVEAU TITRE
-            titreModale.innerText = "Galerie photo";
-
-            //MODIFICATION MARGIN DE GALERIE MODALE
-            galerieModale.style.marginTop = "50px";
-            galerieModale.style.marginBottom = "0";
-
-            //MODIFICAITON PADDING BOTTOM DE GALERIE MODALE
-            galerieModale.style.paddingBottom = "40px";
-
-            //AJOUT DE LA BORDER DE GALERIE MODALE
-            galerieModale.style.borderBottom = "1px solid #B3B3B3";
-
-            //DISPLAY NONE DU MODAL FOOTER
-            modaleFooter.style.display = "flex";
-
-        /* FIN MODIFICATION DES ÉLÉMENTS DU DOM */
 
         toutesLesImages.forEach((image) => 
         {

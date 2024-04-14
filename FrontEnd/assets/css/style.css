@@ -105,6 +105,20 @@
 		font-size: 14px;
 	}
 
+	
+	/* PARAGRAPHES ERREUR DES CHAMPS DE FORMULAIRE */
+
+		#inputEmailErreur, #inputPasswordErreur, #inputTitreErreur, #selectCategorieErreur
+		{
+			display: none;
+			width: 100%;
+			font-size: 14px;
+			color: var(--full-red);
+			margin-top: 10px;
+		}
+
+	/* FIN PARAGRAPHES ERREUR DES CHAMPS DE FORMULAIRE */
+
 
 	/* BANDEAU NOIR AUTHENTIFIÉ */
 
@@ -460,7 +474,7 @@
 		{
 			display: none;
 			width: 630px;
-			min-height: 688px;
+			height: 688px;
 			background-color: var(--full-white);
 			border-radius: 10px;
 			position: absolute;
@@ -808,6 +822,11 @@
 		font-size: 1.2em;
 		border: none;
 		box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	}
+
+	#contact input:focus, #contact textarea:focus
+	{
+		outline: none;
 	}
 
 	#contact label

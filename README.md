@@ -138,6 +138,9 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcxMjA3NDM1MywiZXh
 |11/04/2024| Correction de la requête d'ajout de la photo|
 |||
 |12/04/2024| Création de ```fonctions.js```|
+|| Réorganisation du code|
+|||
+|13/04/2024||
 |||
 
 ### 
