@@ -5,6 +5,9 @@
         --main-bg-color: #FFFEF8;
 		--main-orange: #B1663C;
         --main-green: #1D6154;
+        --full-white: #FFFFFF;
+        --full-black: #000000;
+        --full-red: #FF0000;
     }
 
 /* FIN CHARTE GRAPHIQUE */
@@ -24,6 +27,20 @@
     {
         text-align: center;
         margin-bottom: 30px;
+    }
+
+    #blocErreur
+    {
+        display: none;
+        width: 50%;
+        text-align: center;
+        background-color: var(--main-orange);
+        font-size: 15px;
+        font-weight: bold;
+        color: var(--full-white);
+        padding: 20px 0px 20px;
+        margin: 0 auto 30px;
+        border: 1px solid var(--main-orange);
     }
 
     #formulaireConnexion
@@ -68,17 +85,17 @@
         padding: 10px 30px;
         margin-bottom: 30px;
         border: 1px solid var(--main-green);
-        color: #FFFFFF;
+        color: var(--full-white);
         border-radius: 60px;
         background-color: var(--main-green);
     }
 
     #boutonConnexion:hover
     {
-        opacity: 0.8 !important;
-        border: 1px solid var(--main-orange) !important;
-        background-color: var(--main-orange) !important;
-        color: #FFFFFF !important;
+        opacity: 0.8;
+        border: 1px solid var(--main-orange);
+        background-color: var(--main-orange);
+        color: var(--full-white);
     }   
 
     #motPasseOublie
