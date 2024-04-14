@@ -30,14 +30,17 @@
 		<main>
 			<section id="connexion">
 				<h2>Log In</h2>
+				<p id="blocErreur"></p>
 				<form action="" method="" id="formulaireConnexion">
 					<div id="divEmail">
 						<label for="inputEmail">E-mail</label>
 						<input type="email" name="email" id="inputEmail" required>
+						<p id="inputEmailErreur"></p>
 					</div>
 					<div id="divPassword">
 						<label for="inputPassword">Mot de passe</label>
 						<input type="password" name="password" id="inputPassword" required>
+						<p id="inputPasswordErreur"></p>
 					</div>
 					<button type="submit" id="boutonConnexion">Se connecter</button>
 					<a href="#" id="motPasseOublie">Mot de passe oublié ?</a>
