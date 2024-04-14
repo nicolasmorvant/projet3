@@ -10,10 +10,20 @@
 
         let formulaireConnexion = document.querySelector("#formulaireConnexion");
 
+        let inputEmail = document.querySelector("#inputEmail");
+
+        let inputPassword = document.querySelector("#inputPassword");
+
+        let inputEmailErreur = document.querySelector("#inputEmailErreur");
+
+        let inputPasswordErreur = document.querySelector("#inputPasswordErreur");
+
     /* FIN RÉCUPÉRATION DES ÉLÉMENTS DU DOM */
+
 
     //AJOUT DU STYLE AU LIEN DE CONNEXION
     lienConnexion.style.fontWeight = "600";
+
 
     //SI L'UTILISATEUR EST DÉJÀ CONNECTÉ
     if(window.localStorage.getItem("token"))
@@ -64,23 +74,39 @@
     //L'UTILISATEUR N'EST PAS CONNECTÉ
     else
     {
+        //ÉCOUTE ÉVÈNEMENT PERTE FOCUS INPUTS
+        inputEmail.addEventListener("blur", () => 
+        {
+            verifierEmail(inputEmail.value, inputEmailErreur);
+        });
+
+        inputPassword.addEventListener("blur", () => 
+        {
+            verifierMotDePasse(inputPassword.value, inputPasswordErreur);
+        });
+
+        //SUPPRESSION DES MESSAGES D'ERREUR
+        inputEmail.addEventListener("input", () => 
+        {
+            effacerMessageErreur(inputEmailErreur);
+        });
+
+        inputPassword.addEventListener("input", () => 
+        {
+            effacerMessageErreur(inputPasswordErreur);
+        });
+
         /* ENVOI DU FORMULAIRE */
             formulaireConnexion.addEventListener("submit", (e) => 
             {
                 e.preventDefault();
-                
-                //RÉCUPÉRATION DES VALEURS DES CHAMPS DE FORMULAIRES
-                let email = document.querySelector("#inputEmail").value;
-                let password = document.querySelector('#inputPassword').value;
 
-                //VÉRIFICATION DE L'EMAIL
-                verifierEmail(email);
-
-                //VÉRIFICATION DU MOT DE PASSE
-                verifierMotDePasse(password);
-
-                //TENTATIVE DE CONNEXION
-                seConnecter(email,password);
+                //VÉRIFICATION DE L'EMAIL ET DU MOT DE PASSE
+                if(verifierEmail(inputEmail.value, inputEmailErreur) && verifierMotDePasse(inputPassword.value, inputPasswordErreur))
+                {
+                    //TENTATIVE DE CONNEXION
+                    seConnecter(inputEmail.value, inputPassword.value);
+                }
             });
         /* FIN ENVOI DU FORMULAIRE */
     }
