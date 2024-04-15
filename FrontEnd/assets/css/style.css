@@ -7,8 +7,11 @@
         --main-bg-color: #FFFEF8;
 		--main-orange: #B1663C;
         --main-green: #1D6154;
+
+		/* AJOUTS */
 		--full-white: #FFFFFF;
 		--full-black: #000000;
+		--full-red: #FF0000;
 		--main-grey: #3D3D3D;
     }
 
@@ -108,7 +111,7 @@
 	
 	/* PARAGRAPHES ERREUR DES CHAMPS DE FORMULAIRE */
 
-		#inputEmailErreur, #inputPasswordErreur, #inputTitreErreur, #selectCategorieErreur
+		#inputEmailErreur, #inputPasswordErreur, #inputPhotoErreur, #inputTitreErreur, #selectCategorieErreur
 		{
 			display: none;
 			width: 100%;
