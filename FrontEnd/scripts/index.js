@@ -152,54 +152,88 @@ if (window.localStorage.getItem("token"))
 
     /* FORMULAIRE ENVOI PHOTO */
 
+        let validation = false;
+
         //ÉCOUTE ÉVÈNEMENT CHANGE INPUT AJOUT PHOTO
         inputDivPhoto.addEventListener("input", (e) =>
         {
             //RÉCUPÉRATION DE L'UPLOAD
             let upload = e.target.files[0];
 
-            if(verifierPhoto(upload, inputPhotoErreur))
+            verifierPhoto(upload, inputPhotoErreur);
+
+            if(verifierPhoto(upload, inputPhotoErreur) && verifierTitre(inputTitre.value, inputTitreErreur) && verifierCategorie(selectCategorie.value, selectCategorieErreur))
             {
-                effacerMessageErreur(divPhotoErreur);
+                activerBouton(validerPhoto);
+            }
+            else
+            {
+                desactiverBouton(validerPhoto);
             }
         });
 
         //BLUR INPUT TITRE
         inputTitre.addEventListener("blur", () => 
         {
-            if(verifierTitre(inputTitre.value, inputTitreErreur))
+            verifierTitre(inputTitre.value, inputTitreErreur);
+
+            if(verifierPhoto(upload, inputPhotoErreur) && verifierTitre(inputTitre.value, inputTitreErreur) && verifierCategorie(selectCategorie.value, selectCategorieErreur))
             {
-                effacerMessageErreur(divTitreErreur);
+                activerBouton(validerPhoto);
+            }
+            else
+            {
+                desactiverBouton(validerPhoto);
             }
         });
 
         //BLUR SELECT CATEGORIE
         selectCategorie.addEventListener("blur", () => 
         {
-            if(verifierCategorie(selectCategorie.value, selectCategorieErreur))
+            verifierCategorie(selectCategorie.value, selectCategorieErreur);
+
+            if(verifierPhoto(upload, inputPhotoErreur) && verifierTitre(inputTitre.value, inputTitreErreur) && verifierCategorie(selectCategorie.value, selectCategorieErreur))
             {
-                effacerMessageErreur(divSelectErreur);
+                activerBouton(validerPhoto);
+            }
+            else
+            {
+                desactiverBouton(validerPhoto);
             }
         });
 
         //INPUT TITRE
-        inputTitre.addEventListener("change", () => 
+        inputTitre.addEventListener("input", () => 
         { 
-            if(verifierTitre(inputTitre.value, inputTitreErreur))
+            verifierTitre(inputTitre.value, inputTitreErreur);
+
+            if(verifierPhoto(upload, inputPhotoErreur) && verifierTitre(inputTitre.value, inputTitreErreur) && verifierCategorie(selectCategorie.value, selectCategorieErreur))
             {
-                effacerMessageErreur(divTitreErreur);
+                activerBouton(validerPhoto);
+            }
+            else
+            {
+                desactiverBouton(validerPhoto);
             }
         });
 
         //CHANGE SELECT
         selectCategorie.addEventListener("change", () => 
         {
-            if(verifierCategorie(selectCategorie.value, selectCategorieErreur))
+            verifierCategorie(selectCategorie.value, selectCategorieErreur);
+
+            if(verifierPhoto(upload, inputPhotoErreur) && verifierTitre(inputTitre.value, inputTitreErreur) && verifierCategorie(selectCategorie.value, selectCategorieErreur))
             {
-                effacerMessageErreur(divSelectErreur);
+                activerBouton(validerPhoto);
+            }
+            else
+            {
+                desactiverBouton(validerPhoto);
             }
         });
 
+
+        
 
         //ÉCOUTE ÉVÈNEMENT CLIC ENVOI DU FORMULAIRE
         validerPhoto.addEventListener("click", (e) =>

@@ -100,6 +100,8 @@
             //CRÉATION DE LA MINIATURE DE LA PHOTO
             creerApercuImageFormulairePhoto(fichier);
 
+            effacerMessageErreur(pErreur);
+
             return true;
         }
         else
@@ -131,6 +133,7 @@
         {
             if(regexTitre.test(titre))
             {
+                effacerMessageErreur(pErreur);
                 return true; 
             }
             else
@@ -163,6 +166,7 @@
         {
             if(regexCategorie.test(categorie))
             {
+                effacerMessageErreur(pErreur);
                 return true;
             }
             else
@@ -206,56 +210,7 @@
         bouton.setAttribute("disabled","disabled");
         bouton.setAttribute("aria-disabled", "true");
     }
-
-
-    /**
-    ** FONCTION DE VÉRIFICATION DES CHAMPS DE FORMULAIRE
-    * 
-    * @param {File} photoVal
-    * @param {HTMLElement} divPhotoErreur
-    * @param {string} titreVal
-    * @param {HTMLElement} divTitreErreur
-    * @param {string} selectVal
-    * @param {HTMLElement} divSelectErreur
-    * @param {HTMLElement} bouton
-    * @returns {void}
-    */
-    function verifierChampsEtActiverBouton(photoVal, divPhotoErreur, titreVal, divTitreErreur, selectVal, divSelectErreur, bouton) 
-    {
-
-        //VÉRIFICATION DES CHAMPS
-        let photoValide = verifierPhoto(photoVal,divPhotoErreur);
-        //console.log(photoValide);
-        let titreValide = verifierTitre(titreVal, divTitreErreur);
-        let categorieValide = verifierCategorie(selectVal, divSelectErreur);
-        
-        //EFFACEMENT DU MESSAGE D'ERREUR CORRESPONDANT SI L'UN DES CHAMPS EST VALIDE
-        if(photoValide)
-        {
-            effacerMessageErreur(divPhotoErreur);
-        }
-
-        if(titreValide)
-        {
-            effacerMessageErreur(divTitreErreur);
-        }
-        
-        if(categorieValide)
-        {
-            effacerMessageErreur(divSelectErreur);
-        }
     
-        //ACTIVATION OU DÉSACTIVATION DU BOUTON EN FONCTION DES CHAMPS DE FORMULAIRE
-        if(photoVal && titreValide && categorieValide)
-        {
-            activerBouton(bouton);
-        }
-        else
-        {
-            desactiverBouton(bouton);
-        }
-    }
-
 /* FIN FORMULAIRE */
 
 
