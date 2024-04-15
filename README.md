@@ -140,7 +140,7 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcxMjA3NDM1MywiZXh
 |12/04/2024| Création de ```fonctions.js```|
 || Réorganisation du code|
 |||
-|13/04/2024||
+|13/04/2024 au 15/04/2025| finalisation de gestion des erreurs|
 |||
 
 ### 

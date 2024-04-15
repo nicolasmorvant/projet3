@@ -48,6 +48,9 @@ let formulaireRealisation = document.querySelector("#formulaireRealisation");
 //INPUT FORMULAIRE AJOUT PHOTO
 let inputDivPhoto = document.querySelector("#inputDivPhoto");
 
+//PARAGRAPHE ERREUR INPUT PHOTO
+let inputPhotoErreur = document.querySelector("#inputPhotoErreur");
+
 //INPUT TITRE
 let inputTitre = document.querySelector("#inputTitre");
 
@@ -150,66 +153,52 @@ if (window.localStorage.getItem("token"))
     /* FORMULAIRE ENVOI PHOTO */
 
         //ÉCOUTE ÉVÈNEMENT CHANGE INPUT AJOUT PHOTO
-        inputDivPhoto.addEventListener("change", (e) =>
+        inputDivPhoto.addEventListener("input", (e) =>
         {
             //RÉCUPÉRATION DE L'UPLOAD
-            const upload = e.target.files[0];
+            let upload = e.target.files[0];
 
-            //VÉRIFICATION SI L'UTILISATEUR A BIEN CHOISI UN FICHIER
-            if(upload)
+            if(verifierPhoto(upload, inputPhotoErreur))
             {
-                creerApercuImageFormulairePhoto(upload);
+                effacerMessageErreur(divPhotoErreur);
             }
         });
 
         //BLUR INPUT TITRE
         inputTitre.addEventListener("blur", () => 
         {
-            verifierTitre(inputTitre.value, inputTitreErreur);
+            if(verifierTitre(inputTitre.value, inputTitreErreur))
+            {
+                effacerMessageErreur(divTitreErreur);
+            }
         });
 
         //BLUR SELECT CATEGORIE
         selectCategorie.addEventListener("blur", () => 
         {
-            verifierCategorie(selectCategorie.value, selectCategorieErreur);
+            if(verifierCategorie(selectCategorie.value, selectCategorieErreur))
+            {
+                effacerMessageErreur(divSelectErreur);
+            }
         });
 
-        //SUPPRESSION DES MESSAGES D'ERREUR
-        inputTitre.addEventListener("input", () => 
-        {
-            effacerMessageErreur(inputTitreErreur);
+        //INPUT TITRE
+        inputTitre.addEventListener("change", () => 
+        { 
+            if(verifierTitre(inputTitre.value, inputTitreErreur))
+            {
+                effacerMessageErreur(divTitreErreur);
+            }
         });
 
+        //CHANGE SELECT
         selectCategorie.addEventListener("change", () => 
         {
-            effacerMessageErreur(selectCategorieErreur);
+            if(verifierCategorie(selectCategorie.value, selectCategorieErreur))
+            {
+                effacerMessageErreur(divSelectErreur);
+            }
         });
-
-
-        //ÉCOUTE CHANGEMENT FORMULAIRE POUR MODIFICATION DU BOUTON D'ENVOI
-        formulaireRealisation.addEventListener("change", () => 
-        {
-            let photo = inputDivPhoto.files[0];
-
-            if(photo && verifierTitre(inputTitre.value, inputTitreErreur) && verifierCategorie(selectCategorie.value, selectCategorieErreur))
-            {
-                //ON CHANGE LE BOUTON EN VERT
-                validerPhoto.style.backgroundColor = "var(--main-green)";
-
-                //ON PASSE DISABLED ET ARIA-DISABLED À FALSE
-                validerPhoto.removeAttribute("disabled");
-                validerPhoto.removeAttribute("aria-disabled");
-            }
-            else
-            {
-                //ON RÉINITIALISE LA BACKGROUND COLOR DU BOUTON
-                validerPhoto.style.backgroundColor = "";
-
-                //ON PASSE DISABLED ET ARIA-DISABLED À TRUE
-                validerPhoto.setAttribute("disabled","true");
-                validerPhoto.setAttribute("aria-disabled", "true");
-            }
-        })
 
 
         //ÉCOUTE ÉVÈNEMENT CLIC ENVOI DU FORMULAIRE

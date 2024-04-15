@@ -695,13 +695,18 @@
 				opacity: 0;
 			}
 
-			#divPhoto p
+			#formats
 			{
 				color: #444444;
 				width: 94px;
 				height: 12px;
 				font-size: 10px;
 				font-weight: 400;
+			}
+
+			#inputPhotoErreur
+			{
+				margin-top: 18px;
 			}
 
 			#divImage

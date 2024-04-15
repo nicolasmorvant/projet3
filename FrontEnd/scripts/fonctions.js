@@ -25,7 +25,7 @@
     ** FONCTION QUI VÉRIFIE LA VALEUR DE L'ADRESSE EMAIL
     * 
     * @param {string} email
-    * @param {div} pErreur
+    * @param {HTMLElement} pErreur
     * @returns {boolean}
     */
     function verifierEmail(email, pErreur)
@@ -54,7 +54,7 @@
     ** FONCTION QUI VÉRIFIE LA VALEUR DU MOT DE PASSE
     * 
     * @param {string} password
-    * @param {div} pErreur
+    * @param {HTMLElement} pErreur
     * @returns {boolean}
     */
     //FONCTION DE VÉRIFICATION DU MOT DE PASSE
@@ -81,10 +81,40 @@
 
 
     /**
+    ** FONCTION QUI VÉRIFIE LE FICHIER CHOISI PAR L'UTILISATEUR
+    * 
+    * @param {File} fichier (= e.target.files[0])
+    * @param {HTMLElement} pErreur
+    * @returns {boolean}
+    */
+    function verifierPhoto(fichier, pErreur)
+    {
+        //RÉCUPÉRATION DU TYPE DE FICHIER 
+        let typeFichier = fichier.type;
+
+        //console.log("Type de fichier : ", typeFichier);
+
+        //VÉRIFICATION SI L'UTILISATEUR A BIEN CHOISI UN FICHIER AUTORISÉ (PNG OU JPEG)
+        if(typeFichier === "image/png" || typeFichier === "image/jpeg")
+        {
+            //CRÉATION DE LA MINIATURE DE LA PHOTO
+            creerApercuImageFormulairePhoto(fichier);
+
+            return true;
+        }
+        else
+        {
+            afficherErreurFormulaire("La photo ne correspond pas au format demandé (jpeg ou png)", pErreur);
+            throw new Error("La photo ne correspond pas au format demandé");
+        }
+    }
+
+
+    /**
     ** FONCTION QUI VÉRIFIE LA VALEUR DU CHAMP DE FORMULAIRE TITRE
     * 
     * @param {string} titre
-    * @param {div} pErreur
+    * @param {HTMLElement} pErreur
     * @returns {boolean}
     */
     function verifierTitre(titre, pErreur)
@@ -94,7 +124,7 @@
 
         if(titre.trim() === "")
         {
-            afficherErreur("Le titre ne peut pas être vide", pErreur);
+            afficherErreurFormulaire("Le titre ne peut pas être vide", pErreur);
             throw new Error("Le titre ne peut pas être vide");
         }
         else
@@ -105,7 +135,7 @@
             }
             else
             {
-                afficherErreur(`Le titre ${titre} ne correspond pas au format demandé`, pErreur);
+                afficherErreurFormulaire(`Le titre ${titre} ne correspond pas au format demandé`, pErreur);
                 throw new Error(`Le titre ${titre} ne correspond pas au format demandé`);
             }
         }            
@@ -116,7 +146,7 @@
     ** FONCTION QUI VÉRIFIE LA VALEUR DU CHAMP DE FORMULAIRE CATÉGORIE
     * 
     * @param {string} categorie
-    * @param {div} pErreur
+    * @param {HTMLElement} pErreur
     * @returns {boolean}
     */
     function verifierCategorie(categorie, pErreur)
@@ -124,10 +154,10 @@
         //CRÉATION D'UNE EXPRESSION RÉGULIÈRE ASSOCIÉE À LA CATÉGORIE
         let regexCategorie = /^[0-9]+$/;
 
-        if(categorie.trim() === "")
+        if(categorie === "")
         {
-            afficherErreur(`La categorie ${categorie} ne peut pas être vide`, pErreur);
-            throw new Error(`La categorie ${categorie} ne peut pas être vide`);
+            afficherErreurFormulaire(`Vous devez choisir une catégorie`, pErreur);
+            throw new Error(`Vous devez choisir une catégorie`);
         }
         else
         {
@@ -137,9 +167,92 @@
             }
             else
             {
-                afficherErreur(`La categorie ${categorie} ne correspond pas au format demandé`, pErreur);
+                afficherErreurFormulaire(`La categorie ${categorie} ne correspond pas au format demandé`, pErreur);
                 throw new Error(`La categorie ${categorie} ne correspond pas au format demandé`);
             }
+        }
+    }
+
+
+    /**
+    ** FONCTION QUI ACTIVE LE BOUTON D'ENVOI DU FORMULAIRE PHOTO
+    * 
+    * @param {HTMLElement} bouton
+    * @returns {void}
+    */
+    function activerBouton(bouton)
+    {
+        //ON CHANGE LE BOUTON EN VERT
+        bouton.style.backgroundColor = "var(--main-green)";
+
+        //ON PASSE DISABLED ET ARIA-DISABLED À FALSE
+        bouton.removeAttribute("disabled");
+        bouton.removeAttribute("aria-disabled");
+    }
+
+
+    /**
+    ** FONCTION QUI DÉSACTIVE LE BOUTON D'ENVOI DU FORMULAIRE PHOTO
+    * 
+    * @param {HTMLElement} bouton
+    * @returns {void}
+    */
+    function desactiverBouton(bouton)
+    {
+        //ON RÉINITIALISE LA BACKGROUND COLOR DU BOUTON
+        bouton.style.backgroundColor = "";
+
+        //ON PASSE DISABLED ET ARIA-DISABLED À TRUE
+        bouton.setAttribute("disabled","disabled");
+        bouton.setAttribute("aria-disabled", "true");
+    }
+
+
+    /**
+    ** FONCTION DE VÉRIFICATION DES CHAMPS DE FORMULAIRE
+    * 
+    * @param {File} photoVal
+    * @param {HTMLElement} divPhotoErreur
+    * @param {string} titreVal
+    * @param {HTMLElement} divTitreErreur
+    * @param {string} selectVal
+    * @param {HTMLElement} divSelectErreur
+    * @param {HTMLElement} bouton
+    * @returns {void}
+    */
+    function verifierChampsEtActiverBouton(photoVal, divPhotoErreur, titreVal, divTitreErreur, selectVal, divSelectErreur, bouton) 
+    {
+
+        //VÉRIFICATION DES CHAMPS
+        let photoValide = verifierPhoto(photoVal,divPhotoErreur);
+        //console.log(photoValide);
+        let titreValide = verifierTitre(titreVal, divTitreErreur);
+        let categorieValide = verifierCategorie(selectVal, divSelectErreur);
+        
+        //EFFACEMENT DU MESSAGE D'ERREUR CORRESPONDANT SI L'UN DES CHAMPS EST VALIDE
+        if(photoValide)
+        {
+            effacerMessageErreur(divPhotoErreur);
+        }
+
+        if(titreValide)
+        {
+            effacerMessageErreur(divTitreErreur);
+        }
+        
+        if(categorieValide)
+        {
+            effacerMessageErreur(divSelectErreur);
+        }
+    
+        //ACTIVATION OU DÉSACTIVATION DU BOUTON EN FONCTION DES CHAMPS DE FORMULAIRE
+        if(photoVal && titreValide && categorieValide)
+        {
+            activerBouton(bouton);
+        }
+        else
+        {
+            desactiverBouton(bouton);
         }
     }
 
@@ -177,26 +290,30 @@
     ** FONCTION QUI INSÈRE LE MESSAGE D'ERREUR DANS LA DIV ERREUR DE L'INPUT
     * 
     * @param {string} msgErreur
-    * @param {div} pErreur
+    * @param {HTMLElement} pErreur
     * @returns {void}
     */
     function afficherErreurFormulaire(msgErreur,pErreur)
     {
-        if(pErreur.style.display === "none")
+        let styleParagrapheErreur = getComputedStyle(pErreur);
+
+        if(styleParagrapheErreur.display === "none")
         {
             pErreur.style.display = "block";
 
             pErreur.innerText = msgErreur;
         }
-            
-        pErreur.innerText = msgErreur;
+        else
+        {
+            pErreur.innerText = msgErreur;
+        }  
     } 
 
 
     /**
      ** FONCTION QUI CACHE LA DIV ERREUR ET EFFACE SON CONTENU
     * 
-    * @param {div} pErreur
+    * @param {HTMLElement} pErreur
     * @returns {void}
     */
     function effacerMessageErreur(pErreur) 
@@ -567,6 +684,9 @@
             //AGRANDISSEMENT DE LA FENÊTRE MODALE
             modale.style.height = "688px";
 
+            //RESET DE L'OVERFLOW DE LA MODALE
+            modale.style.overflow = "initial";
+
             //MODIFICATION DU PADDING DE MODALE CONTAINER
             modaleContainer.style.padding = "20px 20px 0px;";
 
@@ -606,14 +726,16 @@
         //SUPPRESSION DES OPTIONS DU SELECT CATÉGORIE
         selectCategorie.innerHTML = "";
 
-        //ON RÉINITIALISE LA BACKGROUND COLOR DU BOUTON
-        validerPhoto.style.backgroundColor = "";
+        //DÉSACTIVATION DU BOUTON D'ENVOI
+        desactiverBouton(validerPhoto);
 
+        //PADDING DIV PHOTO
         divPhoto.style.padding = "15px 0";
 
-        //ON PASSE DISABLED ET ARIA-DISABLED À TRUE
-        validerPhoto.setAttribute("disabled","disabled");
-        validerPhoto.setAttribute("aria-disabled", "true");
+        //EFFACEMENT DES MESSAGES D'ERREUR
+        effacerMessageErreur(inputPhotoErreur);
+        effacerMessageErreur(inputTitreErreur);
+        effacerMessageErreur(selectCategorieErreur);
 
         //SUPPRESSION DE LA DIV AJOUT IMAGE
         divPhoto.querySelectorAll("*").forEach(enfantDivPhoto => 
@@ -688,7 +810,7 @@
     /**
     ** FONCTION DE RÉCUPÉRATION DES TRAVAUX
     * 
-    * @param {div} conteneur
+    * @param {HTMLElement} conteneur
     * @returns {json} works
     */
     async function recupererDonnees(conteneur) 
@@ -930,7 +1052,7 @@
     ** FONCTION QUI AFFICHE LE FORMULAIRE DE LA MODALE
     * 
     * @param {null}
-    * @returns {div} formulaire
+    * @returns {HTMLElement} formulaire
     */
     async function afficherFormulaireModale()
     {
@@ -944,6 +1066,9 @@
 
             //RÉTRECISSEMENT DE LA FENÊTRE MODALE
             modale.style.height = "670px";
+
+            //AJOUT DE L'OVERFLOW AUTO POUR GÉRER LE DÉPASSEMENT DU CONTENU DE LA MODALE EN CAS D'AFFICHAGE DES ERREURS
+            modale.style.overflow = "auto";
 
             //MODIFICATION DU PADDING DE MODALE CONTAINER
             modaleContainer.style.padding ="20px 20px 10px 20px";
@@ -981,7 +1106,7 @@
             //RÉCUPÉRATION DES CATÉGORIES
             let categoriesSelect = await recupererToutesLesCategories();
 
-            console.log(categoriesSelect);
+            //console.log(categoriesSelect);
 
             //ON BOUCLE SUR LES CATÉGORIES
             categoriesSelect.forEach( categorieSelect => 
@@ -1015,7 +1140,7 @@
     /**
     ** FONCTION QUI AFFICHE LA MODALE
     * 
-    * @param {div} modale
+    * @param {HTMLElement} modale
     * @returns {void}
     */
     function afficherModale(modale)
@@ -1053,7 +1178,7 @@
     /**
     ** FONCTION QUI CACHE LA MODALE
     * 
-    * @param {div} modale
+    * @param {HTMLElement} modale
     * @returns {void}
     */
     function cacherModale(modale)
