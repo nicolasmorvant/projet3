@@ -679,6 +679,11 @@
 				z-index: 0;
 			}
 
+			#labelInputDivPhoto
+			{
+				display: none;
+			}
+
 			#boutonDivPhoto:hover
 			{
 				opacity: 0.8;
