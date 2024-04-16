@@ -715,6 +715,7 @@
             }
             else
             {
+                if(enfantDivPhoto.getAttribute("id") !== "labelInputDivPhoto")
                 enfantDivPhoto.style.display = "block";
             }
         });
