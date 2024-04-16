@@ -16,11 +16,6 @@
 
 /* FORMULAIRE */
 
-    //DÉCLARATION DE DEUX EXPRESSIONS RÉGULIÈRES
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const passwordRegex = /^[A-Za-z0-9._-]+$/;
-
-
     /**
     ** FONCTION QUI VÉRIFIE LA VALEUR DE L'ADRESSE EMAIL
     * 
@@ -30,23 +25,28 @@
     */
     function verifierEmail(email, pErreur)
     {
+        let verification = false;
+
+        //CRÉATION D'UNE EXPRESSION RÉGULIÈRE LIÉE À L'ADRESSE EMAIL
+        let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
         if (email.trim() === "")
         {
             afficherErreurFormulaire(`Le champ email est vide`, pErreur);
-            throw new Error(`Le champ email est vide`);
         }
         else
         {
             if(emailRegex.test(email))
             {
-                return true;
+                verification = true;
             }
             else
             {
                 afficherErreurFormulaire(`Le champ ${email} n'est pas valide`, pErreur);
-                throw new Error(`Le champ ${email} n'est pas valide`);
             }
         }
+
+        return verification;
     }
 
 
@@ -60,23 +60,28 @@
     //FONCTION DE VÉRIFICATION DU MOT DE PASSE
     function verifierMotDePasse(password, pErreur)
     {
+        let verification = false;
+
+        //CRÉATION D'UNE EXPRESSION RÉGULIÈRE LIÉE AU MOT DE PASSE
+        let passwordRegex = /^[A-Za-z0-9._-]+$/;
+
         if (password.trim() === "")
         {
             afficherErreurFormulaire(`Le champ mot de passe est vide`, pErreur);
-            throw new Error(`Le champ mot de passe est vide`);
         }
         else
         {
             if(passwordRegex.test(password))
             {
-                return true;
+                verification = true;
             }
             else
             {
                 afficherErreurFormulaire(`Mauvais mot de passe`, pErreur);
-                throw new Error(`Mauvais mot de passe`);
             }
         }
+
+        return verification;
     }
 
 
@@ -92,6 +97,8 @@
         //RÉCUPÉRATION DU TYPE DE FICHIER 
         let typeFichier = fichier.type;
 
+        let verification = false;
+
         //console.log("Type de fichier : ", typeFichier);
 
         //VÉRIFICATION SI L'UTILISATEUR A BIEN CHOISI UN FICHIER AUTORISÉ (PNG OU JPEG)
@@ -102,13 +109,14 @@
 
             effacerMessageErreur(pErreur);
 
-            return true;
+            verification = true;
         }
         else
         {
             afficherErreurFormulaire("La photo ne correspond pas au format demandé (jpeg ou png)", pErreur);
-            throw new Error("La photo ne correspond pas au format demandé");
         }
+
+        return verification;
     }
 
 
@@ -124,24 +132,29 @@
         //CRÉATION D'UNE EXPRESSION RÉGULIÈRE LIÉE AU TITRE
         let regexTitre = /^[a-zA-Z&\- ']+$/;
 
+        let verification = false;
+
         if(titre.trim() === "")
         {
+            verification = false;
+
             afficherErreurFormulaire("Le titre ne peut pas être vide", pErreur);
-            throw new Error("Le titre ne peut pas être vide");
         }
         else
         {
             if(regexTitre.test(titre))
             {
-                effacerMessageErreur(pErreur);
-                return true; 
+                verification = true;
+
+                effacerMessageErreur(pErreur); 
             }
             else
             {
                 afficherErreurFormulaire(`Le titre ${titre} ne correspond pas au format demandé`, pErreur);
-                throw new Error(`Le titre ${titre} ne correspond pas au format demandé`);
             }
-        }            
+        }
+        
+        return verification;
     }
 
 
@@ -157,24 +170,26 @@
         //CRÉATION D'UNE EXPRESSION RÉGULIÈRE ASSOCIÉE À LA CATÉGORIE
         let regexCategorie = /^[0-9]+$/;
 
+        let verification = false;
+
         if(categorie === "")
         {
             afficherErreurFormulaire(`Vous devez choisir une catégorie`, pErreur);
-            throw new Error(`Vous devez choisir une catégorie`);
         }
         else
         {
             if(regexCategorie.test(categorie))
             {
                 effacerMessageErreur(pErreur);
-                return true;
+                verification =  true;
             }
             else
             {
                 afficherErreurFormulaire(`La categorie ${categorie} ne correspond pas au format demandé`, pErreur);
-                throw new Error(`La categorie ${categorie} ne correspond pas au format demandé`);
             }
         }
+
+        return verification;
     }
 
 
@@ -186,8 +201,8 @@
     */
     function activerBouton(bouton)
     {
-        //ON CHANGE LE BOUTON EN VERT
-        bouton.style.backgroundColor = "var(--main-green)";
+        bouton.classList.remove("desactive");
+        bouton.classList.add("active");
 
         //ON PASSE DISABLED ET ARIA-DISABLED À FALSE
         bouton.removeAttribute("disabled");
@@ -203,8 +218,8 @@
     */
     function desactiverBouton(bouton)
     {
-        //ON RÉINITIALISE LA BACKGROUND COLOR DU BOUTON
-        bouton.style.backgroundColor = "";
+        bouton.classList.remove("active");
+        bouton.classList.add("desactive");
 
         //ON PASSE DISABLED ET ARIA-DISABLED À TRUE
         bouton.setAttribute("disabled","disabled");
@@ -564,8 +579,6 @@
             {
                 if(response.ok)
                 {
-                    console.log("Réalisation supprimée");
-
                     //RÉAFFICHAGE DES TRAVAUX DE LA GALERIE MODALE
                     afficherTravauxModale();
 
@@ -573,7 +586,7 @@
                     document.querySelector("#menuTravaux").remove();
 
                     //RÉAFFICHAGE DES TRAVAUX DE LA GALERIE PRINCIPALE
-                    afficherTousLesTravaux();
+                    afficherTousLesTravaux(true);
                 }
                 else
                 {
@@ -735,7 +748,6 @@
             });
 
             const ajout = await response.json();
-            console.log(ajout);
 
             //SUPPRESSION DU FORMULAIRE D'AJOUT PHOTO
             effacerFormulaireAjoutPhoto();
@@ -747,7 +759,7 @@
             document.querySelector("#menuTravaux").remove();
 
             //RÉAFFICHAGE DES TRAVAUX DE LA GALERIE PRINCIPALE
-            afficherTousLesTravaux();
+            afficherTousLesTravaux(true);
         }
         catch(error)
         {
@@ -825,12 +837,12 @@
 
 
     /**
-    ** FONCTION POUR AFFICHER TOUS LES TRAVAUX DANS LA GALERIE PRINCIPALE
+    ** FONCTION POUR AFFICHER TOUS LES TRAVAUX DANS LA GALERIE PRINCIPALE QUI PREND EN PARAMÈTRE UN BOOLÉEN (TRUE = APPLICATION D'UN FILTRE, FALSE = PAS DE FILTRE)
     * 
-    * @param {null}
+    * @param {boolean} applicationFiltre 
     * @returns {void} 
     */
-    async function afficherTousLesTravaux()
+    async function afficherTousLesTravaux(applicationFiltre = false)
     {
         //RÉINITIALISATION DE LA GALERIE
         galerie.innerHTML = "";
@@ -863,6 +875,11 @@
             //SETTINGS DE L'IMAGE
             image.src = work.imageUrl;
             image.setAttribute("alt", work.title);
+
+            if(applicationFiltre)
+            {
+                image.style.filter = "brightness(70%)";
+            }
 
             //SETTINGS DE LA CAPTION
             figureCaption.innerText = work.title;
@@ -963,6 +980,7 @@
             //AJOUT DU CONTAINER
             galerieModale.appendChild(workContainer);
         });
+
 
         /* ÉCOUTE ÉVÈNEMENT SUPPRESSION */
 
@@ -1093,6 +1111,75 @@
 /* FONCTIONS MODALE*/
 
     /**
+    ** FONCTION QUI AUGMENTE LA LUMINOSITÉ DES IMAGES DE LA GALERIE PRINCIPALE, DES INPUTS ET DU TEXTEAREA DU FORMULAIRE DE CONTACT
+    * 
+    * @param {null} 
+    * @returns {void}
+    */
+    function augmenterLuminosite()
+    {
+        //TOUTES LES IMAGES
+        let images = document.querySelectorAll("img");
+
+        /* FIN RÉCUPÉRATION DES ÉLÉMENTS DU DOM */
+
+        //SUPPRESSION DE LA COULEUR DE FOND DU BODY
+        document.body.style.backgroundColor = "var(--main-bg-color)";
+
+        images.forEach((image) => 
+        {
+            //SI LE PARENT LE PLUS PROCHE DE L'IMAGE N'EST PAS MODALE
+            if(!(image.closest("#modale")))
+            {
+                image.style.filter = "brightness(100%)";
+            }
+        });
+
+        inputs.forEach(input =>
+        {
+            input.style.filter = "brightness(100%)";
+        });
+
+        textarea.style.filter = "brightness(100%)";
+    }
+
+    
+    /**
+    ** FONCTION QUI DIMINUE LA LUMINOSITÉ DES IMAGES DE LA GALERIE PRINCIPALE, DES INPUTS ET DU TEXTEAREA DU FORMULAIRE DE CONTACT
+    * 
+    * @param {null}
+    * @returns {void}
+    */
+    function baisserLuminosite()
+    {
+        //TOUTES LES IMAGES
+        let images = document.querySelectorAll("img");
+
+        //MODIFICATION DE LA COULEUR DE FOND DU BODY
+        document.body.style.backgroundColor = "rgba(0, 0, 0, 0.3)";
+
+        images.forEach((image) => 
+        {
+            //SI LE PARENT LE PLUS PROCHE DE L'IMAGE N'EST PAS MODALE
+            if(!(image.closest("#modale")))
+            {
+                image.style.filter = "brightness(70%)";
+            }
+        });
+
+        inputs.forEach(input =>
+        {
+            if(input.getAttribute("id") !== "inputTitre")
+            {
+                input.style.filter = "brightness(70%)";
+            }    
+        });
+
+        textarea.style.filter = "brightness(70%)";
+    }
+
+
+    /**
     ** FONCTION QUI AFFICHE LA MODALE
     * 
     * @param {HTMLElement} modale
@@ -1104,29 +1191,11 @@
         modale.style.display = "block";
         modale.classList.add("visible");
 
-        //Modification de la couleur de fond du body
-        document.body.style.backgroundColor = "rgba(0, 0, 0, 0.3)";
-
-        toutesLesImages.forEach((image) => 
-        {
-            //SI LE PARENT LE PLUS PROCHE DE L'IMAGE N'EST PAS MODALE
-            if(!(image.closest("#modale")))
-            {
-                image.style.filter = "brightness(70%)";
-            }
-        });
-
-        tousLesInput.forEach(input =>
-        {
-            if(input.getAttribute("id") !== "inputTitre")
-            {
-                input.style.filter = "brightness(70%)";
-            }    
-        });
-
-        textarea.style.filter = "brightness(70%)";
-
+        //AFFICHAGE DES TRAVAUX DE LA MODALE
         afficherTravauxModale();    
+
+        //RÉGLAGE DE LA LUMINOSITÉ
+        baisserLuminosite();
     }
 
 
@@ -1144,28 +1213,12 @@
         //RESET DU FORMULAIRE AJOUT PHOTO
         effacerFormulaireAjoutPhoto();
 
-        //SUPPRESSION DE LA COULEUR DE FOND DU BODY
-        document.body.style.backgroundColor = "var(--main-bg-color)";
+        //RÉGLAGE DE LA LUMINOSITÉ
+        augmenterLuminosite();
 
         //ON CACHE LA MODALE
         modale.style.display = "none";
         modale.classList.remove("visible");
-
-        toutesLesImages.forEach((image) => 
-        {
-            //SI LE PARENT LE PLUS PROCHE DE L'IMAGE N'EST PAS MODALE
-            if(!(image.closest("#modale")))
-            {
-                image.style.filter = "brightness(100%)";
-            }
-        });
-
-        tousLesInput.forEach(input =>
-        {
-                input.style.filter = "brightness(100%)";
-        });
-
-        textarea.style.filter = "brightness(100%)";
     }
 
 /* FIN FONCTIONS MODALE*/

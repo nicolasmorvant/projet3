@@ -783,9 +783,19 @@
 
 			#validerPhoto
 			{
-				background-color: #A7A7A7;
-				border: 1px solid #A7A7A7;
 				margin-top: 40px;
+			}
+
+			.active
+			{
+				background-color: var(--main-green) !important;
+				border: 1px solid var(--main-green) !important;
+			}
+
+			.desactive
+			{
+				background-color: #A7A7A7 !important;
+  				border: 1px solid #A7A7A7 !important;
 			}
 
 		/* FIN MODALE PARTIE 2 / AJOUT PHOTO */

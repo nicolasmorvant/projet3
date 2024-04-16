@@ -66,14 +66,12 @@ let selectCategorieErreur = document.querySelector("#selectCategorieErreur");
 //BOUTON FORMULAIRE MODAL
 let validerPhoto = document.querySelector("#validerPhoto");
 
-//TOUTES LES IMAGES
-let toutesLesImages = document.querySelectorAll("img");
-
 //TOUS LES INPUT
-let tousLesInput = document.querySelectorAll("input");
+let inputs = document.querySelectorAll("input");
 
 //TEXTAREA
 let textarea = document.querySelector("textarea");
+
 
 /* FIN RÉCUPÉRATION DES ÉLÉMENTS DU DOM */
 
@@ -133,10 +131,15 @@ if (window.localStorage.getItem("token"))
         }
     });
 
+    //DÉFINITION D'UNE VARIABLE POUR LA PHOTO
+    let upload;
+
     //ÉCOUTE ÉVÈNEMENT AU CLIC DU BOUTON AJOUTER UNE PHOTO
     ajoutPhoto.addEventListener("click", (e) => 
     {
         e.preventDefault();
+
+        upload = null;
 
         //AFFICHAGE DU FORMULAIRE DE LA MODALE
         afficherFormulaireModale();
@@ -146,36 +149,23 @@ if (window.localStorage.getItem("token"))
     //ÉCOUTE ÉVÈNEMENT AU CLIC DE L'ICONE DE FERMETURE DU MODALE
     iconeFermetureModale.addEventListener("click", () => 
     {
+        upload = null;
+
+        //FERMETURE DE LA MODALE
         cacherModale(modale);
     });
 
 
     /* FORMULAIRE ENVOI PHOTO */
 
-        let validation = false;
-
         //ÉCOUTE ÉVÈNEMENT CHANGE INPUT AJOUT PHOTO
+
         inputDivPhoto.addEventListener("input", (e) =>
         {
             //RÉCUPÉRATION DE L'UPLOAD
-            let upload = e.target.files[0];
+            upload = e.target.files[0];
 
             verifierPhoto(upload, inputPhotoErreur);
-
-            if(verifierPhoto(upload, inputPhotoErreur) && verifierTitre(inputTitre.value, inputTitreErreur) && verifierCategorie(selectCategorie.value, selectCategorieErreur))
-            {
-                activerBouton(validerPhoto);
-            }
-            else
-            {
-                desactiverBouton(validerPhoto);
-            }
-        });
-
-        //BLUR INPUT TITRE
-        inputTitre.addEventListener("blur", () => 
-        {
-            verifierTitre(inputTitre.value, inputTitreErreur);
 
             if(verifierPhoto(upload, inputPhotoErreur) && verifierTitre(inputTitre.value, inputTitreErreur) && verifierCategorie(selectCategorie.value, selectCategorieErreur))
             {
@@ -202,9 +192,10 @@ if (window.localStorage.getItem("token"))
             }
         });
 
-        //INPUT TITRE
-        inputTitre.addEventListener("input", () => 
+        //INPUT TITRE BLUR
+        inputTitre.addEventListener("blur", () => 
         { 
+
             verifierTitre(inputTitre.value, inputTitreErreur);
 
             if(verifierPhoto(upload, inputPhotoErreur) && verifierTitre(inputTitre.value, inputTitreErreur) && verifierCategorie(selectCategorie.value, selectCategorieErreur))
@@ -216,6 +207,24 @@ if (window.localStorage.getItem("token"))
                 desactiverBouton(validerPhoto);
             }
         });
+
+
+        //INPUT TITRE INPUT
+        inputTitre.addEventListener("input", () => 
+        { 
+
+            verifierTitre(inputTitre.value, inputTitreErreur);
+
+            if(verifierPhoto(upload, inputPhotoErreur) && verifierTitre(inputTitre.value, inputTitreErreur) && verifierCategorie(selectCategorie.value, selectCategorieErreur))
+            {
+                activerBouton(validerPhoto);
+            }
+            else
+            {
+                desactiverBouton(validerPhoto);
+            }
+        });
+
 
         //CHANGE SELECT
         selectCategorie.addEventListener("change", () => 
@@ -231,9 +240,7 @@ if (window.localStorage.getItem("token"))
                 desactiverBouton(validerPhoto);
             }
         });
-
-
-        
+         
 
         //ÉCOUTE ÉVÈNEMENT CLIC ENVOI DU FORMULAIRE
         validerPhoto.addEventListener("click", (e) =>
@@ -255,7 +262,6 @@ if (window.localStorage.getItem("token"))
         });
 
     /* FIN FORMULAIRE ENVOI PHOTO */
-
 
     //ÉCOUTE ÉVÈNEMENT CLIC RETOUR VERS LA GALERIE MODALE
     iconeRetourModale.addEventListener("click", (e) => 
