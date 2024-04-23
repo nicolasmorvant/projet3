@@ -376,13 +376,13 @@
             {
                 //ON AFFICHE UN MESSAGE D'ERREUR
                 
-                afficherErreurConnexion("Vous ne pouvez pas vous connecter");
+                afficherErreurConnexion("Erreur dans l’identifiant ou le mot de passe");
             }
         }
         else
         {
-            afficherErreurConnexion(`Erreur lors de la connexion : Utilisateur inconnu`);
-            throw new Error("Erreur lors de la connexion");
+            afficherErreurConnexion(`Erreur dans l’identifiant ou le mot de passe`);
+            throw new Error("Erreur dans l’identifiant ou le mot de passe");
         }
     }
 
