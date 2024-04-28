@@ -557,7 +557,7 @@
 		{
 			border-bottom: 1px solid #B3B3B3;	
 			display: flex;
-			/*justify-content: space-between;*/
+			justify-content: space-between;
 			flex-wrap: wrap;
 			max-width: 420px;
 			max-height: 420px;
