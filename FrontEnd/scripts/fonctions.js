@@ -886,7 +886,7 @@
             figureCaption.innerText = work.title;
 
             //AJOUT DE L'IMAGE ET DE LA CAPTION À LA FIGURE FIGURE
-            figure.appendChild(image);
+            figure.appendChild(image);cti
             figure.appendChild(figureCaption);
 
             //AJOUT DE L'ID CATEGORIE A LA FIGURE
