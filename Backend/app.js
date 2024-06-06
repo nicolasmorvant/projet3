@@ -28,7 +28,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 
 //REDIRECTION POUR RENDER.COM
 app.get('/', (req, res) => {
-    res.redirect('/api/works');
+  res.sendFile(path.join(__dirname, 'Frontend', 'index.html'));
 });
 
 
