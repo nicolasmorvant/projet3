@@ -3,6 +3,9 @@
 ![](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 ![](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![](https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white)
+![](https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=black)
+![](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)
 
 ## Contexte
 ## _Vous travaillez comme développeur front-end pour l’agence ArchiWebos qui comprend 50 salariés. Ayant terminé votre dernier projet avec un peu d'avance, vous êtes envoyé en renfort comme développeur front-end d’une équipe qui travaille sur la conception du site portfolio d’une architecte d’intérieur._
@@ -20,17 +23,6 @@
 - Gérer les événements utilisateurs avec JavaScript
 - Manipuler les éléments du DOM avec JavaScript
 - Récupérer les données utilisateurs dans le JavaScript via des formulaires
-
-
-### 
-###
-## Technologies utilisées
-
-![HTML5 + CSS3 + JS](https://user-images.githubusercontent.com/30186107/29488525-f55a69d0-84da-11e7-8a39-5476f663b5eb.png)
-![NODEJS](https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Node.js_logo.svg/1200px-Node.js_logo.svg.png)
-![NPM](https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Npm-logo.svg/1200px-Npm-logo.svg.png)
-![SWAGGER](https://miro.medium.com/v2/resize:fit:1400/1*TxhrlaqIG6FLr6WLhK-HZA.png)
-![POSTMAN](https://logowik.com/content/uploads/images/postman-api-platform6643.logowik.com.webp)
 
 ### 
 ###
